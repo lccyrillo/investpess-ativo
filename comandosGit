@@ -22,4 +22,8 @@ git checkout developer
 git checkout -b refatoracao_conexao
 
 ---> apagar um branch
-git branch -d b_refatoracao_conexao
+git branch -d b_refatoracao_conexao7
+
+---> baixar atualizacoes da brench
+---> puxa as alterações da brench remota para local
+git pull
