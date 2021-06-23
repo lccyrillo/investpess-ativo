@@ -1,1 +1,2 @@
 -- quero criar uma classe de conexão que vai ser reutilizada pelas apis
+-- precisa melhorar a organizaçao
