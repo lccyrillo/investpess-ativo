@@ -27,3 +27,7 @@ git branch -d b_refatoracao_conexao7
 ---> baixar atualizacoes da brench
 ---> puxa as alterações da brench remota para local
 git pull
+
+--> vou mergear o desenvolvimento feito na branch de refatoracao na branch developer
+--> entro na brench developer
+>> git checkout developer
