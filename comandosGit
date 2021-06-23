@@ -18,4 +18,8 @@ git push -u origin developer
 ---> mudar o branch de desenvolvimento
 git checkout developer
 
+---> mudar o branch de desenvolvimento e criar o novo branch
+git checkout -b refatoracao_conexao
 
+---> apagar um branch
+git branch -d b_refatoracao_conexao
