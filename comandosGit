@@ -10,7 +10,12 @@ git push -u origin master
 
 git branch
 
-git branch -M developer
+git branch developer
 git add .
 git commit -a -m "setup"
 git push -u origin developer
+
+---> mudar o branch de desenvolvimento
+git checkout developer
+
+
