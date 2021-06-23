@@ -1,0 +1,56 @@
+1) Criar a imagem
+-> entra no diretorio
+-> comando para gerar imagem
+
+>>> docker image build -t image-investpess-ativo .
+
+-> inspecionar imagem
+
+>>> docker image ls
+>>> docker image inspect image-investpess-ativo
+
+-> criar um container com base nessa imagem
+docker container run -p 50051:50051 --name cont-investpess-ativo -it image-investpess-ativo bash
+
+docker container run -p 50051:50051 --name cont-investpess-ativo image-investpess-ativo
+
+>>>java -jar /usr/server/investpess-ativo.jar
+
+-> Rodar o container em modo detach
+
+>>> docker container start cont-investpess-ativo
+>>>docker container exec -d cont-investpess-ativo sh -c 'java -jar /usr/server/investpess-ativo.jar'
+
+-> ver containers ativos
+>>> docker ps
+
+-> Parar o container
+>>> docker container stop cont-investpess-ativo
+
+
+ENV JAVA_HOME /usr/lib/jvm/java-8-oracle
+RUN apt-get -y update
+
+RUN useradd grpc && \
+  mkdir -p /usr/server && \
+  chown grpc /usr/server
+
+
+
+COPY out/artifacts/investpess_ativo_jar/investpess-ativo.jar /usr/server/investpess-ativo.jar
+
+USER grpc
+WORKDIR /usr/server
+ENTRYPOINT ["/usr/server"]
+
+CMD ["java -jar /usr/server/investpess-ativo.jar"]
+
+RUN useradd grpc && \
+  mkdir -p /usr/server && \
+  chown grpc /usr/server
+
+WORKDIR /usr/server
+ENTRYPOINT ["/usr/server"]
+
+CMD ["java -jar /usr/server/investpess-ativo.jar"]
+
