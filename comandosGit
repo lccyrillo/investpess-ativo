@@ -3,10 +3,12 @@ git init
 git remote add origin https://github.com/lccyrillo/investpess-ativo.git
 
 
-git branch -M master
+git branch master
 git add .
 git commit -a -m "setup"
 git push -u origin master
+
+git branch
 
 git branch -M developer
 git add .
