@@ -27,6 +27,7 @@
 >> git push origin v1.2
 
 3) Se a versão esta fechada e vai para ambiente de homologação ou prod
+--> posso mergear a branch desta feature com a branch de desenvolvimento
 --> vou para o repositorio de desenvolvimento
 >> git checkout developer
 >> git merge refatoracao_conexao
@@ -45,11 +46,11 @@
 --> equalizo com a developer
 >> git pull origin developer
 --> faço qualquer alteração e comito
-git commit -a -m "alterações de refatoração dos entry points"
+>> git commit -a -m "alterações de refatoração dos entry points"
 --> manda para o repositorio remoto (o repositorio remoto é criado)
-git push origin refatoracao_entrypoints
+>> git push origin refatoracao_entrypoints
 --> posso vincular meu branch local ao branch remoto
- git push --set-upstream origin refatoracao_entrypoints
+>>  git push --set-upstream origin refatoracao_entrypoints
 
 
 5) Posso apagar a branch anterior
@@ -64,51 +65,10 @@ git push origin refatoracao_entrypoints
 
 ------------------------------------------------------------------------------------------
 
-git branch master
-git add .
-git commit -a -m "setup"
-git push -u origin master
 
-git branch
-
-git branch developer
-git add .
-git commit -a -m "setup"
-git push -u origin developer
-
----> mudar o branch de desenvolvimento
-git checkout developer
-
----> mudar o branch de desenvolvimento e criar o novo branch
-git checkout -b refatoracao_conexao
-
----> apagar um branch
-git branch -d b_refatoracao_conexao7
-
----> baixar atualizacoes da brench
----> puxa as alterações da brench remota para local
-git pull
-
---> vou mergear o desenvolvimento feito na branch de refatoracao na branch developer
---> entro na brench developer
->> git checkout developer
->> git merge refatoracao_conexao
->> git push -u origin developer
-
-
->> git push -u origin refatoracao_conexao
-
---> Conceito de tag
---> Para marcar versões importantes - cria a tag
->> git tag -a v1.0 -m "Primeira versão da aplicação."
---> listar tags
->> git tag
 
 >> git show v1.0
 
---> mandar a tag para o servidor remoto
---> a tag é uma versão apartada da branch
->> git push origin v1.1
 
 --> Repositorios criados por outros desenvolvedores
 --> utilizo git fetch para puxar a nova branch
