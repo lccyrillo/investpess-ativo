@@ -29,6 +29,13 @@
 3) Se a versão esta fechada e vai para ambiente de homologação ou prod
 --> vou para o repositorio de desenvolvimento
 >> git checkout developer
+>> git merge refatoracao_conexao
+>> git push -u origin developer
+
+--> vou para o repositorio de producao
+>> git checkout master
+>> git merge developer
+>> git push -u origin master
 
 
 git branch master
