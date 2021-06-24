@@ -17,7 +17,7 @@
 --> faço um commit
 >> git commit -a -m "alterações de refatoração dos entry points"
 --> mandar para o repositorio remoto
->> git push
+>> git push origin refatoracao_entrypoints
 
 2) se consegui fechar uma versão, posso gerar uma tag
 --> listar tags
