@@ -48,6 +48,9 @@
 git commit -a -m "alterações de refatoração dos entry points"
 --> manda para o repositorio remoto (o repositorio remoto é criado)
 git push origin refatoracao_entrypoints
+--> posso vincular meu branch local ao branch remoto
+ git push --set-upstream origin refatoracao_entrypoints
+
 
 5) Posso apagar a branch anterior
 
