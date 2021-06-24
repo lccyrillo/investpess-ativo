@@ -7,7 +7,10 @@
 alternativa se precisar escalar
 >> docker compose up -d --scale micro=3
 
-2) derrubar containers e limpar
+2) derrubar containers
+>> docker compose down
+
+3) derrubar containers e  limpar volumes
 >> docker compose down -v
 >> docker compose rm -f
 
