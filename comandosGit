@@ -41,6 +41,8 @@
 --> entro na developer
 >> git checkout developer
 >> git checkout -b refatoracao_entrypoints
+>> git pull origin developer
+
 --> aponto a nova brench para estar com referencia na developer
 >> git branch --set-upstream-to=origin/refatoracao_entrypoints refatoracao_entrypoints
 --> posso apagar a branch anterior (repositorio local)
