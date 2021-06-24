@@ -48,3 +48,9 @@ git pull
 --> mandar a tag para o servidor remoto
 --> a tag é uma versão apartada da branch
 >> git push origin v1.1
+
+--> Repositorios criados por outros desenvolvedores
+--> utilizo git fetch para puxar a nova branch
+
+--> analise e inspecao de repositorios
+
