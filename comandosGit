@@ -23,8 +23,12 @@
 --> listar tags
 >> git tag
 >> git tag -a v1.2 -m "Versão refatorada com a conexão com singleton"
+--> mandar a tag para o servidor remoto
+>> git push origin v1.2
 
-
+3) Se a versão esta fechada e vai para ambiente de homologação ou prod
+--> vou para o repositorio de desenvolvimento
+>> git checkout developer
 
 
 git branch master
