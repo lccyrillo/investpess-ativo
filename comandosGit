@@ -15,7 +15,15 @@
 --> adiciono os arquivos necessários
 >> git add .
 --> faço um commit
-git commit -a -m "alterações de refatoração da conexão"
+>> git commit -a -m "alterações de refatoração da conexão"
+--> mandar para o repositorio remoto
+>> git push
+
+2) se consegui fechar uma versão, posso gerar uma tag
+--> listar tags
+>> git tag
+>> git tag -a v1.2 -m "Versão refatorada com a conexão com singleton"
+
 
 
 
