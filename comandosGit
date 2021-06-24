@@ -53,4 +53,7 @@ git pull
 --> utilizo git fetch para puxar a nova branch
 
 --> analise e inspecao de repositorios
-
+--> conpara versão atual com a master
+git diff master
+--> ou entao
+git diff arquivo1 arquivo2
