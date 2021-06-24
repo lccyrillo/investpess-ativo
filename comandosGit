@@ -31,6 +31,8 @@ git pull
 --> vou mergear o desenvolvimento feito na branch de refatoracao na branch developer
 --> entro na brench developer
 >> git checkout developer
+>> git merge refatoracao_conexao
+>> git push -u origin developer
 
 
-git push -u origin refatoracao_conexao
+>> git push -u origin refatoracao_conexao
