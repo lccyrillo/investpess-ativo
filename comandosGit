@@ -15,7 +15,7 @@
 --> adiciono os arquivos necessários
 >> git add .
 --> faço um commit
->> git commit -a -m "alterações de refatoração da conexão"
+>> git commit -a -m "alterações de refatoração dos entry points"
 --> mandar para o repositorio remoto
 >> git push
 
@@ -37,6 +37,20 @@
 >> git merge developer
 >> git push -u origin master
 
+4) Como acabei a release anterior, vou criar uma branch nova
+--> entro na developer
+>> git checkout developer
+>> git checkout -b refatoracao_entrypoints
+--> aponto a nova brench para estar com referencia na developer
+>> git branch --set-upstream-to=origin/developer refatoracao_entrypoints
+--> posso apagar a branch anterior (repositorio local)
+--> atenção o -D (maiusculo) perde mudanças
+>> git branch -D refatoracao_conexao
+--> posso agora apagar no repositorio remoto
+>> git push origin --delete refatoracao_conexao
+
+
+------------------------------------------------------------------------------------------
 
 git branch master
 git add .
