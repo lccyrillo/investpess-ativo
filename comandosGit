@@ -44,3 +44,6 @@ git pull
 >> git tag
 
 >> git show v1.0
+
+--> mandar a tag para o servidor remoto
+>> git push origin v1.1
