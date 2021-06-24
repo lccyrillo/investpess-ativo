@@ -36,3 +36,7 @@ git pull
 
 
 >> git push -u origin refatoracao_conexao
+
+--> Conceito de tag
+--> Para marcar versões importantes
+>> git tag -a v1.0 -m "Primeira versão da aplicação."
