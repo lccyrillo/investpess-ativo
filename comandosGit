@@ -40,11 +40,17 @@
 4) Como acabei a release anterior, vou criar uma branch nova
 --> entro na developer
 >> git checkout developer
+--> crio a nova branch
 >> git checkout -b refatoracao_entrypoints
+--> equalizo com a developer
 >> git pull origin developer
+--> faço qualquer alteração e comito
+git commit -a -m "alterações de refatoração dos entry points"
+--> manda para o repositorio remoto (o repositorio remoto é criado)
+git push origin refatoracao_entrypoints
 
---> aponto a nova brench para estar com referencia na developer
->> git branch --set-upstream-to=origin/refatoracao_entrypoints refatoracao_entrypoints
+5) Posso apagar a branch anterior
+
 --> posso apagar a branch anterior (repositorio local)
 --> atenção o -D (maiusculo) perde mudanças
 >> git branch -D refatoracao_conexao
