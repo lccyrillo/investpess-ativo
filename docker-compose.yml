@@ -1,6 +1,6 @@
 version: '3'
 volumes:
-  dados:
+  dados_prod:
 networks:
   banco:
   microsserv:
@@ -12,8 +12,7 @@ services:
     #environment:
     #  - POSTGRES_HOST_AUTH_METHOD=trust
     volumes:
-      # volume dos dados
-      - dados:/var/lib/postgresql/data
+      - /dados_prod:/var/lib/postgresql/data
       # script
       - ./scripts:/scripts
       - ./scripts/init.sql:/docker-entrypoint-initdb.d/init.sql

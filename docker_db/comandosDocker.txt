@@ -9,6 +9,10 @@ Configurações para startar o docker
       # - 5433:5432 -> para expor o postgres em uma porta diferente
       # VOLUME dados_dev -> Volume criado para armazernar os dados de desenvolvimento
 
+0) docker image build -t docker_db .
+   docker container run -d --name docker_db_container -p 5433:55432 -v ./scripts:/scripts -v C:\aplic\prjsw\investpess-ativo\scripts\init.sql:/docker-entrypoint-initdb.d/init.sql -v /var/lib/docker/volumes/dados_dev:/var/lib/postgresql/data docker_db
+
+
  1)verificar dados da tabela
  docker container ps
  2) Atachar no container

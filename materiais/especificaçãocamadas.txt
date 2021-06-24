@@ -1,0 +1,25 @@
+application    --> classe main (inicializa configurações e expoe os entrpoints)
+               --> chamar o singleton
+config         --> pegar conexão singleton
+               --> public class ConexaoConfig
+               --> Carrega variaveis de ambiente para saber se dev, homol, prod 
+core
+- entities     --> montar objeto ativo
+- usecases     --> é chamado pela api
+dataproviders  --> montar a instrução insert
+               --> montar classe que insere na base
+               --> essa classe irá acessar o sigleton
+entrypoints    --> casca da api
+               --> aqui vamos levantar o servidor e as apis
+               --> em um primeiro momento, vamos acessar diretamente o data provider
+
+entities
+usecases
+interface
+drivers
+application
+-- configuration - devolver conexão 
+
+
+3003-
+33663003

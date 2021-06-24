@@ -1,6 +1,41 @@
-git init
+0) setup de trabalho
+>> git init
+>> git remote add origin https://github.com/lccyrillo/investpess-ativo.git
 
-git remote add origin https://github.com/lccyrillo/investpess-ativo.git
+1) Forma geral de trabalho
+--> Verificar a branch que estou
+--> devo trabalhar na branch da release
+>> git branch
+--> se não estou na branch correta, vou para a branch correta
+>> git checkout refatoracao_conexao
+
+--> trabalho nos arquivos
+--> vejo as diferencas
+>> git status
+--> adiciono os arquivos necessários
+>> git add .
+--> faço um commit
+>> git commit -a -m "alterações de refatoração da conexão"
+--> mandar para o repositorio remoto
+>> git push
+
+2) se consegui fechar uma versão, posso gerar uma tag
+--> listar tags
+>> git tag
+>> git tag -a v1.2 -m "Versão refatorada com a conexão com singleton"
+--> mandar a tag para o servidor remoto
+>> git push origin v1.2
+
+3) Se a versão esta fechada e vai para ambiente de homologação ou prod
+--> vou para o repositorio de desenvolvimento
+>> git checkout developer
+>> git merge refatoracao_conexao
+>> git push -u origin developer
+
+--> vou para o repositorio de producao
+>> git checkout master
+>> git merge developer
+>> git push -u origin master
 
 
 git branch master
