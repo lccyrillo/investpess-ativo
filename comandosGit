@@ -22,15 +22,15 @@
 2) se consegui fechar uma versão, posso gerar uma tag
 --> listar tags
 >> git tag
->> git tag -a v1.2 -m "Versão refatorada com a conexão com singleton"
+>> git tag -a v1.3 -m "Versão refatorada com os entry points."
 --> mandar a tag para o servidor remoto
->> git push origin v1.2
+>> git push origin v1.3
 
 3) Se a versão esta fechada e vai para ambiente de homologação ou prod
 --> posso mergear a branch desta feature com a branch de desenvolvimento
 --> vou para o repositorio de desenvolvimento
 >> git checkout developer
->> git merge refatoracao_conexao
+>> git merge refatoracao_entrypoints
 >> git push -u origin developer
 
 --> vou para o repositorio de producao
