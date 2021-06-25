@@ -3,12 +3,15 @@ package com.cyrillo.ativo.entities;
 public class AtivoObjeto {
     private String sigla;
     private String nomeAtivo;
-    private String descricaoAtivo;
+    private String descricaoCNPJAtivo;
     private TipoAtivo tipoAtivo;
-    public AtivoObjeto(String sigla, String nomeAtivo, String descricaoAtivo, TipoAtivo tipoAtivo) {
+    public AtivoObjeto(String sigla, String nomeAtivo, String descricaoCNPJAtivo, TipoAtivo tipoAtivo) {
+        if (descricaoCNPJAtivo == null || !descricaoCNPJAtivo.matches("^\\d{2}\\.\\d{3}\\.\\d{3}\\/\\d{4}\\-\\d{2}$")){
+            throw new IllegalArgumentException("CNPJ inválido na criação de um objeto do tipo AtivoObjeto");
+        }
         this.sigla = sigla;
         this.nomeAtivo = nomeAtivo;
-        this.descricaoAtivo = descricaoAtivo;
+        this.descricaoCNPJAtivo = descricaoCNPJAtivo;
         this.tipoAtivo = tipoAtivo;
     }
 
@@ -46,12 +49,16 @@ public class AtivoObjeto {
         this.nomeAtivo = nomeAtivo;
     }
 
-    public String getDescricaoAtivo() {
-        return descricaoAtivo;
+    public String getDescricaoCNPJAtivo() {
+        return descricaoCNPJAtivo;
     }
 
-    public void setDescricaoAtivo(String descricaoAtivo) {
-        this.descricaoAtivo = descricaoAtivo;
+    public void setDescricaoCNPJAtivo(String descricaoCNPJAtivo) {
+        if (descricaoCNPJAtivo == null || !descricaoCNPJAtivo.matches("^\\d{2}\\.\\d{3}\\.\\d{3}\\/\\d{4}\\-\\d{2}$")){
+            throw new IllegalArgumentException("CNPJ inválido na criação de um objeto do tipo AtivoObjeto");
+        }
+
+        this.descricaoCNPJAtivo = descricaoCNPJAtivo;
     }
 
     public TipoAtivo getTipoAtivo() {
