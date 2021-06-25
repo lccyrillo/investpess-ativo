@@ -48,9 +48,9 @@
 --> faço qualquer alteração e comito
 >> git commit -a -m "alterações de refatoração dos entities"
 --> manda para o repositorio remoto (o repositorio remoto é criado)
->> git push origin refatoracao_entrypoints
+>> git push origin refatoracao_entities
 --> posso vincular meu branch local ao branch remoto
->>  git push --set-upstream origin refatoracao_entrypoints
+>>  git push --set-upstream origin refatoracao_entities
 
 
 5) Posso apagar a branch anterior
