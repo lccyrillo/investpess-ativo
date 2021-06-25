@@ -1,7 +1,12 @@
 package com.cyrillo.ativo;
 
+import com.cyrillo.ativo.entrypoints.AtivoServer;
+
+import java.io.IOException;
+
 public class ApplicationAtivo {
-    public static void main(String[] args) {
-        System.out.println("Inicializaçãoda aplicação Ativo");
+    public static void main(String[] args) throws IOException, InterruptedException {
+        System.out.println("Inicialização da aplicação Ativo");
+        AtivoServer var = new AtivoServer();
     }
 }

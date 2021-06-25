@@ -1,4 +1,4 @@
-package com.cyrillo.ativo;
+package com.cyrillo.ativo.entrypoints;
 
 import com.cyrillo.ativo.configuration.ConexaoConfig;
 import com.proto.ativo.ativoobjetoproto.AtivoObjeto;
@@ -11,7 +11,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-public class CadastraAtivoObjetoServiceImpl extends CadastraAtivoObjetoServiceGrpc.CadastraAtivoObjetoServiceImplBase {
+public class CadastraAtivoObjetoService  extends CadastraAtivoObjetoServiceGrpc.CadastraAtivoObjetoServiceImplBase {
     @Override
     public void cadastraAtivoObjeto(CadastraAtivoObjetoRequest request, StreamObserver<CadastraAtivoObjetoResponse> responseObserver) {
         // super.cadastraAtivoObjeto(request, responseObserver);
@@ -39,7 +39,7 @@ public class CadastraAtivoObjetoServiceImpl extends CadastraAtivoObjetoServiceGr
             ps.execute();
             System.out.println("executou sql");
 
-        } catch (SQLException  throwables) {
+        } catch (SQLException throwables) {
             throwables.printStackTrace();
             msgErro = throwables.getMessage();
         }

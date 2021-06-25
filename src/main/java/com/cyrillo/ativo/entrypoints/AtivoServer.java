@@ -1,4 +1,4 @@
-package com.cyrillo.ativo;
+package com.cyrillo.ativo.entrypoints;
 
 import io.grpc.Server;
 import io.grpc.ServerBuilder;
@@ -7,15 +7,18 @@ import java.io.IOException;
 
 
 public class AtivoServer {
-    public static void main(String[] args) throws IOException, InterruptedException {
-        System.out.println("Hello from Ativo Server com serviço1!");
-        System.out.println("Hello from Ativo Server com serviço2!");
+    public AtivoServer() throws IOException, InterruptedException {
+        this.inicializaAtivoServer();
+    }
+
+    private void inicializaAtivoServer() throws IOException, InterruptedException{
+        System.out.println("Inicializando Ativo Server.");
         Server server = ServerBuilder.forPort(50051)
-                .addService(new CadastraAtivoObjetoServiceImpl())
-                .addService(new ConsultaAtivoObjetoServiceImpl())
+                .addService(new CadastraAtivoObjetoService())
+                .addService(new ConsultaAtivoObjetoService())
                 .build();
-        System.out.println("Hello from Ativo Server com serviço3!");
         server.start();
+        System.out.println("Serviço inicializado");
         Runtime.getRuntime().addShutdownHook(new Thread( () -> {
             System.out.println("Received shutdown request");
             server.shutdown();
@@ -23,7 +26,5 @@ public class AtivoServer {
         }  ));
 
         server.awaitTermination();
-
     }
-
 }

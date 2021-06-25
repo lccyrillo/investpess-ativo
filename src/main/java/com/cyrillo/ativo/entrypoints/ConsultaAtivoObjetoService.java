@@ -1,12 +1,15 @@
-package com.cyrillo.ativo;
+package com.cyrillo.ativo.entrypoints;
 
-import com.proto.ativo.ativoobjetoproto.*;
+import com.proto.ativo.ativoobjetoproto.AtivoObjeto;
+import com.proto.ativo.ativoobjetoproto.ConsultaAtivoObjetoRequest;
+import com.proto.ativo.ativoobjetoproto.ConsultaAtivoObjetoResponse;
+import com.proto.ativo.ativoobjetoproto.ConsultaAtivoObjetoServiceGrpc;
 import io.grpc.stub.StreamObserver;
 
 import java.sql.*;
 import java.util.Properties;
 
-public class ConsultaAtivoObjetoServiceImpl extends ConsultaAtivoObjetoServiceGrpc.ConsultaAtivoObjetoServiceImplBase {
+public class ConsultaAtivoObjetoService  extends ConsultaAtivoObjetoServiceGrpc.ConsultaAtivoObjetoServiceImplBase {
     @Override
     public void consultaAtivoObjeto(ConsultaAtivoObjetoRequest request, StreamObserver<ConsultaAtivoObjetoResponse> responseObserver) {
 
@@ -58,6 +61,6 @@ public class ConsultaAtivoObjetoServiceImpl extends ConsultaAtivoObjetoServiceGr
                 .build();
         responseObserver.onNext(response);
         responseObserver.onCompleted();
-        }
-
     }
+
+}

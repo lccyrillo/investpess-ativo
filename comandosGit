@@ -15,7 +15,7 @@
 --> adiciono os arquivos necessários
 >> git add .
 --> faço um commit
->> git commit -a -m "alterações de refatoração dos entry points"
+>> git commit -a -m "Alterações relativas a criação do package entrypoint. Finalizado em 24/06/2021. 22:08"
 --> mandar para o repositorio remoto
 >> git push origin refatoracao_entrypoints
 
