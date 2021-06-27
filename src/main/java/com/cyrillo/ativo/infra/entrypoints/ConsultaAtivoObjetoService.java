@@ -1,9 +1,9 @@
-package com.cyrillo.ativo.entrypoints;
+package com.cyrillo.ativo.infra.entrypoints;
 
-import com.proto.ativo.ativoobjetoproto.AtivoObjeto;
-import com.proto.ativo.ativoobjetoproto.ConsultaAtivoObjetoRequest;
-import com.proto.ativo.ativoobjetoproto.ConsultaAtivoObjetoResponse;
-import com.proto.ativo.ativoobjetoproto.ConsultaAtivoObjetoServiceGrpc;
+import proto.ativo.ativoobjetoproto.AtivoObjeto;
+import proto.ativo.ativoobjetoproto.ConsultaAtivoObjetoRequest;
+import proto.ativo.ativoobjetoproto.ConsultaAtivoObjetoResponse;
+import proto.ativo.ativoobjetoproto.ConsultaAtivoObjetoServiceGrpc;
 import io.grpc.stub.StreamObserver;
 
 import java.sql.*;

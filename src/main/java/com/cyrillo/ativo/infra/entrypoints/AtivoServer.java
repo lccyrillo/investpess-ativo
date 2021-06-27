@@ -1,4 +1,4 @@
-package com.cyrillo.ativo.entrypoints;
+package com.cyrillo.ativo.infra.entrypoints;
 
 import io.grpc.Server;
 import io.grpc.ServerBuilder;

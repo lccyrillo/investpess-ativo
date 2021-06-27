@@ -1,6 +1,6 @@
 package com.cyrillo.ativo;
 
-import com.cyrillo.ativo.entrypoints.AtivoServer;
+import com.cyrillo.ativo.infra.entrypoints.AtivoServer;
 
 import java.io.IOException;
 
