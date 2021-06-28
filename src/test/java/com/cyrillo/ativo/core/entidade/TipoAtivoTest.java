@@ -1,4 +1,4 @@
-package com.cyrillo.ativo.entities;
+package com.cyrillo.ativo.core.entidade;
 
 import org.junit.jupiter.api.Test;
 

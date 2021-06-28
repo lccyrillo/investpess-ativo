@@ -1,8 +1,7 @@
-package com.cyrillo.ativo.infra.entrypoints;
+package com.cyrillo.ativo.infra.entrypoint.servicogrpc;
 
-import com.cyrillo.ativo.entities.AtivoObjeto;
-import com.cyrillo.ativo.entities.AtivoObjetoBuilder;
-import com.cyrillo.ativo.infra.dataprovider.AtivoRepositorieImplcomJDBC;
+import com.cyrillo.ativo.core.usecase.IncluirNovoAtivo;
+import com.cyrillo.ativo.infra.dataprovider.AtivoRepositorioImplcomJDBC;
 import io.grpc.stub.StreamObserver;
 import proto.ativo.ativoobjetoproto.CadastraAtivoObjetoRequest;
 import proto.ativo.ativoobjetoproto.CadastraAtivoObjetoResponse;
@@ -20,16 +19,17 @@ public class CadastraAtivoObjetoService  extends CadastraAtivoObjetoServiceGrpc.
         int tipo_ativo = ativo.getTipoAtivo();
 
         System.out.println("Dados do ativo identifocados");
-        // consulta no banco postgresql
 
-        AtivoRepositorieImplcomJDBC ativoRepositorieImplcomJDBC = new AtivoRepositorieImplcomJDBC();
-        AtivoObjetoBuilder builderAtivo = new AtivoObjetoBuilder();
-        builderAtivo.infoCompleta(sigla_ativo,nome_ativo,descricao_cnpj_ativo,tipo_ativo);
-        AtivoObjeto ativoObjeto = builderAtivo.build();
+        // deveria pedir o repositorio dinamico para o config. Precisa refatorar.
 
-        int resultado = ativoRepositorieImplcomJDBC.incluir(ativoObjeto);
+        // Instancia repositorio
+        AtivoRepositorioImplcomJDBC ativoRepositorieImplcomJDBC = new AtivoRepositorioImplcomJDBC();
+        // Instancia e executa caso de uso
+        IncluirNovoAtivo incluirNovoAtivo = new IncluirNovoAtivo();
+        int resultado = incluirNovoAtivo.executar(ativoRepositorieImplcomJDBC,sigla_ativo,nome_ativo,descricao_cnpj_ativo,tipo_ativo);
+
         String msgresultado;
-        if (resultado == 200) {
+        if (resultado == 0) {
             msgresultado = "Ativo: " + nome_ativo + " cadastrado!";
         }
         else {

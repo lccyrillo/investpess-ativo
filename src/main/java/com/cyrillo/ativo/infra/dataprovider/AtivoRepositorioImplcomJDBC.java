@@ -1,24 +1,30 @@
 package com.cyrillo.ativo.infra.dataprovider;
 
-import com.cyrillo.ativo.configuration.ConexaoConfig;
-import com.cyrillo.ativo.entities.AtivoObjeto;
-import com.cyrillo.ativo.entities.TipoAtivo;
-import com.cyrillo.ativo.usecases.repositories.AtivoRepositorie;
+import com.cyrillo.ativo.infra.config.ConexaoConfig;
+import com.cyrillo.ativo.core.entidade.AtivoObjeto;
+import com.cyrillo.ativo.core.entidade.TipoAtivo;
+import com.cyrillo.ativo.core.dataprovider.AtivoRepositorioInterface;
+
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.List;
 
-public class AtivoRepositorieImplcomJDBC implements AtivoRepositorie {
+public class AtivoRepositorioImplcomJDBC implements AtivoRepositorioInterface {
 
-    public AtivoRepositorieImplcomJDBC(){}
+    public AtivoRepositorioImplcomJDBC(){}
 
 
     @Override
     public int incluir(AtivoObjeto ativoObjeto) {
+        // Mapa de resultados do Repositorio
+        // 0 -> sucesso
+        // 1 -> Erro na comunicação com serviço de persistencia
+
+
         String msgErro = "Ativo cadastrado com sucesso.";
-        int resultado = 200;
+        int resultado = 0;
         String sigla_ativo = ativoObjeto.getSigla();
         String nome_ativo = ativoObjeto.getNomeAtivo();
         String descricao_cnpj_ativo = ativoObjeto.getDescricaoCNPJAtivo();
@@ -43,7 +49,7 @@ public class AtivoRepositorieImplcomJDBC implements AtivoRepositorie {
         } catch (SQLException throwables) {
             //throwables.printStackTrace();
             msgErro = throwables.getMessage();
-            resultado = 400;
+            resultado = 1;
             System.out.println(msgErro);
         }
         System.out.println("executou sql");
@@ -62,7 +68,7 @@ public class AtivoRepositorieImplcomJDBC implements AtivoRepositorie {
     }
 
     @Override
-    public List<AtivoObjeto> listarAtivosPorSigla(TipoAtivo tipoAtivo) {
+    public List<AtivoObjeto> listarAtivosPorTipo(TipoAtivo tipoAtivo) {
         return null;
     }
 }

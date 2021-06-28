@@ -1,4 +1,4 @@
-package com.cyrillo.ativo.infra.entrypoints;
+package com.cyrillo.ativo.infra.entrypoint.servicogrpc;
 
 import proto.ativo.ativoobjetoproto.AtivoObjeto;
 import proto.ativo.ativoobjetoproto.ConsultaAtivoObjetoRequest;

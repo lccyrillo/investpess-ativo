@@ -1,4 +1,4 @@
-package com.cyrillo.ativo.infra.entrypoints;
+package com.cyrillo.ativo.infra.entrypoint.servicogrpc;
 
 import io.grpc.Server;
 import io.grpc.ServerBuilder;
@@ -6,8 +6,8 @@ import io.grpc.ServerBuilder;
 import java.io.IOException;
 
 
-public class AtivoServer {
-    public AtivoServer() throws IOException, InterruptedException {
+public class AtivoServerGRPC {
+    public AtivoServerGRPC() throws IOException, InterruptedException {
         this.inicializaAtivoServer();
     }
 

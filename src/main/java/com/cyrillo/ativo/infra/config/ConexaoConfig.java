@@ -1,4 +1,4 @@
-package com.cyrillo.ativo.configuration;
+package com.cyrillo.ativo.infra.config;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
