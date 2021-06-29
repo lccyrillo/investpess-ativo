@@ -1,9 +1,12 @@
 package com.cyrillo.ativo.infra.entrypoint.servicogrpc;
 
+import com.cyrillo.ativo.core.dataprovider.LoggingInterface;
+import com.cyrillo.ativo.core.usecase.IdentificarLogginInterface;
 import io.grpc.Server;
 import io.grpc.ServerBuilder;
 
 import java.io.IOException;
+
 
 
 public class AtivoServerGRPC {
@@ -12,17 +15,23 @@ public class AtivoServerGRPC {
     }
 
     private void inicializaAtivoServer() throws IOException, InterruptedException{
-        System.out.println("Inicializando Ativo Server.");
+        IdentificarLogginInterface identificarLogginInterface = new IdentificarLogginInterface();
+        LoggingInterface loggingInterface = identificarLogginInterface.getLoggingInterface();
+        loggingInterface.logInfo(null,"Inicializando Servidor GRPC.");
+
+
         Server server = ServerBuilder.forPort(50051)
                 .addService(new CadastraAtivoObjetoService())
                 .addService(new ConsultaAtivoObjetoService())
                 .build();
         server.start();
-        System.out.println("Serviço inicializado");
+
+        loggingInterface.logInfo(null,"Serviço GRPC inicializado");
         Runtime.getRuntime().addShutdownHook(new Thread( () -> {
-            System.out.println("Received shutdown request");
+            loggingInterface.logInfo(null,"Received shutdown request");
             server.shutdown();
-            System.out.println("Sucessfuly shutdown the server!");
+            loggingInterface.logInfo(null,"Sucessfuly shutdown the server!");
+
         }  ));
 
         server.awaitTermination();

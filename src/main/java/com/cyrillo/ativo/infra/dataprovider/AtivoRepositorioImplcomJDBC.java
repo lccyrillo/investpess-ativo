@@ -1,5 +1,6 @@
 package com.cyrillo.ativo.infra.dataprovider;
 
+import com.cyrillo.ativo.core.entidade.ResultadoProcesso;
 import com.cyrillo.ativo.infra.config.ConexaoConfig;
 import com.cyrillo.ativo.core.entidade.AtivoObjeto;
 import com.cyrillo.ativo.core.entidade.TipoAtivo;
@@ -17,14 +18,16 @@ public class AtivoRepositorioImplcomJDBC implements AtivoRepositorioInterface {
 
 
     @Override
-    public int incluir(AtivoObjeto ativoObjeto) {
+    public ResultadoProcesso incluir(AtivoObjeto ativoObjeto) {
         // Mapa de resultados do Repositorio
-        // 0 -> sucesso
-        // 1 -> Erro na comunicação com serviço de persistencia
+        // 200 -> sucesso
+        // 500 -> Erro na comunicação com serviço de persistencia
 
+        int resultado = 200; //
+        int classeResultado = 2; // Resultado esperado ok.
+        String msgResultado = "Ativo cadastrado com sucesso.";
+        String msgStack = null;
 
-        String msgErro = "Ativo cadastrado com sucesso.";
-        int resultado = 0;
         String sigla_ativo = ativoObjeto.getSigla();
         String nome_ativo = ativoObjeto.getNomeAtivo();
         String descricao_cnpj_ativo = ativoObjeto.getDescricaoCNPJAtivo();
@@ -48,13 +51,20 @@ public class AtivoRepositorioImplcomJDBC implements AtivoRepositorioInterface {
 
         } catch (SQLException throwables) {
             //throwables.printStackTrace();
-            msgErro = throwables.getMessage();
-            resultado = 1;
-            System.out.println(msgErro);
+
+
+            resultado = 500; //
+            classeResultado = 5; // Resultado esperado ok.
+            msgResultado = "Erro na comunicação com banco de dados. Classe. AtivoRepositorioImplComJDBC";
+            msgStack = throwables.getMessage();
+            System.out.println(msgResultado);
         }
         System.out.println("executou sql");
         System.out.println("Ativo: " + nome_ativo + " cadastrado!");
-        return resultado;
+        ResultadoProcesso resultadoProcesso = new ResultadoProcesso(resultado,msgResultado,msgStack,classeResultado);
+        return resultadoProcesso;
+
+
     }
 
     @Override

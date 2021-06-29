@@ -1,0 +1,35 @@
+
+docker pull splunk/splunk:latest
+docker run -d -p 8000:8000 -e 'SPLUNK_START_ARGS=--accept-license' -e 'SPLUNK_PASSWORD=<password>' --name splunk splunk/splunk:latest
+
+docker exec -it <container name|id> bash
+
+
+docker run -P -d -e 'SPLUNK_START_ARGS=--accept-license' -e 'SPLUNK_PASSWORD=changeme' splunk/splunk
+
+
+version: '2'
+services:
+ vsplunk:
+     image: busybox
+     volumes:
+      - /opt/splunk/etc
+      - /opt/splunk/var
+     splunk:
+      image: ivanbrazza/splunk:6.5.2-monitor
+      hostname: splunkenterprise
+      environment:
+       SPLUNK_START_ARGS: --accept-license --answer-yes
+       SPLUNK_ENABLE_LISTEN: 9997
+       SPLUNK_ADD: tcp 1514
+       SPLUNK_USER: root
+      volumes_from:
+       - vsplunk
+      volumes:
+       - /var/lib/docker/containers:/host/containers:ro
+       - /var/run/docker.sock:/var/run/docker.sock:ro
+      ports:
+       - "8000:8000"
+       - "9997:9997"
+       - "8088:8088"
+       - "1514:1514"
