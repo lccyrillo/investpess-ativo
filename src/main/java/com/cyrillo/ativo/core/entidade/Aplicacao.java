@@ -6,7 +6,7 @@ public class Aplicacao {
     private static Aplicacao instance;
     private LoggingInterface loggingInterface;
 
-    public Aplicacao(){
+    private Aplicacao(){
     }
 
     public LoggingInterface getLoggingInterface() {

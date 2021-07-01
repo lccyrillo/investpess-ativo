@@ -5,7 +5,7 @@ import com.cyrillo.ativo.core.entidade.Aplicacao;
 
 public class InicializarAplicacao {
     public InicializarAplicacao(LoggingInterface loggingInterface){
-        Aplicacao aplicacao = new Aplicacao();
+        Aplicacao aplicacao = Aplicacao.getInstance();
         aplicacao.setLoggingInterface(loggingInterface);
     }
 }

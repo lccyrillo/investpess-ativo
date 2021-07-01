@@ -1,13 +1,15 @@
 package com.cyrillo.ativo.core.entidade;
 
+import com.cyrillo.ativo.core.excecao.AtivoParametrosInvalidosException;
+
 public class AtivoObjeto {
     private String sigla;
     private String nomeAtivo;
     private String descricaoCNPJAtivo;
     private TipoAtivo tipoAtivo;
-    public AtivoObjeto(String sigla, String nomeAtivo, String descricaoCNPJAtivo, TipoAtivo tipoAtivo) {
+    public AtivoObjeto(String sigla, String nomeAtivo, String descricaoCNPJAtivo, TipoAtivo tipoAtivo) throws AtivoParametrosInvalidosException {
         if (descricaoCNPJAtivo == null || !descricaoCNPJAtivo.matches("^\\d{2}\\.\\d{3}\\.\\d{3}\\/\\d{4}\\-\\d{2}$")){
-            throw new IllegalArgumentException("CNPJ inválido na criação de um objeto do tipo AtivoObjeto");
+            throw new AtivoParametrosInvalidosException("CNPJ inválido na criação de um objeto do tipo AtivoObjeto");
         }
         this.sigla = sigla;
         this.nomeAtivo = nomeAtivo;
