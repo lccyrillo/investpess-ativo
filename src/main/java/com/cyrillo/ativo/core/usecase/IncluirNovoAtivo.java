@@ -23,9 +23,10 @@ public class IncluirNovoAtivo {
 
 
         // Procuro para ver se a sigla informada já existe
+        // preciso transforma siglaativo em maiusculo
+        sigla = sigla.toUpperCase();
 
-
-        if (ativoRepositorioInterface.consultarPorSigla(sigla) == null) {
+        if (ativoRepositorioInterface.consultarPorSigla(sigla) == false) {
             // --> Se a consulta falhar na comunicação com banco de dados, vai gerar uma exceção que precisará ser tratada.
             // Posso cadastrar ativo
             AtivoObjetoBuilder builderAtivo = new AtivoObjetoBuilder();

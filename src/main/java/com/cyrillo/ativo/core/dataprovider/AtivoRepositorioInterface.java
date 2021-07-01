@@ -10,7 +10,7 @@ import java.util.List;
 
 public interface AtivoRepositorioInterface {
     void incluir(AtivoObjeto ativoObjeto) throws AtivoJaExistenteException, SQLException;
-    AtivoObjeto consultarPorSigla(String siglaAtivo);
+    boolean consultarPorSigla(String siglaAtivo) throws SQLException;
     List<AtivoObjeto> listarTodosAtivos();
     List<AtivoObjeto> listarAtivosPorTipo(TipoAtivo tipoAtivo);
 }
