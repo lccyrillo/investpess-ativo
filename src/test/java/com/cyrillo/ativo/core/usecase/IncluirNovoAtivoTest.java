@@ -23,7 +23,6 @@ class IncluirNovoAtivoTest {
         LoggingInterface log = new LoggingInterfaceImplConsole();
         Aplicacao dataProvider = Aplicacao.getInstance();
         dataProvider.setAtivoRepositorio(repositorio);
-        dataProvider.setLoggingInterface(log);
         String sigla = "VALE3";
         String nomeAtivo = "VALE S.A";
         String descricaoCNPJ = "33.592.510/0001-54";
@@ -45,8 +44,8 @@ class IncluirNovoAtivoTest {
         AtivoRepositorioInterface repositorio = new AtivoRepositorioImplMockCriadoSucesso();
         LoggingInterface log = new LoggingInterfaceImplConsole();
         Aplicacao dataProvider = Aplicacao.getInstance();
+        // força o repositorio mock
         dataProvider.setAtivoRepositorio(repositorio);
-        dataProvider.setLoggingInterface(log);
         String sigla = "VALE3";
         String nomeAtivo = "VALE S.A";
         String descricaoCNPJ = "33.592.510/0001-54";

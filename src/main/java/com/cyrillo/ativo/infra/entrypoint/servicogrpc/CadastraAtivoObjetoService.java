@@ -1,10 +1,9 @@
 package com.cyrillo.ativo.infra.entrypoint.servicogrpc;
 
-import com.cyrillo.ativo.core.dataprovider.DataProviderInterface;
 import com.cyrillo.ativo.core.dataprovider.LoggingInterface;
 import com.cyrillo.ativo.core.excecao.AtivoJaExistenteException;
 import com.cyrillo.ativo.core.usecase.IncluirNovoAtivo;
-import com.cyrillo.ativo.infra.config.Aplicacao;
+import com.cyrillo.ativo.infra.config.Sessao;
 import io.grpc.stub.StreamObserver;
 import proto.ativo.ativoobjetoproto.CadastraAtivoObjetoRequest;
 import proto.ativo.ativoobjetoproto.CadastraAtivoObjetoResponse;
@@ -20,29 +19,24 @@ public class CadastraAtivoObjetoService  extends CadastraAtivoObjetoServiceGrpc.
         // 201 - Ativo cadastrado com sucesso
         // 401 - Falha técnica na inclusão de um ativo
 
-
         String msgResultado;
         String codResultado;
-        UUID uniqueKey = UUID.randomUUID();
-        DataProviderInterface dataProvider = Aplicacao.getInstance();
-        LoggingInterface loggingInterface = dataProvider.getLoggingInterface();
+
+        Sessao dataProvider = new Sessao();
+        UUID uniqueKey = dataProvider.getUniqueKey();
+        LoggingInterface log = dataProvider.getLoggingInterface();
 
 
-        loggingInterface.logInfo(String.valueOf(uniqueKey),"iniciando cadastra ativo objeto");
+        log.logInfo(String.valueOf(uniqueKey),"iniciando cadastra ativo objeto");
         proto.ativo.ativoobjetoproto.AtivoObjeto ativo = request.getAtivo();
         String sigla_ativo = ativo.getSiglaAtivo();
         String nome_ativo = ativo.getNomeAtivo();
         String descricao_cnpj_ativo = ativo.getDescricaoCnpjAtivo();
         int tipo_ativo = ativo.getTipoAtivo();
 
-        loggingInterface.logInfo(String.valueOf(uniqueKey),"Dados do ativo identifocados");
+        log.logInfo(String.valueOf(uniqueKey),"Dados do ativo identifocados");
 
-        // deveria pedir o repositorio dinamico para o config. Precisa refatorar.
-
-        // Instancia repositorio
         try {
-
-            // Instancia e executa caso de uso
             IncluirNovoAtivo incluirNovoAtivo = new IncluirNovoAtivo();
             incluirNovoAtivo.executar(dataProvider,sigla_ativo,nome_ativo,descricao_cnpj_ativo,tipo_ativo);
             codResultado = "200";
