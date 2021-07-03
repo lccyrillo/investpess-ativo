@@ -1,7 +1,7 @@
 package com.cyrillo.ativo.infra.entrypoint.servicogrpc;
 
 import com.cyrillo.ativo.core.dataprovider.LoggingInterface;
-import com.cyrillo.ativo.core.usecase.IdentificarLogginInterface;
+import com.cyrillo.ativo.core.entidade.Aplicacao;
 import io.grpc.Server;
 import io.grpc.ServerBuilder;
 
@@ -15,10 +15,8 @@ public class AtivoServerGRPC {
     }
 
     private void inicializaAtivoServer() throws IOException, InterruptedException{
-        IdentificarLogginInterface identificarLogginInterface = new IdentificarLogginInterface();
-        LoggingInterface loggingInterface = identificarLogginInterface.getLoggingInterface();
+        LoggingInterface loggingInterface = Aplicacao.getInstance().getLoggingInterface();
         loggingInterface.logInfo(null,"Inicializando Servidor GRPC.");
-
 
         Server server = ServerBuilder.forPort(50051)
                 .addService(new CadastraAtivoObjetoService())

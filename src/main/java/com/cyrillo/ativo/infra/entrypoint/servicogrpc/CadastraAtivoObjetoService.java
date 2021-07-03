@@ -1,10 +1,10 @@
 package com.cyrillo.ativo.infra.entrypoint.servicogrpc;
 
+import com.cyrillo.ativo.core.dataprovider.AtivoRepositorioInterface;
 import com.cyrillo.ativo.core.dataprovider.LoggingInterface;
+import com.cyrillo.ativo.core.entidade.Aplicacao;
 import com.cyrillo.ativo.core.excecao.AtivoJaExistenteException;
-import com.cyrillo.ativo.core.usecase.IdentificarLogginInterface;
 import com.cyrillo.ativo.core.usecase.IncluirNovoAtivo;
-import com.cyrillo.ativo.infra.dataprovider.AtivoRepositorioImplcomJDBC;
 import io.grpc.stub.StreamObserver;
 import proto.ativo.ativoobjetoproto.CadastraAtivoObjetoRequest;
 import proto.ativo.ativoobjetoproto.CadastraAtivoObjetoResponse;
@@ -24,10 +24,11 @@ public class CadastraAtivoObjetoService  extends CadastraAtivoObjetoServiceGrpc.
         String msgResultado;
         String codResultado;
         UUID uniqueKey = UUID.randomUUID();
-        IdentificarLogginInterface identificarLogginInterface = new IdentificarLogginInterface();
-        LoggingInterface loggingInterface = identificarLogginInterface.getLoggingInterface();
-        loggingInterface.logInfo(String.valueOf(uniqueKey),"iniciando cadastra ativo objeto");
+        LoggingInterface loggingInterface = Aplicacao.getInstance().getLoggingInterface();
+        AtivoRepositorioInterface ativoRepositorio = Aplicacao.getInstance().getAtivoRepositorio();
 
+
+        loggingInterface.logInfo(String.valueOf(uniqueKey),"iniciando cadastra ativo objeto");
         proto.ativo.ativoobjetoproto.AtivoObjeto ativo = request.getAtivo();
         String sigla_ativo = ativo.getSiglaAtivo();
         String nome_ativo = ativo.getNomeAtivo();
@@ -40,10 +41,10 @@ public class CadastraAtivoObjetoService  extends CadastraAtivoObjetoServiceGrpc.
 
         // Instancia repositorio
         try {
-            AtivoRepositorioImplcomJDBC ativoRepositorieImplcomJDBC = new AtivoRepositorioImplcomJDBC();
+
             // Instancia e executa caso de uso
             IncluirNovoAtivo incluirNovoAtivo = new IncluirNovoAtivo();
-            incluirNovoAtivo.executar(ativoRepositorieImplcomJDBC,sigla_ativo,nome_ativo,descricao_cnpj_ativo,tipo_ativo);
+            incluirNovoAtivo.executar(ativoRepositorio,sigla_ativo,nome_ativo,descricao_cnpj_ativo,tipo_ativo);
             codResultado = "200";
             msgResultado = "Ativo: " + nome_ativo + " cadastrado!";
         }

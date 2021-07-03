@@ -38,7 +38,7 @@ public class IncluirNovoAtivo {
         else {
             // Erro: Sigla já existente
             // Lançar exceção AtivoJaExistenteException
-            throw new AtivoJaExistenteException("Ativo " + sigla + " já existente no repositório!");
+            throw new AtivoJaExistenteException(sigla);
         }
 
 

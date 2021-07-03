@@ -2,9 +2,9 @@ package com.cyrillo.ativo.infra.dataprovider;
 
 import com.cyrillo.ativo.core.dataprovider.AtivoRepositorioInterface;
 import com.cyrillo.ativo.core.dataprovider.LoggingInterface;
+import com.cyrillo.ativo.core.entidade.Aplicacao;
 import com.cyrillo.ativo.core.entidade.AtivoObjeto;
 import com.cyrillo.ativo.core.entidade.TipoAtivo;
-import com.cyrillo.ativo.core.usecase.IdentificarLogginInterface;
 import com.cyrillo.ativo.infra.config.ConexaoConfig;
 
 import java.sql.*;
@@ -21,8 +21,7 @@ public class AtivoRepositorioImplcomJDBC implements AtivoRepositorioInterface {
         // camada de entrypoint conhecendo camada core entidade.
         // Essa camada deveria conhecer apenas use case
 
-        IdentificarLogginInterface identificarLogginInterface = new IdentificarLogginInterface();
-        LoggingInterface loggingInterface = identificarLogginInterface.getLoggingInterface();
+        LoggingInterface loggingInterface = Aplicacao.getInstance().getLoggingInterface();
 
         loggingInterface.logInfo(null,"Iniciando Repositorio que cadastra o ativo.");
         String sigla_ativo = ativoObjeto.getSigla().toUpperCase();
@@ -36,6 +35,11 @@ public class AtivoRepositorioImplcomJDBC implements AtivoRepositorioInterface {
         String sql = "INSERT INTO ativoobjeto (sigla_ativo,nome_ativo,descricao_cnpj_ativo,tipo_ativo)";
         sql = sql + " VALUES ('" + sigla_ativo + "','" + nome_ativo + "','" + descricao_cnpj_ativo + "'," + String.valueOf(tipo_ativo)+")";
 
+        //String sql = "INSERT INTO ativoobjeto (sigla_ativo,nome_ativo,descricao_cnpj_ativo,tipo_ativo) VALUES (?,?,?,?)";
+        //PreparedStatement ps = conn.prepareStatement(sql);
+        //ps.setString(1,sigla_ativo);
+        //ps.execute();
+
         loggingInterface.logInfo(null,"Insert montado, pega conexão da classe singleton");
 
         Connection conn = ConexaoConfig.getInstance().getConnection();
@@ -47,9 +51,8 @@ public class AtivoRepositorioImplcomJDBC implements AtivoRepositorioInterface {
 
     @Override
     public boolean consultarPorSigla(String siglaAtivo) throws SQLException {
-        IdentificarLogginInterface identificarLogginInterface = new IdentificarLogginInterface();
-        LoggingInterface loggingInterface = identificarLogginInterface.getLoggingInterface();
 
+        LoggingInterface loggingInterface = Aplicacao.getInstance().getLoggingInterface();
         loggingInterface.logInfo(null,"Iniciando Repositorio que consulta um ativo pela sigla.");
 
         // consulta no banco postgresql
