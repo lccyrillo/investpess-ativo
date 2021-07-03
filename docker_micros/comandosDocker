@@ -2,17 +2,18 @@
 -> entra no diretorio
 -> comando para gerar imagem
 
->>> docker image build -t image-investpess-ativo .
+>>> docker image build -t image-investpess-ativo_ms_dev .
 
 -> inspecionar imagem
 
 >>> docker image ls
->>> docker image inspect image-investpess-ativo
+>>> docker image inspect image-investpess_ativo_ms_dev
 
 -> criar um container com base nessa imagem
-docker container run -p 50051:50051 --name cont-investpess-ativo -it image-investpess-ativo bash
+docker container run -p 50051:50051 --name cont-investpess-ativo -it image-investpess-ativo_ms_dev bash
+--> cat config.properties
 
-docker container run -p 50051:50051 --name cont-investpess-ativo image-investpess-ativo
+docker container run -p 50051:50051 --name cont-investpess-ativo image-investpess-ativo_ms_dev
 
 >>>java -jar /usr/server/investpess-ativo.jar
 

@@ -1,5 +1,5 @@
 <component name="ArtifactManager">
-  <artifact type="jar" name="investpess-ativo:jar2">
+  <artifact type="jar" build-on-make="true" name="investpess-ativo:jar2">
     <output-path>$PROJECT_DIR$/docker_micros/artifacts/investpess_ativo_jar</output-path>
     <root id="archive" name="investpess-ativo.jar">
       <element id="directory" name="META-INF">

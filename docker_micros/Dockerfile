@@ -7,8 +7,10 @@ ENV DB_PORT=5433
 
 
 RUN mkdir -p /usr/server
+RUN mkdir /usr/server/config
 
 COPY artifacts/investpess_ativo_jar/investpess-ativo.jar /usr/server/investpess-ativo.jar
+COPY /config/config.properties /usr/server/config/config.properties
 
 
 WORKDIR /usr/server
