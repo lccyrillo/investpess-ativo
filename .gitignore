@@ -3,3 +3,4 @@ out/*
 run/*
 materiais/*
 materiais/comandos/*
+docker_micros/artifacts/*
