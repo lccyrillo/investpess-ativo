@@ -1,4 +1,4 @@
-package com.cyrillo.ativo.core.excecao;
+package com.cyrillo.ativo.core.entidade.excecao;
 
 public class AtivoJaExistenteException extends Exception {
     public AtivoJaExistenteException(String siglaAtivo){

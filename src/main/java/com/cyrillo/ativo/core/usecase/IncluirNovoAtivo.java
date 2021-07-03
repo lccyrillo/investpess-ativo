@@ -4,9 +4,9 @@ import com.cyrillo.ativo.core.dataprovider.AtivoRepositorioInterface;
 import com.cyrillo.ativo.core.dataprovider.DataProviderInterface;
 import com.cyrillo.ativo.core.dataprovider.LoggingInterface;
 import com.cyrillo.ativo.core.entidade.AtivoObjeto;
-import com.cyrillo.ativo.core.entidade.AtivoObjetoBuilder;
-import com.cyrillo.ativo.core.excecao.AtivoJaExistenteException;
-import com.cyrillo.ativo.core.excecao.AtivoParametrosInvalidosException;
+import com.cyrillo.ativo.core.entidade.builder.AtivoObjetoBuilder;
+import com.cyrillo.ativo.core.entidade.excecao.AtivoJaExistenteException;
+import com.cyrillo.ativo.core.entidade.excecao.AtivoParametrosInvalidosException;
 
 import java.sql.SQLException;
 

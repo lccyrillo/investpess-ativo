@@ -1,6 +1,8 @@
-package com.cyrillo.ativo.core.entidade;
+package com.cyrillo.ativo.core.entidade.builder;
 
-import com.cyrillo.ativo.core.excecao.AtivoParametrosInvalidosException;
+import com.cyrillo.ativo.core.entidade.AtivoObjeto;
+import com.cyrillo.ativo.core.entidade.TipoAtivo;
+import com.cyrillo.ativo.core.entidade.excecao.AtivoParametrosInvalidosException;
 
 public class AtivoObjetoBuilder {
     private AtivoObjeto ativoObjeto;

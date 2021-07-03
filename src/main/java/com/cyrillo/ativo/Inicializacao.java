@@ -1,10 +1,10 @@
 package com.cyrillo.ativo;
 
-import com.cyrillo.ativo.infra.config.InicializarAplicacao;
+import com.cyrillo.ativo.infra.config.Aplicacao;
 
 public class Inicializacao {
 
     public static void main(String[] args)  {
-        InicializarAplicacao inicializarAplicacao = new InicializarAplicacao();
+        Aplicacao.getInstance().inicializaAplicacao();
     }
 }

@@ -2,7 +2,7 @@ package com.cyrillo.ativo.core.dataprovider;
 
 import com.cyrillo.ativo.core.entidade.AtivoObjeto;
 import com.cyrillo.ativo.core.entidade.TipoAtivo;
-import com.cyrillo.ativo.core.excecao.AtivoJaExistenteException;
+import com.cyrillo.ativo.core.entidade.excecao.AtivoJaExistenteException;
 
 
 import java.sql.SQLException;

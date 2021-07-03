@@ -3,7 +3,7 @@ package com.cyrillo.ativo.infra.dataprovider;
 import com.cyrillo.ativo.core.dataprovider.AtivoRepositorioInterface;
 import com.cyrillo.ativo.core.entidade.AtivoObjeto;
 import com.cyrillo.ativo.core.entidade.TipoAtivo;
-import com.cyrillo.ativo.core.excecao.AtivoJaExistenteException;
+import com.cyrillo.ativo.core.entidade.excecao.AtivoJaExistenteException;
 
 import java.sql.SQLException;
 import java.util.ArrayList;

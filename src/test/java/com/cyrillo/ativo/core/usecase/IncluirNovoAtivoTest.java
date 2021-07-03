@@ -2,7 +2,7 @@ package com.cyrillo.ativo.core.usecase;
 
 import com.cyrillo.ativo.core.dataprovider.AtivoRepositorioInterface;
 import com.cyrillo.ativo.core.dataprovider.LoggingInterface;
-import com.cyrillo.ativo.core.excecao.AtivoJaExistenteException;
+import com.cyrillo.ativo.core.entidade.excecao.AtivoJaExistenteException;
 import com.cyrillo.ativo.infra.config.Aplicacao;
 import com.cyrillo.ativo.infra.dataprovider.AtivoRepositorioImplMockCriadoSucesso;
 import com.cyrillo.ativo.infra.dataprovider.AtivoRepositorioImplMockSiglaExistente;

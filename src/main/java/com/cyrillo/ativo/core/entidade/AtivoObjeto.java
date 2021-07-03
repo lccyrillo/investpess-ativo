@@ -1,6 +1,6 @@
 package com.cyrillo.ativo.core.entidade;
 
-import com.cyrillo.ativo.core.excecao.AtivoParametrosInvalidosException;
+import com.cyrillo.ativo.core.entidade.excecao.AtivoParametrosInvalidosException;
 
 public class AtivoObjeto {
     private String sigla;

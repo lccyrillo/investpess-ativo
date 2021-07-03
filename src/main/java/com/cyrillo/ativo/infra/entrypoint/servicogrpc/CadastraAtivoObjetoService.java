@@ -1,7 +1,7 @@
 package com.cyrillo.ativo.infra.entrypoint.servicogrpc;
 
 import com.cyrillo.ativo.core.dataprovider.LoggingInterface;
-import com.cyrillo.ativo.core.excecao.AtivoJaExistenteException;
+import com.cyrillo.ativo.core.entidade.excecao.AtivoJaExistenteException;
 import com.cyrillo.ativo.core.usecase.IncluirNovoAtivo;
 import com.cyrillo.ativo.infra.config.Sessao;
 import io.grpc.stub.StreamObserver;
