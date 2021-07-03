@@ -1,6 +1,8 @@
 package com.cyrillo.ativo.core.usecase;
 
 import com.cyrillo.ativo.core.dataprovider.AtivoRepositorioInterface;
+import com.cyrillo.ativo.core.dataprovider.DataProviderInterface;
+import com.cyrillo.ativo.core.dataprovider.LoggingInterface;
 import com.cyrillo.ativo.core.entidade.AtivoObjeto;
 import com.cyrillo.ativo.core.entidade.AtivoObjetoBuilder;
 import com.cyrillo.ativo.core.excecao.AtivoJaExistenteException;
@@ -12,20 +14,12 @@ public class IncluirNovoAtivo {
 
     public IncluirNovoAtivo(){}
 
-    public void executar(AtivoRepositorioInterface ativoRepositorioInterface, String sigla, String nomeAtivo, String descricaoCNPJAtivo, int tipoAtivo) throws AtivoJaExistenteException, SQLException, AtivoParametrosInvalidosException {
+    public void executar(DataProviderInterface dataProviderInterface,String sigla, String nomeAtivo, String descricaoCNPJAtivo, int tipoAtivo) throws AtivoJaExistenteException, SQLException, AtivoParametrosInvalidosException {
         // Mapa de resultados do use case
+        AtivoRepositorioInterface ativoRepositorioInterface = dataProviderInterface.getAtivoRepositorio();
+        LoggingInterface loggingInterface = dataProviderInterface.getLoggingInterface();
 
-
-        int codigoResultado;
-        String mensagemResultado;
-        String stackTrace = null;
-        int tipoClasseResultado;
-
-
-        // Procuro para ver se a sigla informada já existe
-        // preciso transforma siglaativo em maiusculo
         sigla = sigla.toUpperCase();
-
         if (ativoRepositorioInterface.consultarPorSigla(sigla) == false) {
             // --> Se a consulta falhar na comunicação com banco de dados, vai gerar uma exceção que precisará ser tratada.
             // Posso cadastrar ativo
@@ -33,15 +27,12 @@ public class IncluirNovoAtivo {
             builderAtivo.infoCompleta(sigla,nomeAtivo,descricaoCNPJAtivo,tipoAtivo);
             AtivoObjeto ativoObjeto = builderAtivo.build();
             ativoRepositorioInterface.incluir(ativoObjeto);
-
         }
         else {
             // Erro: Sigla já existente
             // Lançar exceção AtivoJaExistenteException
             throw new AtivoJaExistenteException(sigla);
         }
-
-
     }
 
 

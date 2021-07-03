@@ -2,7 +2,7 @@ package com.cyrillo.ativo.infra.dataprovider;
 
 import com.cyrillo.ativo.core.dataprovider.AtivoRepositorioInterface;
 import com.cyrillo.ativo.core.dataprovider.LoggingInterface;
-import com.cyrillo.ativo.core.entidade.Aplicacao;
+import com.cyrillo.ativo.infra.config.Aplicacao;
 import com.cyrillo.ativo.core.entidade.AtivoObjeto;
 import com.cyrillo.ativo.core.entidade.TipoAtivo;
 import com.cyrillo.ativo.infra.config.ConexaoConfig;

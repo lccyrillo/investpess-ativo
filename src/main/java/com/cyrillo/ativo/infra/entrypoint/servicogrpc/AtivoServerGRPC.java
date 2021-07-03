@@ -1,37 +1,40 @@
 package com.cyrillo.ativo.infra.entrypoint.servicogrpc;
 
 import com.cyrillo.ativo.core.dataprovider.LoggingInterface;
-import com.cyrillo.ativo.core.entidade.Aplicacao;
+import com.cyrillo.ativo.infra.config.Aplicacao;
 import io.grpc.Server;
 import io.grpc.ServerBuilder;
-
-import java.io.IOException;
 
 
 
 public class AtivoServerGRPC {
-    public AtivoServerGRPC() throws IOException, InterruptedException {
+    public AtivoServerGRPC() {
         this.inicializaAtivoServer();
     }
 
-    private void inicializaAtivoServer() throws IOException, InterruptedException{
-        LoggingInterface loggingInterface = Aplicacao.getInstance().getLoggingInterface();
-        loggingInterface.logInfo(null,"Inicializando Servidor GRPC.");
+    private void inicializaAtivoServer() {
+        LoggingInterface log = Aplicacao.getInstance().getLoggingInterface();
+        log.logInfo(null,"Inicializando Servidor GRPC.");
 
-        Server server = ServerBuilder.forPort(50051)
-                .addService(new CadastraAtivoObjetoService())
-                .addService(new ConsultaAtivoObjetoService())
-                .build();
-        server.start();
+        try {
+            Server server = ServerBuilder.forPort(50051)
+                    .addService(new CadastraAtivoObjetoService())
+                    .addService(new ConsultaAtivoObjetoService())
+                    .build();
+            server.start();
+            Runtime.getRuntime().addShutdownHook(new Thread( () -> {
+                log.logInfo(null,"Recebida solicitação para encerramento do servidor.");
+                server.shutdown();
+                log.logInfo(null,"Servidor GRPC encerrado com sucesso!");
 
-        loggingInterface.logInfo(null,"Serviço GRPC inicializado");
-        Runtime.getRuntime().addShutdownHook(new Thread( () -> {
-            loggingInterface.logInfo(null,"Received shutdown request");
-            server.shutdown();
-            loggingInterface.logInfo(null,"Sucessfuly shutdown the server!");
+            }  ));
+            log.logInfo(null,"Servidor GRPC inicializado com sucesso!");
+            server.awaitTermination();
+        }
+        catch (Exception e){
+            log.logError(null, "Falha na inicialização do servidor GRPC.");
+            log.logError(null, e.getMessage());
+        }
 
-        }  ));
-
-        server.awaitTermination();
     }
 }

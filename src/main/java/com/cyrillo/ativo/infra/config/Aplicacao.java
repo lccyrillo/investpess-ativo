@@ -1,9 +1,10 @@
-package com.cyrillo.ativo.core.entidade;
+package com.cyrillo.ativo.infra.config;
 
 import com.cyrillo.ativo.core.dataprovider.AtivoRepositorioInterface;
+import com.cyrillo.ativo.core.dataprovider.DataProviderInterface;
 import com.cyrillo.ativo.core.dataprovider.LoggingInterface;
 
-public class Aplicacao {
+public class Aplicacao implements DataProviderInterface {
     private static Aplicacao instance;
     private LoggingInterface loggingInterface;
     private AtivoRepositorioInterface ativoRepositorio;
