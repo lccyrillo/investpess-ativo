@@ -1,0 +1,76 @@
+1) Montar docker compose
+>> docker compose up -d --build
+
+ alternativa anbiente de dev
+>> docker-compose -f docker-compose.dev.yml up -d --build
+
+alternativa se precisar escalar
+>> docker compose up -d --scale micro=3
+
+2) derrubar containers
+>> docker compose down
+
+3) derrubar containers e  limpar volumes
+>> docker compose down -v
+>> docker compose rm -f
+
+3) verificar containers
+>> docker compose ps
+
+4) monitorar logs
+
+>> docker compose logs -f -t
+>> docker-compose logs -f -t micro
+
+5) verificar dados na tabela
+
+>> docker compose exec db psql -U postgres -d investpess_ativo -c "select * from ativoobjeto"
+
+6) ver tabela
+
+>> docker compose exec db psql -U postgres -d investpess_ativo -f ./scripts/check.sql
+
+7) verificar volumes (onde ficam guardados os dados do postgres)
+
+docker volume ls
+
+>> docker volume inspect investpess-ativo_dados
+>> docker volume inspect dados_dev
+
+>> docker volume rm investpess-ativo_dados
+
+
+------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------
+old
+
+
+docker run --name some-postgres -e POSTGRES_PASSWORD=mysecretpassword -d -p 5432:5432 postgres
+psql -h localhost -p 5432 -U postgres
+psql -h localhost -p 5433 -U postgres
+
+
+1) instalar o postgres no container micro
+
+docker container ps
+docker exec -it ffee57b24122 bash
+apt-get update
+apt-cache search postgresql
+apt-get install postgresql-client -y
+
+
+b) achar
+
+
+
+docker container ps
+docker container inspect 72a2322b66b4
+--> ip 192.168.192.2
+
+
+psql -h 192.168.240.2 -p 5432 -U postgres
+psql -h db -p 5432 -U postgres
+
+\c investpess_ativo
+
+select * from ativoobjeto

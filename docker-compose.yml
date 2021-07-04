@@ -6,7 +6,7 @@ networks:
   microsserv:
 services:
   db:
-    build: docker_db
+    build: docker/docker_db
     # image: postgres:13.3
     # image: postgres:9.6
     #environment:
@@ -14,14 +14,14 @@ services:
     volumes:
       - /dados_prod:/var/lib/postgresql/data
       # script
-      - ./scripts:/scripts
-      - ./scripts/init.sql:/docker-entrypoint-initdb.d/init.sql
+      - ./docker/docker_db/scripts:/scripts
+      - ./docker/docker_db/scripts/init.sql:/docker-entrypoint-initdb.d/init.sql
     ports:
       - 5432:5432
     networks:
       - banco
   micro:
-    build: docker_micros
+    build: docker/docker_micros
     environment:
       - DB_HOST=db
       - DB_PORT=5432

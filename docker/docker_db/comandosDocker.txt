@@ -1,0 +1,72 @@
+Configurações para startar o docker
+ #volumes:
+      # volume dos dados
+      #- dados:/var/lib/postgresql/data
+      # script
+      #- ./scripts:/scripts
+      #- ./scripts/init.sql:/docker-entrypoint-initdb.d/init.sql
+      # ports:
+      # - 5433:5432 -> para expor o postgres em uma porta diferente
+      # VOLUME dados_dev -> Volume criado para armazernar os dados de desenvolvimento
+
+0) docker image build -t docker_db .
+   docker container run -d --name docker_db_container -p 5433:55432 -v ./scripts:/scripts -v C:\aplic\prjsw\investpess-ativo\scripts\init.sql:/docker-entrypoint-initdb.d/init.sql -v /var/lib/docker/volumes/dados_dev:/var/lib/postgresql/data docker_db
+
+   configuração manual no intellij
+   container name:
+   docker_db_desenvolvimento
+   Bind ports:
+   5433:5432
+   Bind mounts:
+   dados_dev:/var/lib/postgresql/data  //scripts//init.sql:/docker-entrypoint-initdb.d/init.sql  ./scripts:/scripts
+
+
+ 1)verificar dados da tabela
+ docker container ps
+ 2) Atachar no container
+ docker exec -it docker_db_desenvolvimento bash
+ 3) Instalar client tools do psql
+
+ apt-get update
+ apt-cache search postgresql
+ apt-get install postgresql-client -y
+
+4) entrando no psql
+ psql -h localhost -p 5432 -U postgres
+
+ 5)
+ >> \c investpess_ativo;
+ >> select * from ativoobjeto;
+\q
+exit
+
+acessando de fora do container atraves do prompt
+precisa ter o psql instalado na maquina local
+
+1) psql -h localhost -p 5433 -U postgres
+>> \c investpess_ativo;
+ >> select * from ativoobjeto;
+\q
+exit
+
+
+
+
+docker container inspect 85af7252111a
+"Type": "volume",
+                "Name": "6c984afb5f98433c7ad4627cf5c71d218a5cb27773ca2bd366b3b19c8abbd514",
+                "Source": "/var/lib/docker/volumes/6c984afb5f98433c7ad4627cf5c71d218a5cb27773ca2bd366b3b19c8abbd514/_data",
+                "Destination": "dados_dev",
+                "Driver": "local",
+                "Mode": "",
+                "RW": true,
+                "Propagation": ""
+
+  "Type": "volume",
+                "Name": "2dd25e9eda998119ef91434b47aaba3e5bcbf057c3f250d26b761aebccdc8794",
+                "Source": "/var/lib/docker/volumes/2dd25e9eda998119ef91434b47aaba3e5bcbf057c3f250d26b761aebccdc8794/_data",
+                "Destination": "dados_dev",
+                "Driver": "local",
+                "Mode": "",
+                "RW": true,
+                "Propagation": ""
