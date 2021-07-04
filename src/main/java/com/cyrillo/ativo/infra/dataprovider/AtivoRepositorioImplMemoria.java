@@ -3,9 +3,8 @@ package com.cyrillo.ativo.infra.dataprovider;
 import com.cyrillo.ativo.core.dataprovider.AtivoRepositorioInterface;
 import com.cyrillo.ativo.core.entidade.AtivoObjeto;
 import com.cyrillo.ativo.core.entidade.TipoAtivo;
-import com.cyrillo.ativo.core.entidade.excecao.AtivoJaExistenteException;
+import com.cyrillo.ativo.core.entidade.excecao.FalhaComunicacaoRepositorioException;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -18,12 +17,12 @@ public class AtivoRepositorioImplMemoria implements AtivoRepositorioInterface {
     }
 
     @Override
-    public void incluir(AtivoObjeto ativoObjeto) throws AtivoJaExistenteException, SQLException {
+    public void incluir(AtivoObjeto ativoObjeto) throws FalhaComunicacaoRepositorioException {
         this.listaAtivoObjeto.add(ativoObjeto);
     }
 
     @Override
-    public boolean consultarPorSigla(String siglaAtivo) throws SQLException {
+    public boolean consultarPorSigla(String siglaAtivo) throws FalhaComunicacaoRepositorioException {
         if (this.listaAtivoObjeto.stream()
             .filter(a -> a.getSigla().equals(siglaAtivo))
             .findFirst().isPresent()) {

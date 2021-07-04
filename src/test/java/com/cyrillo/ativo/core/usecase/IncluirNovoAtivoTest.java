@@ -1,12 +1,13 @@
 package com.cyrillo.ativo.core.usecase;
 
 import com.cyrillo.ativo.core.dataprovider.AtivoRepositorioInterface;
-import com.cyrillo.ativo.core.dataprovider.LoggingInterface;
 import com.cyrillo.ativo.core.entidade.excecao.AtivoJaExistenteException;
+import com.cyrillo.ativo.core.entidade.excecao.AtivoParametrosInvalidosException;
+import com.cyrillo.ativo.core.entidade.excecao.FalhaComunicacaoRepositorioException;
 import com.cyrillo.ativo.infra.config.Aplicacao;
 import com.cyrillo.ativo.infra.dataprovider.AtivoRepositorioImplMockCriadoSucesso;
+import com.cyrillo.ativo.infra.dataprovider.AtivoRepositorioImplMockFalhaRepositorio;
 import com.cyrillo.ativo.infra.dataprovider.AtivoRepositorioImplMockSiglaExistente;
-import com.cyrillo.ativo.infra.dataprovider.LoggingInterfaceImplConsole;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -20,7 +21,6 @@ class IncluirNovoAtivoTest {
         // Passo 1: Setup dos parâmetros de entrada e objetos dependentes
         // Instanciação de um mock que satisfaz a condição do teste (identifica que a sigla já existe)
         AtivoRepositorioInterface repositorio = new AtivoRepositorioImplMockSiglaExistente();
-        LoggingInterface log = new LoggingInterfaceImplConsole();
         Aplicacao dataProvider = Aplicacao.getInstance();
         dataProvider.setAtivoRepositorio(repositorio);
         String sigla = "VALE3";
@@ -42,7 +42,6 @@ class IncluirNovoAtivoTest {
         // Passo 1: Setup dos parâmetros de entrada e objetos dependentes
         // Instanciação de um mock que satisfaz a condição do teste (identifica que a sigla já existe)
         AtivoRepositorioInterface repositorio = new AtivoRepositorioImplMockCriadoSucesso();
-        LoggingInterface log = new LoggingInterfaceImplConsole();
         Aplicacao dataProvider = Aplicacao.getInstance();
         // força o repositorio mock
         dataProvider.setAtivoRepositorio(repositorio);
@@ -65,6 +64,91 @@ class IncluirNovoAtivoTest {
         assertEquals(null,exception);
         // Obs: exceções lançadas pelo método incluirNovoAtivo.executar //  throws AtivoJaExistenteException, SQLException, AtivoParametrosInvalidosException
     }
+
+    @Test
+    void naoDeveriaCriarAtivoCNPJInvalido() {
+        // Passo 1: Setup dos parâmetros de entrada e objetos dependentes
+        // Instanciação de um mock que satisfaz a condição do teste (identifica que a sigla já existe)
+        AtivoRepositorioInterface repositorio = new AtivoRepositorioImplMockCriadoSucesso();
+        Aplicacao dataProvider = Aplicacao.getInstance();
+        // força o repositorio mock
+        dataProvider.setAtivoRepositorio(repositorio);
+        String sigla = "VALE3";
+        String nomeAtivo = "VALE S.A";
+        String descricaoCNPJ = "33.592.510-0001-54";
+        //String descricaoCNPJ = "33.592.510/0001-54";
+        Exception exception = null;
+        int tipoAtivo = 1;
+
+        // Passo 2: Execução do método
+        IncluirNovoAtivo incluirNovoAtivo = new IncluirNovoAtivo();
+        try {
+            incluirNovoAtivo.executar(dataProvider, sigla, nomeAtivo, descricaoCNPJ, tipoAtivo);
+        }
+        catch (Exception e){
+            exception = e;
+        }
+
+        // Passo 3: Verifica se ocorreu a exceção esperada:
+        assertEquals(AtivoParametrosInvalidosException.class,exception.getClass());
+    }
+
+    @Test
+    void naoDeveriaCriarAtivoTipoInvalido() {
+        // Passo 1: Setup dos parâmetros de entrada e objetos dependentes
+        // Instanciação de um mock que satisfaz a condição do teste (identifica que a sigla já existe)
+        AtivoRepositorioInterface repositorio = new AtivoRepositorioImplMockCriadoSucesso();
+        Aplicacao dataProvider = Aplicacao.getInstance();
+        // força o repositorio mock
+        dataProvider.setAtivoRepositorio(repositorio);
+        String sigla = "VALE3";
+        String nomeAtivo = "VALE S.A";
+        String descricaoCNPJ = "33.592.510/0001-54";
+        //String descricaoCNPJ = "33.592.510/0001-54";
+        Exception exception = null;
+        int tipoAtivo = 5;
+
+        // Passo 2: Execução do método
+        IncluirNovoAtivo incluirNovoAtivo = new IncluirNovoAtivo();
+        try {
+            incluirNovoAtivo.executar(dataProvider, sigla, nomeAtivo, descricaoCNPJ, tipoAtivo);
+        }
+        catch (Exception e){
+            exception = e;
+        }
+
+        // Passo 3: Verifica se ocorreu a exceção esperada:
+        assertEquals(AtivoParametrosInvalidosException.class,exception.getClass());
+    }
+
+    @Test
+    void naoDeveriaCriarAtivoFalhaComunicacaoRepositorio() {
+        // Passo 1: Setup dos parâmetros de entrada e objetos dependentes
+        // Instanciação de um mock que satisfaz a condição do teste (identifica que a sigla já existe)
+        AtivoRepositorioInterface repositorio = new AtivoRepositorioImplMockFalhaRepositorio();
+        Aplicacao dataProvider = Aplicacao.getInstance();
+        // força o repositorio mock
+        dataProvider.setAtivoRepositorio(repositorio);
+        String sigla = "VALE3";
+        String nomeAtivo = "VALE S.A";
+        String descricaoCNPJ = "33.592.510/0001-54";
+        Exception exception = null;
+        int tipoAtivo = 1;
+
+        // Passo 2: Execução do método
+        IncluirNovoAtivo incluirNovoAtivo = new IncluirNovoAtivo();
+        try {
+            incluirNovoAtivo.executar(dataProvider, sigla, nomeAtivo, descricaoCNPJ, tipoAtivo);
+        }
+        catch (Exception e){
+            exception = e;
+        }
+
+        // Passo 3: Verifica se ocorreu a exceção esperada:
+        assertEquals(FalhaComunicacaoRepositorioException.class,exception.getClass());
+    }
+
+
 }
 
 

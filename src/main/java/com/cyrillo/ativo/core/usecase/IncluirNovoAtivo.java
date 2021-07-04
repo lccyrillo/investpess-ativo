@@ -7,14 +7,13 @@ import com.cyrillo.ativo.core.entidade.AtivoObjeto;
 import com.cyrillo.ativo.core.entidade.builder.AtivoObjetoBuilder;
 import com.cyrillo.ativo.core.entidade.excecao.AtivoJaExistenteException;
 import com.cyrillo.ativo.core.entidade.excecao.AtivoParametrosInvalidosException;
-
-import java.sql.SQLException;
+import com.cyrillo.ativo.core.entidade.excecao.FalhaComunicacaoRepositorioException;
 
 public class IncluirNovoAtivo {
 
     public IncluirNovoAtivo(){}
 
-    public void executar(DataProviderInterface dataProviderInterface,String sigla, String nomeAtivo, String descricaoCNPJAtivo, int tipoAtivo) throws AtivoJaExistenteException, SQLException, AtivoParametrosInvalidosException {
+    public void executar(DataProviderInterface dataProviderInterface,String sigla, String nomeAtivo, String descricaoCNPJAtivo, int tipoAtivo) throws AtivoJaExistenteException, FalhaComunicacaoRepositorioException, AtivoParametrosInvalidosException {
         // Mapa de resultados do use case
         AtivoRepositorioInterface ativoRepositorioInterface = dataProviderInterface.getAtivoRepositorio();
         LoggingInterface loggingInterface = dataProviderInterface.getLoggingInterface();

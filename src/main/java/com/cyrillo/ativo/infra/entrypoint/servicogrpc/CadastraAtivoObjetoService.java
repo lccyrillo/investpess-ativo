@@ -2,6 +2,7 @@ package com.cyrillo.ativo.infra.entrypoint.servicogrpc;
 
 import com.cyrillo.ativo.core.dataprovider.LoggingInterface;
 import com.cyrillo.ativo.core.entidade.excecao.AtivoJaExistenteException;
+import com.cyrillo.ativo.core.entidade.excecao.FalhaComunicacaoRepositorioException;
 import com.cyrillo.ativo.core.usecase.IncluirNovoAtivo;
 import com.cyrillo.ativo.infra.config.Sessao;
 import io.grpc.stub.StreamObserver;
@@ -9,7 +10,6 @@ import proto.ativo.ativoobjetoproto.CadastraAtivoObjetoRequest;
 import proto.ativo.ativoobjetoproto.CadastraAtivoObjetoResponse;
 import proto.ativo.ativoobjetoproto.CadastraAtivoObjetoServiceGrpc;
 
-import java.sql.SQLException;
 import java.util.UUID;
 
 public class CadastraAtivoObjetoService  extends CadastraAtivoObjetoServiceGrpc.CadastraAtivoObjetoServiceImplBase {
@@ -42,7 +42,7 @@ public class CadastraAtivoObjetoService  extends CadastraAtivoObjetoServiceGrpc.
             codResultado = "200";
             msgResultado = "Ativo: " + nome_ativo + " cadastrado!";
         }
-        catch (SQLException e) {
+        catch (FalhaComunicacaoRepositorioException e) {
             msgResultado = "401";
             codResultado = "Erro na persistência do Ativo no banco de dados!";
         }
