@@ -4,3 +4,4 @@ run/*
 materiais/*
 materiais/comandos/*
 docker/docker_micros/artifacts/*
+docker/docker_micros/artifacts/investpess_ativo_jar/*
