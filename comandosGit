@@ -7,7 +7,7 @@
 --> devo trabalhar na branch da release
 >> git branch
 --> se não estou na branch correta, vou para a branch correta
->> git checkout refatoracao_entities
+>> git checkout testes_unitarios
 
 --> trabalho nos arquivos
 --> vejo as diferencas
@@ -15,9 +15,9 @@
 --> adiciono os arquivos necessários
 >> git add .
 --> faço um commit
->> git commit -a -m "Alterações relativas a refatoração das entities"
+>> git commit -a -m "Alterações relativas a inclusão de testes unitários."
 --> mandar para o repositorio remoto
->> git push origin refatoracao_entities
+>> git push origin testes_unitarios
 
 2) se consegui fechar uma versão, posso gerar uma tag
 --> listar tags
@@ -30,7 +30,7 @@
 --> posso mergear a branch desta feature com a branch de desenvolvimento
 --> vou para o repositorio de desenvolvimento
 >> git checkout developer
->> git merge refatoracao_entrypoints
+>> git merge testes_unitarios
 >> git push -u origin developer
 
 --> vou para o repositorio de producao
