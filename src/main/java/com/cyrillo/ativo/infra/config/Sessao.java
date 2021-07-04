@@ -1,8 +1,8 @@
 package com.cyrillo.ativo.infra.config;
 
-import com.cyrillo.ativo.core.dataprovider.AtivoRepositorioInterface;
-import com.cyrillo.ativo.core.dataprovider.DataProviderInterface;
-import com.cyrillo.ativo.core.dataprovider.LoggingInterface;
+import com.cyrillo.ativo.core.dataprovider.tipos.AtivoRepositorioInterface;
+import com.cyrillo.ativo.core.dataprovider.tipos.DataProviderInterface;
+import com.cyrillo.ativo.core.dataprovider.tipos.LoggingInterface;
 
 import java.util.UUID;
 

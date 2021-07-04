@@ -1,8 +1,7 @@
 package com.cyrillo.ativo.infra.dataprovider;
 
-import com.cyrillo.ativo.core.dataprovider.AtivoRepositorioInterface;
-import com.cyrillo.ativo.core.entidade.AtivoObjeto;
-import com.cyrillo.ativo.core.entidade.TipoAtivo;
+import com.cyrillo.ativo.core.dataprovider.tipos.AtivoDtoInterface;
+import com.cyrillo.ativo.core.dataprovider.tipos.AtivoRepositorioInterface;
 import com.cyrillo.ativo.core.entidade.excecao.FalhaComunicacaoRepositorioException;
 
 import java.util.List;
@@ -11,7 +10,7 @@ public class AtivoRepositorioImplMockFalhaRepositorio implements AtivoRepositori
     public AtivoRepositorioImplMockFalhaRepositorio(){}
 
     @Override
-    public void incluir(AtivoObjeto ativoObjeto) throws FalhaComunicacaoRepositorioException {
+    public void incluir(AtivoDtoInterface ativoObjeto) throws FalhaComunicacaoRepositorioException {
         throw new FalhaComunicacaoRepositorioException("Falha comunicação Repositório");
     }
     @Override
@@ -20,12 +19,12 @@ public class AtivoRepositorioImplMockFalhaRepositorio implements AtivoRepositori
     }
 
     @Override
-    public List<AtivoObjeto> listarTodosAtivos() {
+    public List<AtivoDtoInterface> listarTodosAtivos() {
         return null;
     }
 
     @Override
-    public List<AtivoObjeto> listarAtivosPorTipo(TipoAtivo tipoAtivo) {
+    public List<AtivoDtoInterface> listarAtivosPorTipo(int tipoAtivo) {
         return null;
     }
 }

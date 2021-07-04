@@ -1,10 +1,10 @@
 package com.cyrillo.ativo.core.usecase;
 
-import com.cyrillo.ativo.core.dataprovider.AtivoRepositorioInterface;
-import com.cyrillo.ativo.core.dataprovider.DataProviderInterface;
-import com.cyrillo.ativo.core.dataprovider.LoggingInterface;
+import com.cyrillo.ativo.core.dataprovider.dto.AtivoDto;
+import com.cyrillo.ativo.core.dataprovider.tipos.AtivoRepositorioInterface;
+import com.cyrillo.ativo.core.dataprovider.tipos.DataProviderInterface;
+import com.cyrillo.ativo.core.dataprovider.tipos.LoggingInterface;
 import com.cyrillo.ativo.core.entidade.AtivoObjeto;
-import com.cyrillo.ativo.core.entidade.builder.AtivoObjetoBuilder;
 import com.cyrillo.ativo.core.entidade.excecao.AtivoJaExistenteException;
 import com.cyrillo.ativo.core.entidade.excecao.AtivoParametrosInvalidosException;
 import com.cyrillo.ativo.core.entidade.excecao.FalhaComunicacaoRepositorioException;
@@ -13,23 +13,28 @@ public class IncluirNovoAtivo {
 
     public IncluirNovoAtivo(){}
 
-    public void executar(DataProviderInterface dataProviderInterface,String sigla, String nomeAtivo, String descricaoCNPJAtivo, int tipoAtivo) throws AtivoJaExistenteException, FalhaComunicacaoRepositorioException, AtivoParametrosInvalidosException {
+    public void executar(DataProviderInterface data,String sigla, String nomeAtivo, String descricaoCNPJAtivo, int tipoAtivo) throws AtivoJaExistenteException, FalhaComunicacaoRepositorioException, AtivoParametrosInvalidosException {
         // Mapa de resultados do use case
-        AtivoRepositorioInterface ativoRepositorioInterface = dataProviderInterface.getAtivoRepositorio();
-        LoggingInterface loggingInterface = dataProviderInterface.getLoggingInterface();
+        AtivoRepositorioInterface repo = data.getAtivoRepositorio();
+        LoggingInterface log = data.getLoggingInterface();
+        String uniqueKey =String.valueOf(data.getUniqueKey());
+
+        log.logInfo(uniqueKey,"Iniciando Use Case Incluir Novo Ativo");
 
         sigla = sigla.toUpperCase();
-        if (ativoRepositorioInterface.consultarPorSigla(sigla) == false) {
+        if (repo.consultarPorSigla(sigla) == false) {
             // --> Se a consulta falhar na comunicação com banco de dados, vai gerar uma exceção que precisará ser tratada.
             // Posso cadastrar ativo
-            AtivoObjetoBuilder builderAtivo = new AtivoObjetoBuilder();
-            builderAtivo.infoCompleta(sigla,nomeAtivo,descricaoCNPJAtivo,tipoAtivo);
-            AtivoObjeto ativoObjeto = builderAtivo.build();
-            ativoRepositorioInterface.incluir(ativoObjeto);
+            AtivoDto ativoDto = new AtivoDto(sigla,nomeAtivo,descricaoCNPJAtivo,tipoAtivo);
+            // Faço esse passo para garantir o Dto está criando um objeto válido.
+            AtivoObjeto ativoObjeto = ativoDto.builder();
+            repo.incluir(ativoDto);
+            log.logInfo(uniqueKey,"Ativo incluído com sucesso");
         }
         else {
             // Erro: Sigla já existente
             // Lançar exceção AtivoJaExistenteException
+            log.logInfo(uniqueKey,"Ativo já existe no repositório");
             throw new AtivoJaExistenteException(sigla);
         }
     }

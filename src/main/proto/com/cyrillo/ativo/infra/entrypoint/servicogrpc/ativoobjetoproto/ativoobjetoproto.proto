@@ -1,0 +1,56 @@
+syntax = "proto3";
+package ativoobjetoproto;
+option java_package = "com.cyrillo.ativo.infra.entrypoint.servicogrpc.ativoobjetoproto";
+option java_multiple_files = true;
+
+message AtivoObjeto {
+  string sigla_ativo = 1;
+  string nome_ativo = 2;
+  string descricao_cnpj_ativo = 3;
+  int32 tipo_ativo = 4;  // 1 - ação , 2 - fundo imobiliario
+}
+
+
+message CadastraAtivoObjetoRequest {
+  AtivoObjeto ativo = 1;
+}
+
+message CadastraAtivoObjetoResponse {
+  int32 response_code = 1;
+  string response_message = 2;
+}
+
+message ConsultaAtivoObjetoRequest {
+  string sigla_ativo = 1;
+}
+
+message ConsultaAtivoObjetoResponse {
+  int32 response_code = 1;
+  string response_message = 2;
+  AtivoObjeto ativo = 3;
+}
+
+message ConsultaListaAtivoRequest {
+  int32 tipo_ativo = 1;
+}
+
+message ConsultaListaAtivoResponse {
+  int32 response_code = 1;
+  string response_message = 2;
+  repeated AtivoObjeto ativos = 3;
+}
+
+
+service CadastraAtivoObjetoService {
+  //unary
+  rpc CadastraAtivoObjeto(CadastraAtivoObjetoRequest) returns (CadastraAtivoObjetoResponse) {};
+}
+
+service ConsultaListaAtivoService {
+  //unary
+  rpc ConsultaListaAtivo(ConsultaListaAtivoRequest) returns (ConsultaListaAtivoResponse) {};
+}
+
+
+
+

@@ -1,6 +1,6 @@
 package com.cyrillo.ativo.core.usecase;
 
-import com.cyrillo.ativo.core.dataprovider.AtivoRepositorioInterface;
+import com.cyrillo.ativo.core.dataprovider.tipos.AtivoRepositorioInterface;
 import com.cyrillo.ativo.core.entidade.excecao.AtivoJaExistenteException;
 import com.cyrillo.ativo.core.entidade.excecao.AtivoParametrosInvalidosException;
 import com.cyrillo.ativo.core.entidade.excecao.FalhaComunicacaoRepositorioException;

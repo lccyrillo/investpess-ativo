@@ -1,9 +1,8 @@
 package com.cyrillo.ativo.infra.dataprovider;
 
-import com.cyrillo.ativo.core.dataprovider.AtivoRepositorioInterface;
-import com.cyrillo.ativo.core.dataprovider.LoggingInterface;
-import com.cyrillo.ativo.core.entidade.AtivoObjeto;
-import com.cyrillo.ativo.core.entidade.TipoAtivo;
+import com.cyrillo.ativo.core.dataprovider.tipos.AtivoDtoInterface;
+import com.cyrillo.ativo.core.dataprovider.tipos.AtivoRepositorioInterface;
+import com.cyrillo.ativo.core.dataprovider.tipos.LoggingInterface;
 import com.cyrillo.ativo.core.entidade.excecao.FalhaComunicacaoRepositorioException;
 import com.cyrillo.ativo.infra.config.Aplicacao;
 import com.cyrillo.ativo.infra.config.ConexaoConfig;
@@ -17,7 +16,7 @@ public class AtivoRepositorioImplcomJDBC implements AtivoRepositorioInterface {
 
 
     @Override
-    public void incluir(AtivoObjeto ativoObjeto) throws FalhaComunicacaoRepositorioException {
+    public void incluir(AtivoDtoInterface ativoObjeto) throws FalhaComunicacaoRepositorioException {
         // Precisa ser refatorado...
         // camada de entrypoint conhecendo camada core entidade.
         // Essa camada deveria conhecer apenas use case
@@ -29,7 +28,7 @@ public class AtivoRepositorioImplcomJDBC implements AtivoRepositorioInterface {
             String sigla_ativo = ativoObjeto.getSigla().toUpperCase();
             String nome_ativo = ativoObjeto.getNomeAtivo();
             String descricao_cnpj_ativo = ativoObjeto.getDescricaoCNPJAtivo();
-            int tipo_ativo = ativoObjeto.getTipoAtivo().getTipoAtivo();
+            int tipo_ativo = ativoObjeto.getTipoAtivoInt();
 
             loggingInterface.logInfo(null,"Dados do ativo identifocados");
             // consulta no banco postgresql
@@ -94,12 +93,12 @@ public class AtivoRepositorioImplcomJDBC implements AtivoRepositorioInterface {
     }
 
     @Override
-    public List<AtivoObjeto> listarTodosAtivos() {
+    public List<AtivoDtoInterface> listarTodosAtivos() {
         return null;
     }
 
     @Override
-    public List<AtivoObjeto> listarAtivosPorTipo(TipoAtivo tipoAtivo) {
+    public List<AtivoDtoInterface> listarAtivosPorTipo(int tipoAtivo) {
         return null;
     }
 }

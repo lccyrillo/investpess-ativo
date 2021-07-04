@@ -1,6 +1,6 @@
 package com.cyrillo.ativo.infra.dataprovider;
 
-import com.cyrillo.ativo.core.dataprovider.LoggingInterface;
+import com.cyrillo.ativo.core.dataprovider.tipos.LoggingInterface;
 
 
 public class LoggingInterfaceImplConsole implements LoggingInterface {

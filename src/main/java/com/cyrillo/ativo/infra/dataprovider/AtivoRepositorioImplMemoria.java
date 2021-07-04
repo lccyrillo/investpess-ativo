@@ -1,8 +1,7 @@
 package com.cyrillo.ativo.infra.dataprovider;
 
-import com.cyrillo.ativo.core.dataprovider.AtivoRepositorioInterface;
-import com.cyrillo.ativo.core.entidade.AtivoObjeto;
-import com.cyrillo.ativo.core.entidade.TipoAtivo;
+import com.cyrillo.ativo.core.dataprovider.tipos.AtivoDtoInterface;
+import com.cyrillo.ativo.core.dataprovider.tipos.AtivoRepositorioInterface;
 import com.cyrillo.ativo.core.entidade.excecao.FalhaComunicacaoRepositorioException;
 
 import java.util.ArrayList;
@@ -10,14 +9,14 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class AtivoRepositorioImplMemoria implements AtivoRepositorioInterface {
-    private List<AtivoObjeto> listaAtivoObjeto = new ArrayList<>();
+    private List<AtivoDtoInterface> listaAtivoObjeto = new ArrayList<>();
 
     public AtivoRepositorioImplMemoria(){
 
     }
 
     @Override
-    public void incluir(AtivoObjeto ativoObjeto) throws FalhaComunicacaoRepositorioException {
+    public void incluir(AtivoDtoInterface ativoObjeto) throws FalhaComunicacaoRepositorioException {
         this.listaAtivoObjeto.add(ativoObjeto);
     }
 
@@ -34,16 +33,16 @@ public class AtivoRepositorioImplMemoria implements AtivoRepositorioInterface {
     }
 
     @Override
-    public List<AtivoObjeto> listarTodosAtivos() {
+    public List<AtivoDtoInterface> listarTodosAtivos() {
         return this.listaAtivoObjeto;
 
     }
 
     @Override
-    public List<AtivoObjeto> listarAtivosPorTipo(TipoAtivo tipoAtivo) {
+    public List<AtivoDtoInterface> listarAtivosPorTipo(int tipoAtivo) {
 
         return this.listaAtivoObjeto.stream()
-                .filter(a -> a.getTipoAtivo().equals(tipoAtivo.getTipoAtivo()))
+                .filter(a -> a.getTipoAtivoInt() == tipoAtivo)
                 .collect(Collectors.toList());
     }
 }

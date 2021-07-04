@@ -1,14 +1,14 @@
 package com.cyrillo.ativo.infra.entrypoint.servicogrpc;
 
-import com.cyrillo.ativo.core.dataprovider.LoggingInterface;
+import com.cyrillo.ativo.core.dataprovider.tipos.LoggingInterface;
 import com.cyrillo.ativo.core.entidade.excecao.AtivoJaExistenteException;
 import com.cyrillo.ativo.core.entidade.excecao.FalhaComunicacaoRepositorioException;
 import com.cyrillo.ativo.core.usecase.IncluirNovoAtivo;
 import com.cyrillo.ativo.infra.config.Sessao;
+import com.cyrillo.ativo.infra.entrypoint.servicogrpc.ativoobjetoproto.CadastraAtivoObjetoRequest;
+import com.cyrillo.ativo.infra.entrypoint.servicogrpc.ativoobjetoproto.CadastraAtivoObjetoResponse;
+import com.cyrillo.ativo.infra.entrypoint.servicogrpc.ativoobjetoproto.CadastraAtivoObjetoServiceGrpc;
 import io.grpc.stub.StreamObserver;
-import proto.ativo.ativoobjetoproto.CadastraAtivoObjetoRequest;
-import proto.ativo.ativoobjetoproto.CadastraAtivoObjetoResponse;
-import proto.ativo.ativoobjetoproto.CadastraAtivoObjetoServiceGrpc;
 
 import java.util.UUID;
 
@@ -20,7 +20,7 @@ public class CadastraAtivoObjetoService  extends CadastraAtivoObjetoServiceGrpc.
         // 401 - Falha técnica na inclusão de um ativo
 
         String msgResultado;
-        String codResultado;
+        int codResultado;
 
         Sessao dataProvider = new Sessao();
         UUID uniqueKey = dataProvider.getUniqueKey();
@@ -28,7 +28,7 @@ public class CadastraAtivoObjetoService  extends CadastraAtivoObjetoServiceGrpc.
 
 
         log.logInfo(String.valueOf(uniqueKey),"iniciando cadastra ativo objeto");
-        proto.ativo.ativoobjetoproto.AtivoObjeto ativo = request.getAtivo();
+        com.cyrillo.ativo.infra.entrypoint.servicogrpc.ativoobjetoproto.AtivoObjeto ativo = request.getAtivo();
         String sigla_ativo = ativo.getSiglaAtivo();
         String nome_ativo = ativo.getNomeAtivo();
         String descricao_cnpj_ativo = ativo.getDescricaoCnpjAtivo();
@@ -39,20 +39,20 @@ public class CadastraAtivoObjetoService  extends CadastraAtivoObjetoServiceGrpc.
         try {
             IncluirNovoAtivo incluirNovoAtivo = new IncluirNovoAtivo();
             incluirNovoAtivo.executar(dataProvider,sigla_ativo,nome_ativo,descricao_cnpj_ativo,tipo_ativo);
-            codResultado = "200";
+            codResultado = 200;
             msgResultado = "Ativo: " + nome_ativo + " cadastrado!";
         }
         catch (FalhaComunicacaoRepositorioException e) {
-            msgResultado = "401";
-            codResultado = "Erro na persistência do Ativo no banco de dados!";
+            codResultado = 401;
+            msgResultado = "Erro na persistência do Ativo no banco de dados!";
         }
         catch (AtivoJaExistenteException e) {
+            codResultado = 101;
             msgResultado = e.getMessage();
-            codResultado = "101";
         }
         catch(Exception e){
+            codResultado = 500;
             msgResultado = "Erro não identificado" + e.getMessage();
-            codResultado = "500";
         }
         CadastraAtivoObjetoResponse response = CadastraAtivoObjetoResponse.newBuilder()
                 .setResponseCode(codResultado)
