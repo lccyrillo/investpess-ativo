@@ -15,7 +15,7 @@
 --> adiciono os arquivos necessários
 >> git add .
 --> faço um commit
->> git commit -a -m "Alterações relativas a inclusão de testes unitários."
+>> git commit -a -m "CYRILLO_0001 - FIX - Tratamento de exceções que estão vazando no serviço GRPC de Cadastro de Ativos."
 --> mandar para o repositorio remoto
 >> git push origin testes_unitarios
 
