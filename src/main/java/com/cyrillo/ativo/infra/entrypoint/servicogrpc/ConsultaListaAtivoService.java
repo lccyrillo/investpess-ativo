@@ -1,15 +1,17 @@
 package com.cyrillo.ativo.infra.entrypoint.servicogrpc;
 
+import com.cyrillo.ativo.core.dataprovider.tipos.AtivoDtoInterface;
 import com.cyrillo.ativo.core.dataprovider.tipos.LoggingInterface;
 import com.cyrillo.ativo.core.entidade.excecao.FalhaComunicacaoRepositorioException;
 import com.cyrillo.ativo.core.usecase.ListarAtivosPorTipo;
 import com.cyrillo.ativo.infra.config.Sessao;
+import com.cyrillo.ativo.infra.entrypoint.servicogrpc.ativoobjetoproto.AtivoObjeto;
 import com.cyrillo.ativo.infra.entrypoint.servicogrpc.ativoobjetoproto.ConsultaListaAtivoRequest;
 import com.cyrillo.ativo.infra.entrypoint.servicogrpc.ativoobjetoproto.ConsultaListaAtivoResponse;
 import com.cyrillo.ativo.infra.entrypoint.servicogrpc.ativoobjetoproto.ConsultaListaAtivoServiceGrpc;
 import io.grpc.stub.StreamObserver;
 
-import java.util.UUID;
+import java.util.List;
 
 public class ConsultaListaAtivoService extends ConsultaListaAtivoServiceGrpc.ConsultaListaAtivoServiceImplBase {
     @Override
@@ -20,11 +22,12 @@ public class ConsultaListaAtivoService extends ConsultaListaAtivoServiceGrpc.Con
 
         String msgResultado;
         int codResultado;
+        boolean montarLista = false;
 
         Sessao dataProvider = new Sessao();
-        UUID uniqueKey = dataProvider.getUniqueKey();
+        String uniqueKey = String.valueOf(dataProvider.getUniqueKey());
         LoggingInterface log = dataProvider.getLoggingInterface();
-
+        List<AtivoDtoInterface> lista = null;
         //
         //message ConsultaListaAtivoRequest {
         //    string sigla_ativo = 1;
@@ -43,9 +46,14 @@ public class ConsultaListaAtivoService extends ConsultaListaAtivoServiceGrpc.Con
 
         try {
             ListarAtivosPorTipo listarAtivosPorTipo = new ListarAtivosPorTipo();
-            listarAtivosPorTipo.executar(dataProvider,tipoAtivo);
+            lista = listarAtivosPorTipo.executar(dataProvider,tipoAtivo);
             codResultado = 200;
-            msgResultado = "Lissta ok";
+            msgResultado = "Lista ok";
+            // Preciso montar o retorno repeated
+            if (lista != null) {
+                montarLista = true;
+            }
+
         }
         catch (FalhaComunicacaoRepositorioException e) {
             codResultado = 401;
@@ -62,14 +70,22 @@ public class ConsultaListaAtivoService extends ConsultaListaAtivoServiceGrpc.Con
         //    Iterable<String> iterable = list;
         //    for (String s : iterable) {
         //        System.out.println(s);
-        ConsultaListaAtivoResponse response = ConsultaListaAtivoResponse.newBuilder()
-                //.addAllAtivos()
+        ConsultaListaAtivoResponse.Builder builder = ConsultaListaAtivoResponse.newBuilder()
                 .setResponseCode(codResultado)
-                .setResponseMessage(msgResultado)
-                .build();
+                .setResponseMessage(msgResultado);
+        if (montarLista == true) {
+            for (int i = 0; i < lista.size(); i++) {
+                AtivoObjeto ativoObjeto = AtivoObjeto.newBuilder().
+                        setTipoAtivo(lista.get(i).getTipoAtivoInt()).
+                        setDescricaoCnpjAtivo(lista.get(i).getDescricaoCNPJAtivo()).
+                        setNomeAtivo(lista.get(i).getNomeAtivo()).
+                        setSiglaAtivo(lista.get(i).getSigla()).
+                        build();
+                builder.addAtivos(ativoObjeto);
+            }
+        }
+        ConsultaListaAtivoResponse response = builder.build();
         responseObserver.onNext(response);
         responseObserver.onCompleted();
     }
 }
-
-

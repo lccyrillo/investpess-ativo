@@ -98,7 +98,8 @@ public class AtivoRepositorioImplcomJDBC implements AtivoRepositorioInterface {
     }
 
     @Override
-    public List<AtivoDtoInterface> listarAtivosPorTipo(int tipoAtivo) {
-        return null;
+    public List<AtivoDtoInterface> listarAtivosPorTipo(int tipoAtivo) throws FalhaComunicacaoRepositorioException{
+        FalhaComunicacaoRepositorioException falha = new FalhaComunicacaoRepositorioException("Falha na comunicação com Repositório: AtivoRepositorioImplcomJDBC");
+        throw falha;
     }
 }

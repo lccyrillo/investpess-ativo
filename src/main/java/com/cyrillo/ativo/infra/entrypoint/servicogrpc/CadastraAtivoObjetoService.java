@@ -2,6 +2,7 @@ package com.cyrillo.ativo.infra.entrypoint.servicogrpc;
 
 import com.cyrillo.ativo.core.dataprovider.tipos.LoggingInterface;
 import com.cyrillo.ativo.core.entidade.excecao.AtivoJaExistenteException;
+import com.cyrillo.ativo.core.entidade.excecao.AtivoParametrosInvalidosException;
 import com.cyrillo.ativo.core.entidade.excecao.FalhaComunicacaoRepositorioException;
 import com.cyrillo.ativo.core.usecase.IncluirNovoAtivo;
 import com.cyrillo.ativo.infra.config.Sessao;
@@ -9,8 +10,6 @@ import com.cyrillo.ativo.infra.entrypoint.servicogrpc.ativoobjetoproto.CadastraA
 import com.cyrillo.ativo.infra.entrypoint.servicogrpc.ativoobjetoproto.CadastraAtivoObjetoResponse;
 import com.cyrillo.ativo.infra.entrypoint.servicogrpc.ativoobjetoproto.CadastraAtivoObjetoServiceGrpc;
 import io.grpc.stub.StreamObserver;
-
-import java.util.UUID;
 
 public class CadastraAtivoObjetoService  extends CadastraAtivoObjetoServiceGrpc.CadastraAtivoObjetoServiceImplBase {
     @Override
@@ -23,18 +22,18 @@ public class CadastraAtivoObjetoService  extends CadastraAtivoObjetoServiceGrpc.
         int codResultado;
 
         Sessao dataProvider = new Sessao();
-        UUID uniqueKey = dataProvider.getUniqueKey();
+        String uniqueKey = String.valueOf(dataProvider.getUniqueKey());
         LoggingInterface log = dataProvider.getLoggingInterface();
 
 
-        log.logInfo(String.valueOf(uniqueKey),"iniciando cadastra ativo objeto");
+        log.logInfo(uniqueKey,"Iniciando cadastra ativo objeto.");
         com.cyrillo.ativo.infra.entrypoint.servicogrpc.ativoobjetoproto.AtivoObjeto ativo = request.getAtivo();
         String sigla_ativo = ativo.getSiglaAtivo();
         String nome_ativo = ativo.getNomeAtivo();
         String descricao_cnpj_ativo = ativo.getDescricaoCnpjAtivo();
         int tipo_ativo = ativo.getTipoAtivo();
 
-        log.logInfo(String.valueOf(uniqueKey),"Dados do ativo identifocados");
+        log.logInfo(uniqueKey,"Dados do ativo identificados.");
 
         try {
             IncluirNovoAtivo incluirNovoAtivo = new IncluirNovoAtivo();
@@ -50,9 +49,13 @@ public class CadastraAtivoObjetoService  extends CadastraAtivoObjetoServiceGrpc.
             codResultado = 101;
             msgResultado = e.getMessage();
         }
+        catch (AtivoParametrosInvalidosException e) {
+            codResultado = 102;
+            msgResultado = e.getMessage();
+        }
         catch(Exception e){
             codResultado = 500;
-            msgResultado = "Erro não identificado" + e.getMessage();
+            msgResultado = "Erro não identificado. " + e.getMessage();
         }
         CadastraAtivoObjetoResponse response = CadastraAtivoObjetoResponse.newBuilder()
                 .setResponseCode(codResultado)
@@ -61,4 +64,5 @@ public class CadastraAtivoObjetoService  extends CadastraAtivoObjetoServiceGrpc.
         responseObserver.onNext(response);
         responseObserver.onCompleted();
     }
+
 }
