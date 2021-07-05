@@ -57,7 +57,7 @@ public class ConsultaListaAtivoService extends ConsultaListaAtivoServiceGrpc.Con
         }
         catch (FalhaComunicacaoRepositorioException e) {
             codResultado = 401;
-            msgResultado = "Erro na persistência do Ativo no banco de dados!";
+            msgResultado = "Erro na comunicação com o repositório de dados!";
         }
         catch(Exception e){
             codResultado = 500;

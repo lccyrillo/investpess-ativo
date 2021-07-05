@@ -13,21 +13,12 @@ public class ListarAtivosPorTipo {
     public ListarAtivosPorTipo() {
     }
 
-    public List<AtivoDtoInterface> executar(DataProviderInterface data, int tipoAtivo) throws FalhaComunicacaoRepositorioException {
+    public List<AtivoDtoInterface> executar(DataProviderInterface data, int tipoAtivo) throws FalhaComunicacaoRepositorioException,AtivoParametrosInvalidosException {
         AtivoRepositorioInterface repo = data.getAtivoRepositorio();
         LoggingInterface log = data.getLoggingInterface();
         String uniqueKey = String.valueOf(data.getUniqueKey());
         List<AtivoDtoInterface> listaAtivos = null;
-
-        try {
-            listaAtivos = repo.listarAtivosPorTipo(tipoAtivo);
-        }
-        catch (FalhaComunicacaoRepositorioException e) {
-            e.printStackTrace();
-        }
-        catch (AtivoParametrosInvalidosException e) {
-            e.printStackTrace();
-        }
+        listaAtivos = repo.listarAtivosPorTipo(data, tipoAtivo);
         return listaAtivos;
     }
 }

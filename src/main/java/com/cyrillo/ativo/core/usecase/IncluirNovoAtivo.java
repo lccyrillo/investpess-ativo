@@ -22,13 +22,13 @@ public class IncluirNovoAtivo {
         log.logInfo(uniqueKey,"Iniciando Use Case Incluir Novo Ativo");
 
         sigla = sigla.toUpperCase();
-        if (repo.consultarPorSigla(sigla) == false) {
+        if (repo.consultarPorSigla(data, sigla) == false) {
             // --> Se a consulta falhar na comunicação com banco de dados, vai gerar uma exceção que precisará ser tratada.
             // Posso cadastrar ativo
             AtivoDto ativoDto = new AtivoDto(sigla,nomeAtivo,descricaoCNPJAtivo,tipoAtivo);
             // Faço esse passo para garantir o Dto está criando um objeto válido.
             AtivoObjeto ativoObjeto = ativoDto.builder();
-            repo.incluir(ativoDto);
+            repo.incluir(data, ativoDto);
             log.logInfo(uniqueKey,"Ativo incluído com sucesso");
         }
         else {

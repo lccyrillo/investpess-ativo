@@ -6,8 +6,8 @@ import com.cyrillo.ativo.core.entidade.excecao.FalhaComunicacaoRepositorioExcept
 import java.util.List;
 
 public interface AtivoRepositorioInterface {
-    void incluir(AtivoDtoInterface ativoObjeto) throws FalhaComunicacaoRepositorioException;
-    boolean consultarPorSigla(String siglaAtivo) throws FalhaComunicacaoRepositorioException;
-    List<AtivoDtoInterface> listarTodosAtivos();
-    List<AtivoDtoInterface> listarAtivosPorTipo(int tipoAtivo) throws FalhaComunicacaoRepositorioException, AtivoParametrosInvalidosException;
+    void incluir(DataProviderInterface data, AtivoDtoInterface ativoObjeto) throws FalhaComunicacaoRepositorioException;
+    boolean consultarPorSigla(DataProviderInterface data, String siglaAtivo) throws FalhaComunicacaoRepositorioException;
+    List<AtivoDtoInterface> listarTodosAtivos(DataProviderInterface data);
+    List<AtivoDtoInterface> listarAtivosPorTipo(DataProviderInterface data, int tipoAtivo) throws FalhaComunicacaoRepositorioException, AtivoParametrosInvalidosException;
 }

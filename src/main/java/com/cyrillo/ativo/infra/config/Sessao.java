@@ -27,4 +27,8 @@ public class Sessao implements DataProviderInterface {
     public AtivoRepositorioInterface getAtivoRepositorio() {
         return Aplicacao.getInstance().getAtivoRepositorio();
     }
+
+    public void setAtivoRepositorio(AtivoRepositorioInterface ativoRepositorio) {
+        Aplicacao.getInstance().setAtivoRepositorio(ativoRepositorio);
+    }
 }

@@ -4,7 +4,7 @@ import com.cyrillo.ativo.core.dataprovider.tipos.AtivoRepositorioInterface;
 import com.cyrillo.ativo.core.entidade.excecao.AtivoJaExistenteException;
 import com.cyrillo.ativo.core.entidade.excecao.AtivoParametrosInvalidosException;
 import com.cyrillo.ativo.core.entidade.excecao.FalhaComunicacaoRepositorioException;
-import com.cyrillo.ativo.infra.config.Aplicacao;
+import com.cyrillo.ativo.infra.config.Sessao;
 import com.cyrillo.ativo.infra.dataprovider.AtivoRepositorioImplMockCriadoSucesso;
 import com.cyrillo.ativo.infra.dataprovider.AtivoRepositorioImplMockFalhaRepositorio;
 import com.cyrillo.ativo.infra.dataprovider.AtivoRepositorioImplMockSiglaExistente;
@@ -21,7 +21,7 @@ class IncluirNovoAtivoTest {
         // Passo 1: Setup dos parâmetros de entrada e objetos dependentes
         // Instanciação de um mock que satisfaz a condição do teste (identifica que a sigla já existe)
         AtivoRepositorioInterface repositorio = new AtivoRepositorioImplMockSiglaExistente();
-        Aplicacao dataProvider = Aplicacao.getInstance();
+        Sessao dataProvider = new Sessao();
         dataProvider.setAtivoRepositorio(repositorio);
         String sigla = "VALE3";
         String nomeAtivo = "VALE S.A";
@@ -42,7 +42,7 @@ class IncluirNovoAtivoTest {
         // Passo 1: Setup dos parâmetros de entrada e objetos dependentes
         // Instanciação de um mock que satisfaz a condição do teste (identifica que a sigla já existe)
         AtivoRepositorioInterface repositorio = new AtivoRepositorioImplMockCriadoSucesso();
-        Aplicacao dataProvider = Aplicacao.getInstance();
+        Sessao dataProvider = new Sessao();
         // força o repositorio mock
         dataProvider.setAtivoRepositorio(repositorio);
         String sigla = "VALE3";
@@ -70,7 +70,7 @@ class IncluirNovoAtivoTest {
         // Passo 1: Setup dos parâmetros de entrada e objetos dependentes
         // Instanciação de um mock que satisfaz a condição do teste (identifica que a sigla já existe)
         AtivoRepositorioInterface repositorio = new AtivoRepositorioImplMockCriadoSucesso();
-        Aplicacao dataProvider = Aplicacao.getInstance();
+        Sessao dataProvider = new Sessao();
         // força o repositorio mock
         dataProvider.setAtivoRepositorio(repositorio);
         String sigla = "VALE3";
@@ -98,7 +98,7 @@ class IncluirNovoAtivoTest {
         // Passo 1: Setup dos parâmetros de entrada e objetos dependentes
         // Instanciação de um mock que satisfaz a condição do teste (identifica que a sigla já existe)
         AtivoRepositorioInterface repositorio = new AtivoRepositorioImplMockCriadoSucesso();
-        Aplicacao dataProvider = Aplicacao.getInstance();
+        Sessao dataProvider = new Sessao();
         // força o repositorio mock
         dataProvider.setAtivoRepositorio(repositorio);
         String sigla = "VALE3";
@@ -126,7 +126,7 @@ class IncluirNovoAtivoTest {
         // Passo 1: Setup dos parâmetros de entrada e objetos dependentes
         // Instanciação de um mock que satisfaz a condição do teste (identifica que a sigla já existe)
         AtivoRepositorioInterface repositorio = new AtivoRepositorioImplMockFalhaRepositorio();
-        Aplicacao dataProvider = Aplicacao.getInstance();
+        Sessao dataProvider = new Sessao();
         // força o repositorio mock
         dataProvider.setAtivoRepositorio(repositorio);
         String sigla = "VALE3";
