@@ -20,12 +20,12 @@
               <option name="hostPath" value="dados_dev" />
             </DockerVolumeBindingImpl>
             <DockerVolumeBindingImpl>
-              <option name="containerPath" value="/docker-entrypoint-initdb.d/init.sql" />
-              <option name="hostPath" value="//scripts//init.sql" />
-            </DockerVolumeBindingImpl>
-            <DockerVolumeBindingImpl>
               <option name="containerPath" value="/scripts" />
               <option name="hostPath" value="./scripts" />
+            </DockerVolumeBindingImpl>
+            <DockerVolumeBindingImpl>
+              <option name="containerPath" value="/docker-entrypoint-initdb.d/init.sql" />
+              <option name="hostPath" value="C:\aplic\prjsw\investpess-ativo\docker\docker_db\scripts\init.sql" />
             </DockerVolumeBindingImpl>
           </list>
         </option>

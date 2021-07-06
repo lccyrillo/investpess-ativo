@@ -1,6 +1,6 @@
 create database investpess_ativo;
 
-\c investpess_ativo
+\c investpess_ativo;
 
 create table ativoobjeto (
     id serial not null,

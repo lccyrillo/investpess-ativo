@@ -1,5 +1,6 @@
 package com.cyrillo.ativo.infra.dataprovider;
 
+import com.cyrillo.ativo.core.dataprovider.dto.AtivoDto;
 import com.cyrillo.ativo.core.dataprovider.tipos.AtivoDtoInterface;
 import com.cyrillo.ativo.core.dataprovider.tipos.AtivoRepositorioInterface;
 import com.cyrillo.ativo.core.dataprovider.tipos.DataProviderInterface;
@@ -10,6 +11,7 @@ import com.cyrillo.ativo.infra.config.ConexaoConfig;
 import com.cyrillo.ativo.infra.config.excecao.FalhaObterConexaoRepositorioExcecao;
 
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.List;
 
 public class AtivoRepositorioImplcomJDBC implements AtivoRepositorioInterface {
@@ -124,7 +126,52 @@ public class AtivoRepositorioImplcomJDBC implements AtivoRepositorioInterface {
 
     @Override
     public List<AtivoDtoInterface> listarAtivosPorTipo(DataProviderInterface data, int tipoAtivo) throws FalhaComunicacaoRepositorioException{
-        FalhaComunicacaoRepositorioException falha = new FalhaComunicacaoRepositorioException("Falha na comunicação com Repositório: AtivoRepositorioImplcomJDBC");
-        throw falha;
+        String siglaAtivo;
+        String nomeAtivo;
+        String cnpjAtivo;
+        List<AtivoDtoInterface> listaAtivoObjeto = new ArrayList<>();
+
+        try {
+            LoggingInterface log = data.getLoggingInterface();
+            String uniqueKey =String.valueOf(data.getUniqueKey());
+            log.logInfo(uniqueKey,"Iniciando Repositorio que consulta um ativo pela sigla.");
+
+            String sql = "SELECT sigla_ativo,nome_ativo,descricao_cnpj_ativo FROM ativoobjeto WHERE tipo_ativo = ?";
+            log.logInfo(uniqueKey,"Select montado, pega conexão da classe singleton");
+
+            ConexaoConfig config= ConexaoConfig.getInstance();
+            Connection conn = config.getConnection();
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setInt(1,tipoAtivo);
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                siglaAtivo = rs.getString("sigla_ativo");
+                nomeAtivo = rs.getString("nome_ativo");
+                cnpjAtivo = rs.getString("descricao_cnpj_ativo");
+                AtivoDto ativoObjeto = new AtivoDto(siglaAtivo,nomeAtivo,cnpjAtivo,tipoAtivo);
+                listaAtivoObjeto.add(ativoObjeto);
+            }
+            rs.close();
+            return listaAtivoObjeto;
+        }
+        catch (SQLException e){
+            LoggingInterface log = data.getLoggingInterface();
+            String uniqueKey =String.valueOf(data.getUniqueKey());
+            log.logError(uniqueKey,"SQL Exception no banco.");
+            ConexaoConfig.getInstance().setConexaoAtiva(false);
+            FalhaComunicacaoRepositorioException falha = new FalhaComunicacaoRepositorioException("Falha na comunicação com Repositório: AtivoRepositorioImplcomJDBC");
+            falha.addSuppressed(e);
+            throw falha;
+        }
+        catch (FalhaObterConexaoRepositorioExcecao e) {
+            LoggingInterface log = data.getLoggingInterface();
+            String uniqueKey =String.valueOf(data.getUniqueKey());
+            log.logError(uniqueKey,"Falha em buscar conexão com o repositório.");
+            ConexaoConfig.getInstance().setConexaoAtiva(false);
+            FalhaComunicacaoRepositorioException falha = new FalhaComunicacaoRepositorioException("Falha para obter conexao com Repositório.");
+            falha.addSuppressed(e);
+            throw falha;
+        }
     }
 }

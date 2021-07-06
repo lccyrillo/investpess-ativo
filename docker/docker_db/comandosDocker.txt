@@ -18,7 +18,7 @@ Configurações para startar o docker
    Bind ports:
    5433:5432
    Bind mounts:
-   dados_dev:/var/lib/postgresql/data  //scripts//init.sql:/docker-entrypoint-initdb.d/init.sql  ./scripts:/scripts
+   dados_dev:/var/lib/postgresql/data  //scripts/init.sql:/docker-entrypoint-initdb.d/init.sql  ./scripts:/scripts
 
 
  1)verificar dados da tabela
