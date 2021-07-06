@@ -1,13 +1,13 @@
 package com.cyrillo.ativo.core.entidade;
 
-import com.cyrillo.ativo.core.entidade.excecao.AtivoParametrosInvalidosException;
+import com.cyrillo.ativo.core.entidade.excecao.ParametroTipoInvalidoException;
 
 public class TipoAtivo {
     private int tipoAtivo;
 
-    public TipoAtivo(int tipoAtivo) throws AtivoParametrosInvalidosException {
+    public TipoAtivo(int tipoAtivo) throws ParametroTipoInvalidoException {
         if (tipoAtivo > 3 ||  tipoAtivo < 1 ){
-            throw new AtivoParametrosInvalidosException("Tipo ativo inválido na criação do objeto TipoAtivo");
+            throw new ParametroTipoInvalidoException("Tipo ativo inválido na criação do objeto TipoAtivo");
         }
         this.tipoAtivo = tipoAtivo; //// 1 - ação , 2 - fundo imobiliario, 3 opção
     }

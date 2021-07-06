@@ -1,15 +1,15 @@
 package com.cyrillo.ativo.infra.config;
 
-import com.cyrillo.ativo.core.dataprovider.tipos.AtivoRepositorioInterface;
-import com.cyrillo.ativo.core.dataprovider.tipos.DataProviderInterface;
-import com.cyrillo.ativo.core.dataprovider.tipos.LoggingInterface;
+import com.cyrillo.ativo.core.dataprovider.AtivoRepositorioInterface;
+import com.cyrillo.ativo.core.dataprovider.DataProviderInterface;
+import com.cyrillo.ativo.core.dataprovider.LogInterface;
 
 import java.util.UUID;
 
 public class Sessao implements DataProviderInterface {
 
     private UUID uniqueKey;
-    private LoggingInterface log;
+    private LogInterface log;
 
     public Sessao(){
         this.uniqueKey = UUID.randomUUID();
@@ -20,7 +20,7 @@ public class Sessao implements DataProviderInterface {
         return uniqueKey;
     }
 
-    public LoggingInterface getLoggingInterface() {
+    public LogInterface getLoggingInterface() {
         return this.log;
     }
 

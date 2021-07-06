@@ -1,22 +1,24 @@
 package com.cyrillo.ativo.core.usecase;
 
 import com.cyrillo.ativo.core.dataprovider.dto.AtivoDto;
-import com.cyrillo.ativo.core.dataprovider.tipos.AtivoRepositorioInterface;
-import com.cyrillo.ativo.core.dataprovider.tipos.DataProviderInterface;
-import com.cyrillo.ativo.core.dataprovider.tipos.LoggingInterface;
+import com.cyrillo.ativo.core.dataprovider.AtivoRepositorioInterface;
+import com.cyrillo.ativo.core.dataprovider.DataProviderInterface;
+import com.cyrillo.ativo.core.dataprovider.LogInterface;
 import com.cyrillo.ativo.core.entidade.AtivoObjeto;
-import com.cyrillo.ativo.core.entidade.excecao.AtivoJaExistenteException;
-import com.cyrillo.ativo.core.entidade.excecao.AtivoParametrosInvalidosException;
-import com.cyrillo.ativo.core.entidade.excecao.FalhaComunicacaoRepositorioException;
+import com.cyrillo.ativo.core.entidade.excecao.ParametroCNPJInvalidoException;
+import com.cyrillo.ativo.core.entidade.excecao.ParametroTipoInvalidoException;
+import com.cyrillo.ativo.core.usecase.excecao.AtivoJaExistenteException;
+import com.cyrillo.ativo.core.usecase.excecao.AtivoParametrosInvalidosException;
+import com.cyrillo.ativo.core.usecase.excecao.ComunicacaoRepositorioException;
 
 public class IncluirNovoAtivo {
 
     public IncluirNovoAtivo(){}
 
-    public void executar(DataProviderInterface data,String sigla, String nomeAtivo, String descricaoCNPJAtivo, int tipoAtivo) throws AtivoJaExistenteException, FalhaComunicacaoRepositorioException, AtivoParametrosInvalidosException {
+    public void executar(DataProviderInterface data,String sigla, String nomeAtivo, String descricaoCNPJAtivo, int tipoAtivo) throws AtivoJaExistenteException, ComunicacaoRepositorioException, AtivoParametrosInvalidosException {
         // Mapa de resultados do use case
         AtivoRepositorioInterface repo = data.getAtivoRepositorio();
-        LoggingInterface log = data.getLoggingInterface();
+        LogInterface log = data.getLoggingInterface();
         String uniqueKey =String.valueOf(data.getUniqueKey());
 
         log.logInfo(uniqueKey,"Iniciando Use Case Incluir Novo Ativo");
@@ -27,7 +29,17 @@ public class IncluirNovoAtivo {
             // Posso cadastrar ativo
             AtivoDto ativoDto = new AtivoDto(sigla,nomeAtivo,descricaoCNPJAtivo,tipoAtivo);
             // Faço esse passo para garantir o Dto está criando um objeto válido.
-            AtivoObjeto ativoObjeto = ativoDto.builder();
+            try {
+                AtivoObjeto ativoObjeto = ativoDto.builder();
+            }
+            catch (ParametroCNPJInvalidoException e){
+                log.logError(uniqueKey,"CNPJ Inválido");
+                throw new AtivoParametrosInvalidosException("CNPJ Inválido");
+            }
+            catch (ParametroTipoInvalidoException e){
+                log.logError(uniqueKey,"Tipo Inválido");
+                throw new AtivoParametrosInvalidosException("Tipo Inválido");
+            }
             repo.incluir(data, ativoDto);
             log.logInfo(uniqueKey,"Ativo incluído com sucesso");
         }

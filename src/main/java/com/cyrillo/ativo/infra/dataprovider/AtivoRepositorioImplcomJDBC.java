@@ -1,11 +1,11 @@
 package com.cyrillo.ativo.infra.dataprovider;
 
 import com.cyrillo.ativo.core.dataprovider.dto.AtivoDto;
-import com.cyrillo.ativo.core.dataprovider.tipos.AtivoDtoInterface;
-import com.cyrillo.ativo.core.dataprovider.tipos.AtivoRepositorioInterface;
-import com.cyrillo.ativo.core.dataprovider.tipos.DataProviderInterface;
-import com.cyrillo.ativo.core.dataprovider.tipos.LoggingInterface;
-import com.cyrillo.ativo.core.entidade.excecao.FalhaComunicacaoRepositorioException;
+import com.cyrillo.ativo.core.dataprovider.AtivoDtoInterface;
+import com.cyrillo.ativo.core.dataprovider.AtivoRepositorioInterface;
+import com.cyrillo.ativo.core.dataprovider.DataProviderInterface;
+import com.cyrillo.ativo.core.dataprovider.LogInterface;
+import com.cyrillo.ativo.core.usecase.excecao.ComunicacaoRepositorioException;
 import com.cyrillo.ativo.infra.config.Aplicacao;
 import com.cyrillo.ativo.infra.config.ConexaoConfig;
 import com.cyrillo.ativo.infra.config.excecao.FalhaObterConexaoRepositorioExcecao;
@@ -20,21 +20,21 @@ public class AtivoRepositorioImplcomJDBC implements AtivoRepositorioInterface {
 
 
     @Override
-    public void incluir(DataProviderInterface data, AtivoDtoInterface ativoObjeto) throws FalhaComunicacaoRepositorioException {
+    public void incluir(DataProviderInterface data, AtivoDtoInterface ativoObjeto) throws ComunicacaoRepositorioException {
         // Precisa ser refatorado...
         // camada de entrypoint conhecendo camada core entidade.
         // Essa camada deveria conhecer apenas use case
 
         try {
-            LoggingInterface loggingInterface = Aplicacao.getInstance().getLoggingInterface();
+            LogInterface logInterface = Aplicacao.getInstance().getLoggingInterface();
 
-            loggingInterface.logInfo(null,"Iniciando Repositorio que cadastra o ativo.");
+            logInterface.logInfo(null,"Iniciando Repositorio que cadastra o ativo.");
             String sigla_ativo = ativoObjeto.getSigla().toUpperCase();
             String nome_ativo = ativoObjeto.getNomeAtivo();
             String descricao_cnpj_ativo = ativoObjeto.getDescricaoCNPJAtivo();
             int tipo_ativo = ativoObjeto.getTipoAtivoInt();
 
-            loggingInterface.logInfo(null,"Dados do ativo identifocados");
+            logInterface.logInfo(null,"Dados do ativo identifocados");
             // consulta no banco postgresql
 
             String sql = "INSERT INTO ativoobjeto (sigla_ativo,nome_ativo,descricao_cnpj_ativo,tipo_ativo)";
@@ -45,34 +45,34 @@ public class AtivoRepositorioImplcomJDBC implements AtivoRepositorioInterface {
             //ps.setString(1,sigla_ativo);
             //ps.execute();
 
-            loggingInterface.logInfo(null,"Insert montado, pega conexão da classe singleton");
+            logInterface.logInfo(null,"Insert montado, pega conexão da classe singleton");
 
             ConexaoConfig config =ConexaoConfig.getInstance();
             Connection conn = config.getConnection();
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.execute();
-            loggingInterface.logInfo(null,"Executou o sql");
-            loggingInterface.logInfo(null,"Ativo: " + nome_ativo + " cadastrado!");
+            logInterface.logInfo(null,"Executou o sql");
+            logInterface.logInfo(null,"Ativo: " + nome_ativo + " cadastrado!");
         }
         catch (SQLException e) {
             ConexaoConfig.getInstance().setConexaoAtiva(false);
-            FalhaComunicacaoRepositorioException falha = new FalhaComunicacaoRepositorioException("Falha na comunicação com Repositório: AtivoRepositorioImplcomJDBC");
+            ComunicacaoRepositorioException falha = new ComunicacaoRepositorioException("Falha na comunicação com Repositório: AtivoRepositorioImplcomJDBC");
             falha.addSuppressed(e);
             throw falha;
         }
         catch (FalhaObterConexaoRepositorioExcecao e) {
             ConexaoConfig.getInstance().setConexaoAtiva(false);
-            FalhaComunicacaoRepositorioException falha = new FalhaComunicacaoRepositorioException("Falha para obter conexao com Repositório.");
+            ComunicacaoRepositorioException falha = new ComunicacaoRepositorioException("Falha para obter conexao com Repositório.");
             falha.addSuppressed(e);
             throw falha;
         }
     }
 
     @Override
-    public boolean consultarPorSigla(DataProviderInterface data, String siglaAtivo) throws FalhaComunicacaoRepositorioException {
+    public boolean consultarPorSigla(DataProviderInterface data, String siglaAtivo) throws ComunicacaoRepositorioException {
 
         try {
-            LoggingInterface log = data.getLoggingInterface();
+            LogInterface log = data.getLoggingInterface();
             String uniqueKey =String.valueOf(data.getUniqueKey());
             log.logInfo(uniqueKey,"Iniciando Repositorio que consulta um ativo pela sigla.");
 
@@ -101,20 +101,20 @@ public class AtivoRepositorioImplcomJDBC implements AtivoRepositorioInterface {
             }
         }
         catch (SQLException e){
-            LoggingInterface log = data.getLoggingInterface();
+            LogInterface log = data.getLoggingInterface();
             String uniqueKey =String.valueOf(data.getUniqueKey());
             log.logError(uniqueKey,"SQL Exception no banco.");
             ConexaoConfig.getInstance().setConexaoAtiva(false);
-            FalhaComunicacaoRepositorioException falha = new FalhaComunicacaoRepositorioException("Falha na comunicação com Repositório: AtivoRepositorioImplcomJDBC");
+            ComunicacaoRepositorioException falha = new ComunicacaoRepositorioException("Falha na comunicação com Repositório: AtivoRepositorioImplcomJDBC");
             falha.addSuppressed(e);
             throw falha;
         }
         catch (FalhaObterConexaoRepositorioExcecao e) {
-            LoggingInterface log = data.getLoggingInterface();
+            LogInterface log = data.getLoggingInterface();
             String uniqueKey =String.valueOf(data.getUniqueKey());
             log.logError(uniqueKey,"Falha em buscar conexão com o repositório.");
             ConexaoConfig.getInstance().setConexaoAtiva(false);
-            FalhaComunicacaoRepositorioException falha = new FalhaComunicacaoRepositorioException("Falha para obter conexao com Repositório.");
+            ComunicacaoRepositorioException falha = new ComunicacaoRepositorioException("Falha para obter conexao com Repositório.");
             falha.addSuppressed(e);
             throw falha;
         }
@@ -125,14 +125,14 @@ public class AtivoRepositorioImplcomJDBC implements AtivoRepositorioInterface {
     }
 
     @Override
-    public List<AtivoDtoInterface> listarAtivosPorTipo(DataProviderInterface data, int tipoAtivo) throws FalhaComunicacaoRepositorioException{
+    public List<AtivoDtoInterface> listarAtivosPorTipo(DataProviderInterface data, int tipoAtivo) throws ComunicacaoRepositorioException {
         String siglaAtivo;
         String nomeAtivo;
         String cnpjAtivo;
         List<AtivoDtoInterface> listaAtivoObjeto = new ArrayList<>();
 
         try {
-            LoggingInterface log = data.getLoggingInterface();
+            LogInterface log = data.getLoggingInterface();
             String uniqueKey =String.valueOf(data.getUniqueKey());
             log.logInfo(uniqueKey,"Iniciando Repositorio que consulta um ativo pela sigla.");
 
@@ -156,20 +156,20 @@ public class AtivoRepositorioImplcomJDBC implements AtivoRepositorioInterface {
             return listaAtivoObjeto;
         }
         catch (SQLException e){
-            LoggingInterface log = data.getLoggingInterface();
+            LogInterface log = data.getLoggingInterface();
             String uniqueKey =String.valueOf(data.getUniqueKey());
             log.logError(uniqueKey,"SQL Exception no banco.");
             ConexaoConfig.getInstance().setConexaoAtiva(false);
-            FalhaComunicacaoRepositorioException falha = new FalhaComunicacaoRepositorioException("Falha na comunicação com Repositório: AtivoRepositorioImplcomJDBC");
+            ComunicacaoRepositorioException falha = new ComunicacaoRepositorioException("Falha na comunicação com Repositório: AtivoRepositorioImplcomJDBC");
             falha.addSuppressed(e);
             throw falha;
         }
         catch (FalhaObterConexaoRepositorioExcecao e) {
-            LoggingInterface log = data.getLoggingInterface();
+            LogInterface log = data.getLoggingInterface();
             String uniqueKey =String.valueOf(data.getUniqueKey());
             log.logError(uniqueKey,"Falha em buscar conexão com o repositório.");
             ConexaoConfig.getInstance().setConexaoAtiva(false);
-            FalhaComunicacaoRepositorioException falha = new FalhaComunicacaoRepositorioException("Falha para obter conexao com Repositório.");
+            ComunicacaoRepositorioException falha = new ComunicacaoRepositorioException("Falha para obter conexao com Repositório.");
             falha.addSuppressed(e);
             throw falha;
         }

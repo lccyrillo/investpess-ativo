@@ -1,6 +1,6 @@
 package com.cyrillo.ativo.infra.entrypoint.servicogrpc;
 
-import com.cyrillo.ativo.core.dataprovider.tipos.LoggingInterface;
+import com.cyrillo.ativo.core.dataprovider.LogInterface;
 import com.cyrillo.ativo.infra.config.Aplicacao;
 import io.grpc.Server;
 import io.grpc.ServerBuilder;
@@ -16,7 +16,7 @@ public class AtivoServerGRPC {
     }
 
     private void inicializaAtivoServer() {
-        LoggingInterface log = Aplicacao.getInstance().getLoggingInterface();
+        LogInterface log = Aplicacao.getInstance().getLoggingInterface();
         log.logInfo(null,"Inicializando Servidor GRPC.");
 
 

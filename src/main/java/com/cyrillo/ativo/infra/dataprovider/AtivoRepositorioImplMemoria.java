@@ -1,9 +1,9 @@
 package com.cyrillo.ativo.infra.dataprovider;
 
-import com.cyrillo.ativo.core.dataprovider.tipos.AtivoDtoInterface;
-import com.cyrillo.ativo.core.dataprovider.tipos.AtivoRepositorioInterface;
-import com.cyrillo.ativo.core.dataprovider.tipos.DataProviderInterface;
-import com.cyrillo.ativo.core.entidade.excecao.FalhaComunicacaoRepositorioException;
+import com.cyrillo.ativo.core.dataprovider.AtivoDtoInterface;
+import com.cyrillo.ativo.core.dataprovider.AtivoRepositorioInterface;
+import com.cyrillo.ativo.core.dataprovider.DataProviderInterface;
+import com.cyrillo.ativo.core.usecase.excecao.ComunicacaoRepositorioException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,12 +17,12 @@ public class AtivoRepositorioImplMemoria implements AtivoRepositorioInterface {
     }
 
     @Override
-    public void incluir(DataProviderInterface data, AtivoDtoInterface ativoObjeto) throws FalhaComunicacaoRepositorioException {
+    public void incluir(DataProviderInterface data, AtivoDtoInterface ativoObjeto) throws ComunicacaoRepositorioException {
         this.listaAtivoObjeto.add(ativoObjeto);
     }
 
     @Override
-    public boolean consultarPorSigla(DataProviderInterface data, String siglaAtivo) throws FalhaComunicacaoRepositorioException {
+    public boolean consultarPorSigla(DataProviderInterface data, String siglaAtivo) throws ComunicacaoRepositorioException {
         if (this.listaAtivoObjeto.stream()
             .filter(a -> a.getSigla().equals(siglaAtivo))
             .findFirst().isPresent()) {

@@ -1,9 +1,10 @@
 package com.cyrillo.ativo.core.dataprovider.dto;
 
-import com.cyrillo.ativo.core.dataprovider.tipos.AtivoDtoInterface;
+import com.cyrillo.ativo.core.dataprovider.AtivoDtoInterface;
 import com.cyrillo.ativo.core.entidade.AtivoObjeto;
 import com.cyrillo.ativo.core.entidade.TipoAtivo;
-import com.cyrillo.ativo.core.entidade.excecao.AtivoParametrosInvalidosException;
+import com.cyrillo.ativo.core.entidade.excecao.ParametroCNPJInvalidoException;
+import com.cyrillo.ativo.core.entidade.excecao.ParametroTipoInvalidoException;
 
 public class AtivoDto implements AtivoDtoInterface {
     private String sigla;
@@ -18,7 +19,7 @@ public class AtivoDto implements AtivoDtoInterface {
         this.tipoAtivo = tipoAtivo;
     }
 
-    public AtivoObjeto builder() throws AtivoParametrosInvalidosException  {
+    public AtivoObjeto builder() throws ParametroCNPJInvalidoException, ParametroTipoInvalidoException {
         return new AtivoObjeto(sigla,nomeAtivo,descricaoCNPJAtivo,new TipoAtivo(tipoAtivo));
     }
     public String getSigla() {

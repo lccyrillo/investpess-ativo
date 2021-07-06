@@ -1,9 +1,9 @@
 package com.cyrillo.ativo.core.usecase;
 
-import com.cyrillo.ativo.core.dataprovider.tipos.AtivoRepositorioInterface;
-import com.cyrillo.ativo.core.entidade.excecao.AtivoJaExistenteException;
-import com.cyrillo.ativo.core.entidade.excecao.AtivoParametrosInvalidosException;
-import com.cyrillo.ativo.core.entidade.excecao.FalhaComunicacaoRepositorioException;
+import com.cyrillo.ativo.core.dataprovider.AtivoRepositorioInterface;
+import com.cyrillo.ativo.core.usecase.excecao.AtivoJaExistenteException;
+import com.cyrillo.ativo.core.usecase.excecao.AtivoParametrosInvalidosException;
+import com.cyrillo.ativo.core.usecase.excecao.ComunicacaoRepositorioException;
 import com.cyrillo.ativo.infra.config.Sessao;
 import com.cyrillo.ativo.infra.dataprovider.AtivoRepositorioImplMockCriadoSucesso;
 import com.cyrillo.ativo.infra.dataprovider.AtivoRepositorioImplMockFalhaRepositorio;
@@ -145,7 +145,7 @@ class IncluirNovoAtivoTest {
         }
 
         // Passo 3: Verifica se ocorreu a exceção esperada:
-        assertEquals(FalhaComunicacaoRepositorioException.class,exception.getClass());
+        assertEquals(ComunicacaoRepositorioException.class,exception.getClass());
     }
 
 

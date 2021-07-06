@@ -1,12 +1,12 @@
 package com.cyrillo.ativo.infra.config;
 
-import com.cyrillo.ativo.core.dataprovider.tipos.AtivoRepositorioInterface;
-import com.cyrillo.ativo.core.dataprovider.tipos.DataProviderInterface;
-import com.cyrillo.ativo.core.dataprovider.tipos.LoggingInterface;
+import com.cyrillo.ativo.core.dataprovider.AtivoRepositorioInterface;
+import com.cyrillo.ativo.core.dataprovider.DataProviderInterface;
+import com.cyrillo.ativo.core.dataprovider.LogInterface;
 import com.cyrillo.ativo.infra.config.excecao.PropriedadeInvalidaExcecao;
 import com.cyrillo.ativo.infra.dataprovider.AtivoRepositorioImplMemoria;
 import com.cyrillo.ativo.infra.dataprovider.AtivoRepositorioImplcomJDBC;
-import com.cyrillo.ativo.infra.dataprovider.LoggingInterfaceImplConsole;
+import com.cyrillo.ativo.infra.dataprovider.LogInterfaceImplConsole;
 import com.cyrillo.ativo.infra.entrypoint.servicogrpc.AtivoServerGRPC;
 
 import java.io.FileInputStream;
@@ -19,7 +19,7 @@ import java.util.UUID;
 
 public class Aplicacao implements DataProviderInterface {
     private static Aplicacao instance;
-    private LoggingInterface logAplicacao;
+    private LogInterface logAplicacao;
     private AtivoRepositorioInterface ativoRepositorio;
     private String RepoImplementacao;
     private String logImplementacao;
@@ -74,7 +74,7 @@ public class Aplicacao implements DataProviderInterface {
 
 
     private void configurarLogAplicacao(){
-        this.logAplicacao = new LoggingInterfaceImplConsole();
+        this.logAplicacao = new LogInterfaceImplConsole();
     }
 
 
@@ -119,7 +119,7 @@ public class Aplicacao implements DataProviderInterface {
         }
     }
 
-    public LoggingInterface getLoggingInterface() {
+    public LogInterface getLoggingInterface() {
         return this.logAplicacao;
     }
 
@@ -131,11 +131,11 @@ public class Aplicacao implements DataProviderInterface {
         this.ativoRepositorio = ativoRepositorio;
     }
 
-    public LoggingInterface gerarNovoObjetoLog() {
+    public LogInterface gerarNovoObjetoLog() {
         // deve ler parametros de configurar e instanciar a implementação correta de log
         // Por enquanto so tem uma implementacao
         // pode ser usado para o log de cada sessao / requisição
-        return new LoggingInterfaceImplConsole();
+        return new LogInterfaceImplConsole();
     }
 
     public UUID getUniqueKey(){

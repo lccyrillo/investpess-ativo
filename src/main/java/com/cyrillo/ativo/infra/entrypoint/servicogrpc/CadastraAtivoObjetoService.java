@@ -1,9 +1,9 @@
 package com.cyrillo.ativo.infra.entrypoint.servicogrpc;
 
-import com.cyrillo.ativo.core.dataprovider.tipos.LoggingInterface;
-import com.cyrillo.ativo.core.entidade.excecao.AtivoJaExistenteException;
-import com.cyrillo.ativo.core.entidade.excecao.AtivoParametrosInvalidosException;
-import com.cyrillo.ativo.core.entidade.excecao.FalhaComunicacaoRepositorioException;
+import com.cyrillo.ativo.core.dataprovider.LogInterface;
+import com.cyrillo.ativo.core.usecase.excecao.AtivoJaExistenteException;
+import com.cyrillo.ativo.core.usecase.excecao.AtivoParametrosInvalidosException;
+import com.cyrillo.ativo.core.usecase.excecao.ComunicacaoRepositorioException;
 import com.cyrillo.ativo.core.usecase.IncluirNovoAtivo;
 import com.cyrillo.ativo.infra.config.Sessao;
 import com.cyrillo.ativo.infra.entrypoint.servicogrpc.ativoobjetoproto.CadastraAtivoObjetoRequest;
@@ -23,7 +23,7 @@ public class CadastraAtivoObjetoService  extends CadastraAtivoObjetoServiceGrpc.
 
         Sessao dataProvider = new Sessao();
         String uniqueKey = String.valueOf(dataProvider.getUniqueKey());
-        LoggingInterface log = dataProvider.getLoggingInterface();
+        LogInterface log = dataProvider.getLoggingInterface();
 
 
         log.logInfo(uniqueKey,"Iniciando cadastra ativo objeto.");
@@ -41,7 +41,7 @@ public class CadastraAtivoObjetoService  extends CadastraAtivoObjetoServiceGrpc.
             codResultado = 200;
             msgResultado = "Ativo: " + nome_ativo + " cadastrado!";
         }
-        catch (FalhaComunicacaoRepositorioException e) {
+        catch (ComunicacaoRepositorioException e) {
             codResultado = 401;
             msgResultado = "Erro na persistência do Ativo no banco de dados!";
         }

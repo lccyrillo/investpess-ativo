@@ -1,8 +1,8 @@
 package com.cyrillo.ativo.infra.entrypoint.servicogrpc;
 
-import com.cyrillo.ativo.core.dataprovider.tipos.AtivoDtoInterface;
-import com.cyrillo.ativo.core.dataprovider.tipos.LoggingInterface;
-import com.cyrillo.ativo.core.entidade.excecao.FalhaComunicacaoRepositorioException;
+import com.cyrillo.ativo.core.dataprovider.AtivoDtoInterface;
+import com.cyrillo.ativo.core.dataprovider.LogInterface;
+import com.cyrillo.ativo.core.usecase.excecao.ComunicacaoRepositorioException;
 import com.cyrillo.ativo.core.usecase.ListarAtivosPorTipo;
 import com.cyrillo.ativo.infra.config.Sessao;
 import com.cyrillo.ativo.infra.entrypoint.servicogrpc.ativoobjetoproto.AtivoObjeto;
@@ -26,7 +26,7 @@ public class ConsultaListaAtivoService extends ConsultaListaAtivoServiceGrpc.Con
 
         Sessao dataProvider = new Sessao();
         String uniqueKey = String.valueOf(dataProvider.getUniqueKey());
-        LoggingInterface log = dataProvider.getLoggingInterface();
+        LogInterface log = dataProvider.getLoggingInterface();
         List<AtivoDtoInterface> lista = null;
         //
         //message ConsultaListaAtivoRequest {
@@ -55,7 +55,7 @@ public class ConsultaListaAtivoService extends ConsultaListaAtivoServiceGrpc.Con
             }
 
         }
-        catch (FalhaComunicacaoRepositorioException e) {
+        catch (ComunicacaoRepositorioException e) {
             codResultado = 401;
             msgResultado = "Erro na comunicação com o repositório de dados!";
         }
