@@ -1,12 +1,13 @@
 package com.cyrillo.ativo.infra.config;
 
-import com.cyrillo.ativo.infra.config.excecao.FalhaObterConexaoRepositorioExcecao;
+import com.cyrillo.ativo.core.dataprovider.ConexaoInterface;
+import com.cyrillo.ativo.core.dataprovider.excecao.FalhaObterConexaoRepositorioExcecao;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-public class ConexaoConfig {
+public class ConexaoConfig implements ConexaoInterface {
     private static ConexaoConfig instance;
     private Connection conexaoBD;
     private boolean conexaoAtiva;
@@ -42,6 +43,11 @@ public class ConexaoConfig {
         return this.conexaoBD;
     }
 
+    @Override
+    public void setConnectionAtiva(boolean conexaoAtiva)  {
+        this.conexaoAtiva = conexaoAtiva;
+    }
+
     private void geraConexao() throws SQLException, ClassNotFoundException  {
         if (! conexaoAtiva) {
             // variaveis de anbiente recebidas pelo Docker
@@ -64,9 +70,5 @@ public class ConexaoConfig {
             this.conexaoAtiva = true;
         }
     }
-    public void setConexaoAtiva(boolean conexaoAtiva) {
-        this.conexaoAtiva = conexaoAtiva;
-    }
-
 
 }

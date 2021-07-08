@@ -1,13 +1,9 @@
 package com.cyrillo.ativo.infra.dataprovider;
 
-import com.cyrillo.ativo.core.dataprovider.AtivoDtoInterface;
-import com.cyrillo.ativo.core.dataprovider.AtivoRepositorioInterface;
-import com.cyrillo.ativo.core.dataprovider.DataProviderInterface;
-import com.cyrillo.ativo.core.dataprovider.LogInterface;
+import com.cyrillo.ativo.core.dataprovider.*;
 import com.cyrillo.ativo.core.dataprovider.dto.AtivoDto;
+import com.cyrillo.ativo.core.dataprovider.excecao.FalhaObterConexaoRepositorioExcecao;
 import com.cyrillo.ativo.core.usecase.excecao.ComunicacaoRepositorioException;
-import com.cyrillo.ativo.infra.config.ConexaoConfig;
-import com.cyrillo.ativo.infra.config.excecao.FalhaObterConexaoRepositorioExcecao;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -28,7 +24,6 @@ public class AtivoRepositorioImplcomJDBC implements AtivoRepositorioInterface {
             LogInterface log = data.getLoggingInterface();
             String uniqueKey =String.valueOf(data.getUniqueKey());
 
-
             log.logInfo(uniqueKey,"Iniciando Repositorio que cadastra o ativo.");
             String sigla_ativo = ativoObjeto.getSigla().toUpperCase();
             String nome_ativo = ativoObjeto.getNomeAtivo();
@@ -43,8 +38,8 @@ public class AtivoRepositorioImplcomJDBC implements AtivoRepositorioInterface {
 
             log.logInfo(uniqueKey,"Insert montado, pega conexão da classe singleton.");
 
-            ConexaoConfig config =ConexaoConfig.getInstance();
-            Connection conn = config.getConnection();
+            ConexaoInterface conexao = data.getConexaoAplicacao();
+            Connection conn = conexao.getConnection();
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.execute();
             log.logInfo(uniqueKey,"Ativo: " + nome_ativo + " cadastrado!");
@@ -52,7 +47,8 @@ public class AtivoRepositorioImplcomJDBC implements AtivoRepositorioInterface {
         catch (SQLException e) {
             LogInterface log = data.getLoggingInterface();
             String uniqueKey =String.valueOf(data.getUniqueKey());
-            ConexaoConfig.getInstance().setConexaoAtiva(false);
+            ConexaoInterface conexao = data.getConexaoAplicacao();
+            conexao.setConnectionAtiva(false);
             ComunicacaoRepositorioException falha = new ComunicacaoRepositorioException("Falha na comunicação com Repositório: AtivoRepositorioImplcomJDBC");
             falha.addSuppressed(e);
             log.logError(uniqueKey,"Erro na comunicação com repositório. SQL Exception.");
@@ -61,7 +57,8 @@ public class AtivoRepositorioImplcomJDBC implements AtivoRepositorioInterface {
         catch (FalhaObterConexaoRepositorioExcecao e) {
             LogInterface log = data.getLoggingInterface();
             String uniqueKey =String.valueOf(data.getUniqueKey());
-            ConexaoConfig.getInstance().setConexaoAtiva(false);
+            ConexaoInterface conexao = data.getConexaoAplicacao();
+            conexao.setConnectionAtiva(false);
             ComunicacaoRepositorioException falha = new ComunicacaoRepositorioException("Falha para obter conexao com Repositório.");
             log.logError(uniqueKey,"Erro na comunicação com repositório. FalhaObterConexaoRepositorioExcecao.");
             falha.addSuppressed(e);
@@ -85,8 +82,8 @@ public class AtivoRepositorioImplcomJDBC implements AtivoRepositorioInterface {
 
             log.logInfo(uniqueKey,"Select montado, pega conexão da classe singleton");
 
-            ConexaoConfig config= ConexaoConfig.getInstance();
-            Connection conn = config.getConnection();
+            ConexaoInterface conexao = data.getConexaoAplicacao();
+            Connection conn = conexao.getConnection();
             Statement stmt = conn.createStatement();
             ResultSet rs = stmt.executeQuery(sql);
             rs.next();
@@ -105,7 +102,8 @@ public class AtivoRepositorioImplcomJDBC implements AtivoRepositorioInterface {
             LogInterface log = data.getLoggingInterface();
             String uniqueKey =String.valueOf(data.getUniqueKey());
             log.logError(uniqueKey,"SQL Exception no banco.");
-            ConexaoConfig.getInstance().setConexaoAtiva(false);
+            ConexaoInterface conexao = data.getConexaoAplicacao();
+            conexao.setConnectionAtiva(false);
             ComunicacaoRepositorioException falha = new ComunicacaoRepositorioException("Falha na comunicação com Repositório: AtivoRepositorioImplcomJDBC");
             falha.addSuppressed(e);
             throw falha;
@@ -114,7 +112,8 @@ public class AtivoRepositorioImplcomJDBC implements AtivoRepositorioInterface {
             LogInterface log = data.getLoggingInterface();
             String uniqueKey =String.valueOf(data.getUniqueKey());
             log.logError(uniqueKey,"Falha em buscar conexão com o repositório.");
-            ConexaoConfig.getInstance().setConexaoAtiva(false);
+            ConexaoInterface conexao = data.getConexaoAplicacao();
+            conexao.setConnectionAtiva(false);
             ComunicacaoRepositorioException falha = new ComunicacaoRepositorioException("Falha para obter conexao com Repositório.");
             falha.addSuppressed(e);
             throw falha;
@@ -140,8 +139,8 @@ public class AtivoRepositorioImplcomJDBC implements AtivoRepositorioInterface {
             String sql = "SELECT sigla_ativo,nome_ativo,descricao_cnpj_ativo FROM ativoobjeto WHERE tipo_ativo = ?";
             log.logInfo(uniqueKey,"Select montado, pega conexão da classe singleton");
 
-            ConexaoConfig config= ConexaoConfig.getInstance();
-            Connection conn = config.getConnection();
+            ConexaoInterface conexao = data.getConexaoAplicacao();
+            Connection conn = conexao.getConnection();
             PreparedStatement stmt = conn.prepareStatement(sql);
             stmt.setInt(1,tipoAtivo);
             ResultSet rs = stmt.executeQuery();
@@ -160,7 +159,8 @@ public class AtivoRepositorioImplcomJDBC implements AtivoRepositorioInterface {
             LogInterface log = data.getLoggingInterface();
             String uniqueKey =String.valueOf(data.getUniqueKey());
             log.logError(uniqueKey,"SQL Exception no banco.");
-            ConexaoConfig.getInstance().setConexaoAtiva(false);
+            ConexaoInterface conexao = data.getConexaoAplicacao();
+            conexao.setConnectionAtiva(false);
             ComunicacaoRepositorioException falha = new ComunicacaoRepositorioException("Falha na comunicação com Repositório: AtivoRepositorioImplcomJDBC");
             falha.addSuppressed(e);
             throw falha;
@@ -169,7 +169,8 @@ public class AtivoRepositorioImplcomJDBC implements AtivoRepositorioInterface {
             LogInterface log = data.getLoggingInterface();
             String uniqueKey =String.valueOf(data.getUniqueKey());
             log.logError(uniqueKey,"Falha em buscar conexão com o repositório.");
-            ConexaoConfig.getInstance().setConexaoAtiva(false);
+            ConexaoInterface conexao = data.getConexaoAplicacao();
+            conexao.setConnectionAtiva(false);
             ComunicacaoRepositorioException falha = new ComunicacaoRepositorioException("Falha para obter conexao com Repositório.");
             falha.addSuppressed(e);
             throw falha;

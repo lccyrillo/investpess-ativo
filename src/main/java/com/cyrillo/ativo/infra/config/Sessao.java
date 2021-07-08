@@ -1,6 +1,7 @@
 package com.cyrillo.ativo.infra.config;
 
 import com.cyrillo.ativo.core.dataprovider.AtivoRepositorioInterface;
+import com.cyrillo.ativo.core.dataprovider.ConexaoInterface;
 import com.cyrillo.ativo.core.dataprovider.DataProviderInterface;
 import com.cyrillo.ativo.core.dataprovider.LogInterface;
 
@@ -22,6 +23,11 @@ public class Sessao implements DataProviderInterface {
 
     public LogInterface getLoggingInterface() {
         return this.log;
+    }
+
+    @Override
+    public ConexaoInterface getConexaoAplicacao() {
+        return ConexaoConfig.getInstance();
     }
 
     public AtivoRepositorioInterface getAtivoRepositorio() {

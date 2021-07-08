@@ -1,6 +1,7 @@
 package com.cyrillo.ativo.infra.config;
 
 import com.cyrillo.ativo.core.dataprovider.AtivoRepositorioInterface;
+import com.cyrillo.ativo.core.dataprovider.ConexaoInterface;
 import com.cyrillo.ativo.core.dataprovider.DataProviderInterface;
 import com.cyrillo.ativo.core.dataprovider.LogInterface;
 import com.cyrillo.ativo.infra.config.excecao.PropriedadeInvalidaExcecao;
@@ -31,8 +32,9 @@ public class Aplicacao implements DataProviderInterface {
 
     public void inicializaAplicacao(){
         try {
-            montarListaConfiguracoes();
+            // Carrega configuraçoes da aplicação
             carregarConfiguracoes();
+            // Configura Data Providers (Aplicação e Repositório)
             configurarLogAplicacao();
             this.logAplicacao.logInfo(null,"Inicializando aplicação...");
             configurarRepositorioAplicacao();
@@ -89,6 +91,7 @@ public class Aplicacao implements DataProviderInterface {
 
     private void carregarConfiguracoes() throws PropriedadeInvalidaExcecao  {
         PropriedadeInvalidaExcecao propriedadeInvalidaExcecao;
+        montarListaConfiguracoes();
         try {
             Properties properties = new Properties();
             FileInputStream fis = new FileInputStream("config/config.properties");
@@ -121,6 +124,11 @@ public class Aplicacao implements DataProviderInterface {
 
     public LogInterface getLoggingInterface() {
         return this.logAplicacao;
+    }
+
+    @Override
+    public ConexaoInterface getConexaoAplicacao() {
+        return ConexaoConfig.getInstance();
     }
 
     public AtivoRepositorioInterface getAtivoRepositorio() {
