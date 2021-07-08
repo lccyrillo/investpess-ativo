@@ -47,28 +47,16 @@ public class ConexaoConfig implements ConexaoInterface {
         this.conexaoAtiva = conexaoAtiva;
     }
 
-    // Ainda precisa ser refatorada para pegar configuraçoes da aplicacao
     private void geraConexao() throws SQLException, ClassNotFoundException  {
         if (! conexaoAtiva) {
-            // variaveis de anbiente recebidas pelo Docker
-            String db_host = System.getenv("DB_HOST");
-            String db_port = System.getenv("DB_PORT");
-            if (db_host == null) {
-                db_host = "localhost"; //ambiente local
-            }
-            if (db_port == null) {
-                db_port = "5433"; // ambiente local
-            }
-            String url = "jdbc:postgresql://" + db_host + ":" + db_port + "/investpess_ativo";
+
+            String url = Aplicacao.getInstance().getStringConexaoBD();
             System.out.println("URL" + url);
-
-            // produção - String url = "jdbc:postgresql://db:5432/investpess_ativo";
-            // dev - String url = "jdbc:postgresql://localhost:5433/investpess_ativo";
-
             Class.forName("org.postgresql.Driver");
-            this.conexaoBD = DriverManager.getConnection(url, "postgres",null);
+            this.conexaoBD = DriverManager.getConnection(url,Aplicacao.getInstance().getUserDB(), Aplicacao.getInstance().getPasswordDB());
             this.conexaoAtiva = true;
         }
     }
+
 
 }

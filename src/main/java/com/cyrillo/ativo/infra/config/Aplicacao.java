@@ -22,10 +22,16 @@ public class Aplicacao implements DataProviderInterface {
     private static Aplicacao instance;
     private LogInterface logAplicacao;
     private AtivoRepositorioInterface ativoRepositorio;
-    private String RepoImplementacao;
+    private String repoImplementacao;
     private String logImplementacao;
     private List<String> propriedadeLog; // lista de todos os domínios possíveis para a propriedade de log.
     private List<String> propriedadeRepo;// lista de todos os domínios possíveis para a propriedade de log.
+    // Parametros de conexao com banco de dados
+    private String db_host;
+    private String db_port;
+    private String stringConexaoBD;
+    private String userDB;
+    private String passwordDB;
 
     private Aplicacao(){
     }
@@ -50,7 +56,12 @@ public class Aplicacao implements DataProviderInterface {
     }
 
     public String getConfiguracoesAplicacao(){
-        return "Repo: " + RepoImplementacao + " Log: " +logImplementacao ;
+        if (repoImplementacao.equals("postgres")){
+            return "Repo:" + repoImplementacao + " DB_Host:" +db_host +  " DB_Port:" + db_port  +  " User:" +userDB + " String Conexao:" + stringConexaoBD +" Log: " +logImplementacao;
+        }
+        else {
+            return "Repo:" + repoImplementacao + " Log:" +logImplementacao;
+        }
     }
 
     public static Aplicacao getInstance(){
@@ -65,7 +76,7 @@ public class Aplicacao implements DataProviderInterface {
     }
 
     private void configurarRepositorioAplicacao() {
-        if (this.RepoImplementacao.equals("postgres")){
+        if (this.repoImplementacao.equals("postgres")){
             this.ativoRepositorio = new AtivoRepositorioImplcomJDBC();
         }
         else {
@@ -92,12 +103,13 @@ public class Aplicacao implements DataProviderInterface {
     private void carregarConfiguracoes() throws PropriedadeInvalidaExcecao  {
         PropriedadeInvalidaExcecao propriedadeInvalidaExcecao;
         montarListaConfiguracoes();
+        carregarConfigBancoDados();
         try {
             Properties properties = new Properties();
             FileInputStream fis = new FileInputStream("config/config.properties");
             properties.load(fis);
             this.logImplementacao = properties.getProperty("log.implementacao");
-            this.RepoImplementacao = properties.getProperty("repositorio.implementacao");
+            this.repoImplementacao = properties.getProperty("repositorio.implementacao");
             this.validarConfiguracoes();
         }
         catch (FileNotFoundException e) {
@@ -117,7 +129,7 @@ public class Aplicacao implements DataProviderInterface {
         if ( ! propriedadeLog.contains(logImplementacao)){
             throw new PropriedadeInvalidaExcecao("Propriedade: log.implementacao inválida.");
         }
-        if ( ! propriedadeRepo.contains(RepoImplementacao)){
+        if ( ! propriedadeRepo.contains(repoImplementacao)){
             throw new PropriedadeInvalidaExcecao("Propriedade: repositorio.implementacao inválida.");
         }
     }
@@ -149,4 +161,40 @@ public class Aplicacao implements DataProviderInterface {
     public UUID getUniqueKey(){
         return null;
     }
+
+
+    private void carregarConfigBancoDados() {
+
+        // Carrega variávieis de ambiente recebidas pelo Docker
+        this.db_host = System.getenv("DB_HOST");
+        this.db_port = System.getenv("DB_PORT");
+        // Se não conseguir carregar variáveis do docker, set variáveis de ambiente de desenvolvimento local
+        if (db_host == null) {
+            db_host = "localhost"; //ambiente local
+        }
+        if (db_port == null) {
+            db_port = "5433"; // ambiente local
+        }
+        this.stringConexaoBD = "jdbc:postgresql://" + db_host + ":" + db_port + "/investpess_ativo";
+        this.userDB = "postgres";
+        this.passwordDB = null;
+
+        // produção - String url = "jdbc:postgresql://db:5432/investpess_ativo";
+        // dev - String url = "jdbc:postgresql://localhost:5433/investpess_ativo";
+        // dev - String url = "jdbc:postgresql://localhost:5433/investpess_ativo";
+    }
+
+
+    public String getStringConexaoBD() {
+        return stringConexaoBD;
+    }
+
+    public String getUserDB() {
+        return userDB;
+    }
+
+    public String getPasswordDB() {
+        return passwordDB;
+    }
+
 }
