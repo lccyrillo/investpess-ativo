@@ -40,7 +40,7 @@ public class Aplicacao implements DataProviderInterface {
             configurarRepositorioAplicacao();
             this.logAplicacao.logInfo(null,"Propriedades de configuração da aplicação carregadas!");
             this.logAplicacao.logInfo(null,getConfiguracoesAplicacao());
-            // Cria o servidor GRPC
+            // Levanta o servidor GRPC
             AtivoServerGRPC var = new AtivoServerGRPC();
         }
         catch (Exception e){

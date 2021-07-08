@@ -5,6 +5,7 @@ import com.cyrillo.ativo.core.usecase.excecao.ComunicacaoRepositorioException;
 
 import java.util.List;
 
+// Acerto exceção
 public interface AtivoRepositorioInterface {
     void incluir(DataProviderInterface data, AtivoDtoInterface ativoObjeto) throws ComunicacaoRepositorioException;
     boolean consultarPorSigla(DataProviderInterface data, String siglaAtivo) throws ComunicacaoRepositorioException;

@@ -43,11 +43,11 @@ public class ConexaoConfig implements ConexaoInterface {
         return this.conexaoBD;
     }
 
-    @Override
     public void setConnectionAtiva(boolean conexaoAtiva)  {
         this.conexaoAtiva = conexaoAtiva;
     }
 
+    // Ainda precisa ser refatorada para pegar configuraçoes da aplicacao
     private void geraConexao() throws SQLException, ClassNotFoundException  {
         if (! conexaoAtiva) {
             // variaveis de anbiente recebidas pelo Docker

@@ -31,7 +31,7 @@ public class AtivoRepositorioImplcomJDBC implements AtivoRepositorioInterface {
             int tipo_ativo = ativoObjeto.getTipoAtivoInt();
 
             log.logInfo(uniqueKey,"Dados do ativo identificados.");
-            // consulta no banco postgresql
+            // consulta no banco de dados do repositório
 
             String sql = "INSERT INTO ativoobjeto (sigla_ativo,nome_ativo,descricao_cnpj_ativo,tipo_ativo)";
             sql = sql + " VALUES ('" + sigla_ativo + "','" + nome_ativo + "','" + descricao_cnpj_ativo + "'," + String.valueOf(tipo_ativo)+")";

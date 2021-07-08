@@ -25,7 +25,6 @@ public class Sessao implements DataProviderInterface {
         return this.log;
     }
 
-    @Override
     public ConexaoInterface getConexaoAplicacao() {
         return ConexaoConfig.getInstance();
     }
