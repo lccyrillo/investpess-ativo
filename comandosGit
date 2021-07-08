@@ -15,7 +15,7 @@
 --> adiciono os arquivos necessários
 >> git add .
 --> faço um commit
->> git commit -a -m "CYRILLO_IMPROVE_0002 - Acertas as exceções do projeto. Cada camada tem suas exceções."
+>> git commit -a -m "CYRILLO_IMPROVE_0003 - Classe use case de cadastro de ativos não está com logs adequados. Acertar flowid."
 --> mandar para o repositorio remoto
 >> git push origin testes_unitarios
 
