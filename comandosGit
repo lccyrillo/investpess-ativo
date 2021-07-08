@@ -15,7 +15,7 @@
 --> adiciono os arquivos necessários
 >> git add .
 --> faço um commit
->> git commit -a -m "CYRILLO_IMPROVE_0003 - Classe use case de cadastro de ativos não está com logs adequados. Acertar flowid."
+>> git commit -a -m "CYRILLO_IMPROVE_0004 Refatorar a classe Config. Conexao. Encapsular no objeto aplicação como interface para tirar acoplamento."
 --> mandar para o repositorio remoto
 >> git push origin testes_unitarios
 
