@@ -1,12 +1,11 @@
 package com.cyrillo.ativo.infra.dataprovider;
 
-import com.cyrillo.ativo.core.dataprovider.dto.AtivoDto;
 import com.cyrillo.ativo.core.dataprovider.AtivoDtoInterface;
 import com.cyrillo.ativo.core.dataprovider.AtivoRepositorioInterface;
 import com.cyrillo.ativo.core.dataprovider.DataProviderInterface;
 import com.cyrillo.ativo.core.dataprovider.LogInterface;
+import com.cyrillo.ativo.core.dataprovider.dto.AtivoDto;
 import com.cyrillo.ativo.core.usecase.excecao.ComunicacaoRepositorioException;
-import com.cyrillo.ativo.infra.config.Aplicacao;
 import com.cyrillo.ativo.infra.config.ConexaoConfig;
 import com.cyrillo.ativo.infra.config.excecao.FalhaObterConexaoRepositorioExcecao;
 
@@ -26,43 +25,45 @@ public class AtivoRepositorioImplcomJDBC implements AtivoRepositorioInterface {
         // Essa camada deveria conhecer apenas use case
 
         try {
-            LogInterface logInterface = Aplicacao.getInstance().getLoggingInterface();
+            LogInterface log = data.getLoggingInterface();
+            String uniqueKey =String.valueOf(data.getUniqueKey());
 
-            logInterface.logInfo(null,"Iniciando Repositorio que cadastra o ativo.");
+
+            log.logInfo(uniqueKey,"Iniciando Repositorio que cadastra o ativo.");
             String sigla_ativo = ativoObjeto.getSigla().toUpperCase();
             String nome_ativo = ativoObjeto.getNomeAtivo();
             String descricao_cnpj_ativo = ativoObjeto.getDescricaoCNPJAtivo();
             int tipo_ativo = ativoObjeto.getTipoAtivoInt();
 
-            logInterface.logInfo(null,"Dados do ativo identifocados");
+            log.logInfo(uniqueKey,"Dados do ativo identificados.");
             // consulta no banco postgresql
 
             String sql = "INSERT INTO ativoobjeto (sigla_ativo,nome_ativo,descricao_cnpj_ativo,tipo_ativo)";
             sql = sql + " VALUES ('" + sigla_ativo + "','" + nome_ativo + "','" + descricao_cnpj_ativo + "'," + String.valueOf(tipo_ativo)+")";
 
-            //String sql = "INSERT INTO ativoobjeto (sigla_ativo,nome_ativo,descricao_cnpj_ativo,tipo_ativo) VALUES (?,?,?,?)";
-            //PreparedStatement ps = conn.prepareStatement(sql);
-            //ps.setString(1,sigla_ativo);
-            //ps.execute();
-
-            logInterface.logInfo(null,"Insert montado, pega conexão da classe singleton");
+            log.logInfo(uniqueKey,"Insert montado, pega conexão da classe singleton.");
 
             ConexaoConfig config =ConexaoConfig.getInstance();
             Connection conn = config.getConnection();
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.execute();
-            logInterface.logInfo(null,"Executou o sql");
-            logInterface.logInfo(null,"Ativo: " + nome_ativo + " cadastrado!");
+            log.logInfo(uniqueKey,"Ativo: " + nome_ativo + " cadastrado!");
         }
         catch (SQLException e) {
+            LogInterface log = data.getLoggingInterface();
+            String uniqueKey =String.valueOf(data.getUniqueKey());
             ConexaoConfig.getInstance().setConexaoAtiva(false);
             ComunicacaoRepositorioException falha = new ComunicacaoRepositorioException("Falha na comunicação com Repositório: AtivoRepositorioImplcomJDBC");
             falha.addSuppressed(e);
+            log.logError(uniqueKey,"Erro na comunicação com repositório. SQL Exception.");
             throw falha;
         }
         catch (FalhaObterConexaoRepositorioExcecao e) {
+            LogInterface log = data.getLoggingInterface();
+            String uniqueKey =String.valueOf(data.getUniqueKey());
             ConexaoConfig.getInstance().setConexaoAtiva(false);
             ComunicacaoRepositorioException falha = new ComunicacaoRepositorioException("Falha para obter conexao com Repositório.");
+            log.logError(uniqueKey,"Erro na comunicação com repositório. FalhaObterConexaoRepositorioExcecao.");
             falha.addSuppressed(e);
             throw falha;
         }
