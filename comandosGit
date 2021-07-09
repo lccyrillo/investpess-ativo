@@ -15,7 +15,7 @@
 --> adiciono os arquivos necessários
 >> git add .
 --> faço um commit
->> git commit -a -m "CYRILLO_IMPROVE_0005 - Evoluir API GRPC de consulta Ativos"
+>> git commit -a -m "CYRILLO_FIX_0002 - Corrigir a consulta de lista de ativos que esta permitindo buscar por tipo de ativo inexistente."
 --> mandar para o repositorio remoto
 >> git push origin testes_unitarios
 
