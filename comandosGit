@@ -15,7 +15,7 @@
 --> adiciono os arquivos necessários
 >> git add .
 --> faço um commit
->> git commit -a -m "CYRILLO_FIX_0002 - Corrigir a consulta de lista de ativos que esta permitindo buscar por tipo de ativo inexistente."
+>> git commit -a -m "CYRILLO_FEAT_0001 - Montar Api de Health check"
 --> mandar para o repositorio remoto
 >> git push origin testes_unitarios
 
