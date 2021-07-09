@@ -2,6 +2,7 @@ package com.cyrillo.ativo.infra.entrypoint.servicogrpc;
 
 import com.cyrillo.ativo.core.dataprovider.AtivoDtoInterface;
 import com.cyrillo.ativo.core.dataprovider.LogInterface;
+import com.cyrillo.ativo.core.usecase.excecao.AtivoParametrosInvalidosException;
 import com.cyrillo.ativo.core.usecase.excecao.ComunicacaoRepositorioException;
 import com.cyrillo.ativo.core.usecase.ListarAtivosPorTipo;
 import com.cyrillo.ativo.infra.config.Sessao;
@@ -19,6 +20,7 @@ public class ConsultaListaAtivoService extends ConsultaListaAtivoServiceGrpc.Con
         // 200 - Lista gerada com sucesso
         // 201 - Lista vazia
         // 401 - Erro na comunicação com repositório
+        // 402 - Tipo Ativo inválido enviado na consulta
         // 500 - Erro técnico não identificado.
 
         String msgResultado;
@@ -49,6 +51,10 @@ public class ConsultaListaAtivoService extends ConsultaListaAtivoServiceGrpc.Con
         catch (ComunicacaoRepositorioException e) {
             codResultado = 401;
             msgResultado = "Erro na comunicação com o Repositório!";
+        }
+        catch (AtivoParametrosInvalidosException e) {
+            codResultado = 402;
+            msgResultado = "Tipo Ativo inválido enviado na consulta";
         }
         catch(Exception e){
             codResultado = 500;
