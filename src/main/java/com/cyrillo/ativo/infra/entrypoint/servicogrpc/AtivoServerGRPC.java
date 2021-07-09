@@ -24,6 +24,7 @@ public class AtivoServerGRPC {
             List<ServerServiceDefinition> lista = new ArrayList<>();
             lista.add(new ConsultaListaAtivoService().bindService());
             lista.add(new CadastraAtivoObjetoService().bindService());
+            lista.add(new HealthCheckService().bindService());
             Server server = ServerBuilder.forPort(50051)
                     .addServices(lista)
                     .build()

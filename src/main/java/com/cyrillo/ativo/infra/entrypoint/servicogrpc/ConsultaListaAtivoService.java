@@ -2,9 +2,9 @@ package com.cyrillo.ativo.infra.entrypoint.servicogrpc;
 
 import com.cyrillo.ativo.core.dataprovider.AtivoDtoInterface;
 import com.cyrillo.ativo.core.dataprovider.LogInterface;
+import com.cyrillo.ativo.core.usecase.ListarAtivosPorTipo;
 import com.cyrillo.ativo.core.usecase.excecao.AtivoParametrosInvalidosException;
 import com.cyrillo.ativo.core.usecase.excecao.ComunicacaoRepositorioException;
-import com.cyrillo.ativo.core.usecase.ListarAtivosPorTipo;
 import com.cyrillo.ativo.infra.config.Sessao;
 import com.cyrillo.ativo.infra.entrypoint.servicogrpc.ativoobjetoproto.AtivoObjeto;
 import com.cyrillo.ativo.infra.entrypoint.servicogrpc.ativoobjetoproto.ConsultaListaAtivoRequest;
@@ -12,7 +12,8 @@ import com.cyrillo.ativo.infra.entrypoint.servicogrpc.ativoobjetoproto.ConsultaL
 import com.cyrillo.ativo.infra.entrypoint.servicogrpc.ativoobjetoproto.ConsultaListaAtivoServiceGrpc;
 import io.grpc.stub.StreamObserver;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ConsultaListaAtivoService extends ConsultaListaAtivoServiceGrpc.ConsultaListaAtivoServiceImplBase {
     @Override
@@ -75,15 +76,16 @@ public class ConsultaListaAtivoService extends ConsultaListaAtivoServiceGrpc.Con
     private List<AtivoObjeto> gerarListaAtivoObjeto(List<AtivoDtoInterface> lista){
         // preciso verificar o tamanho da lista
         List<AtivoObjeto> listaAtivoObjeto = new ArrayList<AtivoObjeto>();
-        for (int i = 0; i < lista.size(); i++) {
+        for (AtivoDtoInterface ativoDtoInterface : lista) {
             AtivoObjeto ativoObjeto = AtivoObjeto.newBuilder().
-                    setTipoAtivo(lista.get(i).getTipoAtivoInt()).
-                    setDescricaoCnpjAtivo(lista.get(i).getDescricaoCNPJAtivo()).
-                    setNomeAtivo(lista.get(i).getNomeAtivo()).
-                    setSiglaAtivo(lista.get(i).getSigla()).
+                    setTipoAtivo(ativoDtoInterface.getTipoAtivoInt()).
+                    setDescricaoCnpjAtivo(ativoDtoInterface.getDescricaoCNPJAtivo()).
+                    setNomeAtivo(ativoDtoInterface.getNomeAtivo()).
+                    setSiglaAtivo(ativoDtoInterface.getSigla()).
                     build();
             listaAtivoObjeto.add(ativoObjeto);
         }
+
         return listaAtivoObjeto;
     }
 }
