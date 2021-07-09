@@ -26,8 +26,6 @@ public class AtivoServerGRPC {
             lista.add(new CadastraAtivoObjetoService().bindService());
             Server server = ServerBuilder.forPort(50051)
                     .addServices(lista)
-                    //.addService(new ConsultaListaAtivoService())
-                    //.addService(new CadastraAtivoObjetoService())
                     .build()
                     .start();
             Runtime.getRuntime().addShutdownHook(new Thread( () -> {
@@ -37,7 +35,6 @@ public class AtivoServerGRPC {
 
             }  ));
             log.logInfo(null,"Servidor GRPC inicializado com sucesso!");
-            log.logInfo(null,"Inicializando Servidor GRPC.");
             List<ServerServiceDefinition> lista2 = server.getServices();
             String mensagem = "Serviços disponíveis: ";
             for (int i =0; i <lista.size(); i++) {
