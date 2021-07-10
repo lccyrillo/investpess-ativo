@@ -3,12 +3,11 @@ package com.cyrillo.ativo.infra.entrypoint.servicogrpc;
 import com.cyrillo.ativo.core.dataprovider.AtivoDtoInterface;
 import com.cyrillo.ativo.core.dataprovider.DataProviderInterface;
 import com.cyrillo.ativo.core.dataprovider.LogInterface;
-import com.cyrillo.ativo.core.usecase.IncluirNovoAtivo;
-import com.cyrillo.ativo.core.usecase.ListarAtivosPorTipo;
 import com.cyrillo.ativo.core.usecase.excecao.AtivoJaExistenteUseCaseExcecao;
 import com.cyrillo.ativo.core.usecase.excecao.AtivoParametrosInvalidosUseCaseExcecao;
 import com.cyrillo.ativo.core.usecase.excecao.ComunicacaoRepoUseCaseExcecao;
 import com.cyrillo.ativo.infra.entrypoint.servicogrpc.ativoobjetoproto.*;
+import com.cyrillo.ativo.infra.facade.FacadeAtivo;
 import io.grpc.stub.StreamObserver;
 
 import java.util.ArrayList;
@@ -45,8 +44,7 @@ public class AtivoServerService extends AtivoServerServiceGrpc.AtivoServerServic
         log.logInfo(uniqueKey,"Dados do ativo identificados.");
 
         try {
-            IncluirNovoAtivo incluirNovoAtivo = new IncluirNovoAtivo();
-            incluirNovoAtivo.executar(dataProvider,sigla_ativo,nome_ativo,descricao_cnpj_ativo,tipo_ativo);
+            new FacadeAtivo().executarIncluirNovoAtivo(dataProvider,sigla_ativo,nome_ativo,descricao_cnpj_ativo,tipo_ativo);
             codResultado = 200;
             msgResultado = "Ativo: " + nome_ativo + " cadastrado!";
         }
@@ -96,8 +94,7 @@ public class AtivoServerService extends AtivoServerServiceGrpc.AtivoServerServic
 
         try {
             // use case
-            ListarAtivosPorTipo listarAtivosPorTipo = new ListarAtivosPorTipo();
-            lista = listarAtivosPorTipo.executar(dataProvider,tipoAtivo);
+            lista = new FacadeAtivo().executarListarAtivosPorTipo(dataProvider,tipoAtivo);
             if (lista.size() == 0) {
                 codResultado = 201;
                 msgResultado = "Lista Vazia.";
