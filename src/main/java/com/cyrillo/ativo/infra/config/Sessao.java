@@ -26,6 +26,11 @@ public class Sessao implements DataProviderInterface {
         return Aplicacao.getInstance().healthCheckOk(data);
     }
 
+    @Override
+    public int getTimeOutDefault() {
+        return Aplicacao.getInstance().getTimeOutDefault();
+    }
+
 
     public LogInterface getLoggingInterface() {
         return this.log;

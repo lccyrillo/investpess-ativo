@@ -22,6 +22,7 @@ public class Aplicacao implements DataProviderInterface {
     private static Aplicacao instance;
     private LogInterface logAplicacao;
     private AtivoRepositorioInterface ativoRepositorio;
+    private int defaultTimeoutRepo;
     private String repoImplementacao;
     private String logImplementacao;
     private List<String> propriedadeLog; // lista de todos os domínios possíveis para a propriedade de log.
@@ -110,6 +111,7 @@ public class Aplicacao implements DataProviderInterface {
             properties.load(fis);
             this.logImplementacao = properties.getProperty("log.implementacao");
             this.repoImplementacao = properties.getProperty("repositorio.implementacao");
+            this.defaultTimeoutRepo = Integer.parseInt(properties.getProperty("repositorio.timeout"));
             this.validarConfiguracoes();
         }
         catch (FileNotFoundException e) {
@@ -123,6 +125,11 @@ public class Aplicacao implements DataProviderInterface {
             propriedadeInvalidaConfigExcecao.addSuppressed(e);
             throw propriedadeInvalidaConfigExcecao;
         }
+        catch (Exception e) {
+            propriedadeInvalidaConfigExcecao = new PropriedadeInvalidaConfigExcecao("Não foi possível carregar o arquivo de configuração: config.properties");
+            propriedadeInvalidaConfigExcecao.addSuppressed(e);
+            throw propriedadeInvalidaConfigExcecao;
+        }
     }
 
     private void validarConfiguracoes() throws PropriedadeInvalidaConfigExcecao {
@@ -132,6 +139,10 @@ public class Aplicacao implements DataProviderInterface {
         if ( ! propriedadeRepo.contains(repoImplementacao)){
             throw new PropriedadeInvalidaConfigExcecao("Propriedade: repositorio.implementacao inválida.");
         }
+        if ( defaultTimeoutRepo <=0 ){
+            throw new PropriedadeInvalidaConfigExcecao("Propriedade: repositorio.timeout inválida.");
+        }
+
     }
 
     public LogInterface getLoggingInterface() {
@@ -173,6 +184,11 @@ public class Aplicacao implements DataProviderInterface {
             data.getConexaoAplicacao().setConnectionAtiva(false);
             return false;
         }
+    }
+
+    @Override
+    public int getTimeOutDefault() {
+        return defaultTimeoutRepo;
     }
 
 

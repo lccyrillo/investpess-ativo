@@ -9,4 +9,5 @@ public interface DataProviderInterface {
     public AtivoRepositorioInterface getAtivoRepositorio();
     public UUID getUniqueKey();
     public boolean healthCheckOk(DataProviderInterface data);
+    public int getTimeOutDefault();
 }
