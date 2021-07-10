@@ -44,16 +44,19 @@ public class IncluirNovoAtivo {
         }
         catch (ParametroCNPJInvalidoEntExcecao e){
             log.logError(uniqueKey,"CNPJ Inválido");
+            e.printStackTrace();
             throw new AtivoParametrosInvalidosUseCaseExcecao("CNPJ Inválido");
         }
         catch (ParametroTipoInvalidoEntExcecao e){
             log.logError(uniqueKey,"Tipo Inválido");
+            e.printStackTrace();
             throw new AtivoParametrosInvalidosUseCaseExcecao("Tipo Inválido");
         }
-        catch (ComunicacaoRepoDataProvExcecao comunicacaoRepoDataProvExcecao) {
+        catch (ComunicacaoRepoDataProvExcecao e) {
             ComunicacaoRepoUseCaseExcecao falha = new ComunicacaoRepoUseCaseExcecao("Falha na comunicação do Use Case com Repositório: AtivoRepositorio");
-            falha.addSuppressed(comunicacaoRepoDataProvExcecao);
+            falha.addSuppressed(e);
             log.logError(uniqueKey, "Erro na comunicação com repositório.");
+            e.printStackTrace();
             throw falha;
         }
     }

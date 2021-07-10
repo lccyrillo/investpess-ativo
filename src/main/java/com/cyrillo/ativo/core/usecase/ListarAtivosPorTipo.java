@@ -27,15 +27,17 @@ public class ListarAtivosPorTipo {
             }
             return listaAtivos;
         } catch (ParametroTipoInvalidoEntExcecao e) {
-            log.logError(uniqueKey,"Tipo de Ativo Inválido");
             AtivoParametrosInvalidosUseCaseExcecao falha = new AtivoParametrosInvalidosUseCaseExcecao("Tipo de Ativo inválido!");
             falha.addSuppressed(e);
+            log.logError(uniqueKey,"Tipo de Ativo Inválido");
+            e.printStackTrace();
             throw falha;
         }
-        catch (ComunicacaoRepoDataProvExcecao comunicacaoRepoDataProvExcecao) {
+        catch (ComunicacaoRepoDataProvExcecao e) {
             ComunicacaoRepoUseCaseExcecao falha = new ComunicacaoRepoUseCaseExcecao("Falha na comunicação do Use Case com Repositório: AtivoRepositorio");
-            falha.addSuppressed(comunicacaoRepoDataProvExcecao);
+            falha.addSuppressed(e);
             log.logError(uniqueKey, "Erro na comunicação com repositório.");
+            e.printStackTrace();
             throw falha;
         }
     }
