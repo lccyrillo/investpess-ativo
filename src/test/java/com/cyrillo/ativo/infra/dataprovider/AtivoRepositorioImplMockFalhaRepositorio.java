@@ -25,8 +25,8 @@ public class AtivoRepositorioImplMockFalhaRepositorio implements AtivoRepositori
     }
 
     @Override
-    public List<AtivoDtoInterface> listarAtivosPorTipo(DataProviderInterface data,int tipoAtivo) {
-        return null;
+    public List<AtivoDtoInterface> listarAtivosPorTipo(DataProviderInterface data,int tipoAtivo) throws ComunicacaoRepoDataProvExcecao {
+        throw new ComunicacaoRepoDataProvExcecao("Falha comunicação Repositório");
     }
 
     @Override
