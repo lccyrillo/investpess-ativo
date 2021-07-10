@@ -31,6 +31,11 @@ public class Sessao implements DataProviderInterface {
         return Aplicacao.getInstance().getTimeOutDefault();
     }
 
+    @Override
+    public DataProviderInterface geraSessao() {
+        return this;
+    }
+
 
     public LogInterface getLoggingInterface() {
         return this.log;

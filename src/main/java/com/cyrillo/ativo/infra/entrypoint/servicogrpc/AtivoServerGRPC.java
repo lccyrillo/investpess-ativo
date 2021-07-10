@@ -1,5 +1,6 @@
 package com.cyrillo.ativo.infra.entrypoint.servicogrpc;
 
+import com.cyrillo.ativo.core.dataprovider.DataProviderInterface;
 import com.cyrillo.ativo.core.dataprovider.LogInterface;
 import com.cyrillo.ativo.infra.config.Aplicacao;
 import io.grpc.*;
@@ -9,7 +10,10 @@ import java.util.List;
 
 
 public class AtivoServerGRPC {
-    public AtivoServerGRPC() {
+    private DataProviderInterface data;
+
+    public AtivoServerGRPC(DataProviderInterface dataProviderInterface) {
+        this.data = dataProviderInterface;
         this.inicializaAtivoServer();
     }
 
@@ -20,7 +24,7 @@ public class AtivoServerGRPC {
 
         try {
             List<ServerServiceDefinition> lista = new ArrayList<>();
-            lista.add(new AtivoServerService().bindService());
+            lista.add(new AtivoServerService(this.data).bindService());
             lista.add(new HealthCheckService().bindService());
             Server server = ServerBuilder.forPort(50051)
                     .addServices(lista)

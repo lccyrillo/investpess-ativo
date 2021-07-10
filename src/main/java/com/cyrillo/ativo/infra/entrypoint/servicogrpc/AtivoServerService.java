@@ -1,13 +1,13 @@
 package com.cyrillo.ativo.infra.entrypoint.servicogrpc;
 
 import com.cyrillo.ativo.core.dataprovider.AtivoDtoInterface;
+import com.cyrillo.ativo.core.dataprovider.DataProviderInterface;
 import com.cyrillo.ativo.core.dataprovider.LogInterface;
 import com.cyrillo.ativo.core.usecase.IncluirNovoAtivo;
 import com.cyrillo.ativo.core.usecase.ListarAtivosPorTipo;
 import com.cyrillo.ativo.core.usecase.excecao.AtivoJaExistenteUseCaseExcecao;
 import com.cyrillo.ativo.core.usecase.excecao.AtivoParametrosInvalidosUseCaseExcecao;
 import com.cyrillo.ativo.core.usecase.excecao.ComunicacaoRepoUseCaseExcecao;
-import com.cyrillo.ativo.infra.config.Sessao;
 import com.cyrillo.ativo.infra.entrypoint.servicogrpc.ativoobjetoproto.*;
 import io.grpc.stub.StreamObserver;
 
@@ -15,6 +15,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AtivoServerService extends AtivoServerServiceGrpc.AtivoServerServiceImplBase {
+    private DataProviderInterface data;
+
+    public AtivoServerService(DataProviderInterface dataProviderInterface){
+        this.data = dataProviderInterface;
+    }
+
     @Override
     public void cadastraAtivoObjeto(CadastraAtivoObjetoRequest request, StreamObserver<CadastraAtivoObjetoResponse> responseObserver) {
         // 101 - Já existe ativo com essa sigla
@@ -24,7 +30,7 @@ public class AtivoServerService extends AtivoServerServiceGrpc.AtivoServerServic
         String msgResultado;
         int codResultado;
 
-        Sessao dataProvider = new Sessao();
+        DataProviderInterface dataProvider = data.geraSessao();
         String uniqueKey = String.valueOf(dataProvider.getUniqueKey());
         LogInterface log = dataProvider.getLoggingInterface();
 
@@ -67,6 +73,7 @@ public class AtivoServerService extends AtivoServerServiceGrpc.AtivoServerServic
         responseObserver.onNext(response);
         responseObserver.onCompleted();
     }
+
     @Override
     public void consultaListaAtivo(ConsultaListaAtivoRequest request, StreamObserver<ConsultaListaAtivoResponse> responseObserver) {
         // 200 - Lista gerada com sucesso
@@ -78,7 +85,7 @@ public class AtivoServerService extends AtivoServerServiceGrpc.AtivoServerServic
         String msgResultado;
         int codResultado;
 
-        Sessao dataProvider = new Sessao();
+        DataProviderInterface dataProvider = data.geraSessao();
         String uniqueKey = String.valueOf(dataProvider.getUniqueKey());
         LogInterface log = dataProvider.getLoggingInterface();
         List<AtivoDtoInterface> lista = null;

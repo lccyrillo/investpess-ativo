@@ -46,7 +46,7 @@
 --> equalizo com a developer
 >> git pull origin developer
 --> faço qualquer alteração e comito
->> git commit -a -m "CYRILLO_IMPROVE_0010 - Melhorar classe de repositorio JDBC, melhorar string SQL, com statement preparado."
+>> git commit -a -m "CYRILLO_IMPROVE_0011 Adequar arquitetura Clean. Entrypoint não pode conhecer objeto sessão. Transformar em interface Data provider"
 --> manda para o repositorio remoto (o repositorio remoto é criado)
 >> git push origin refatoracao_entities
 --> posso vincular meu branch local ao branch remoto

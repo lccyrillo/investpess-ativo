@@ -48,7 +48,7 @@ public class Aplicacao implements DataProviderInterface {
             this.logAplicacao.logInfo(null,"Propriedades de configuração da aplicação carregadas!");
             this.logAplicacao.logInfo(null,getConfiguracoesAplicacao());
             // Levanta o servidor GRPC
-            AtivoServerGRPC var = new AtivoServerGRPC();
+            AtivoServerGRPC var = new AtivoServerGRPC(this);
         }
         catch (Exception e){
             System.out.println("Não foi possível inicializar a aplicação.");
@@ -224,6 +224,10 @@ public class Aplicacao implements DataProviderInterface {
 
     public String getPasswordDB() {
         return passwordDB;
+    }
+
+    public DataProviderInterface geraSessao(){
+        return new Sessao();
     }
 
 
