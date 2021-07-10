@@ -35,18 +35,19 @@ public class AtivoRepositorioImplcomJDBC implements AtivoRepositorioInterface {
             // consulta no banco de dados do repositório
 
             String sql = "INSERT INTO ativoobjeto (sigla_ativo,nome_ativo,descricao_cnpj_ativo,tipo_ativo)";
-            sql = sql + " VALUES ('" + sigla_ativo + "','" + nome_ativo + "','" + descricao_cnpj_ativo + "'," + String.valueOf(tipo_ativo) + ")";
+            sql = sql + " VALUES (?,?,?,?)";
 
-            // teste para gerar timeout
             //String sql = "SELECT pg_sleep(5); INSERT INTO ativoobjeto (sigla_ativo,nome_ativo,descricao_cnpj_ativo,tipo_ativo)";
-            //sql = sql + " VALUES ('" + sigla_ativo + "','" + nome_ativo + "','" + descricao_cnpj_ativo + "'," + String.valueOf(tipo_ativo) + ")";
-
+            //sql = sql + " VALUES (?,?,?,?)";
 
             log.logInfo(uniqueKey, "Insert montado, pega conexão da classe singleton.");
-
             ConexaoInterface conexao = data.getConexaoAplicacao();
             Connection conn = conexao.getConnection();
             PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setString(1, sigla_ativo);
+            ps.setString(2, nome_ativo);
+            ps.setString(3, descricao_cnpj_ativo);
+            ps.setInt(4, tipo_ativo);
             ps.setQueryTimeout(data.getTimeOutDefault());
             ps.execute();
             log.logInfo(uniqueKey, "Ativo: " + nome_ativo + " cadastrado!");
@@ -83,16 +84,17 @@ public class AtivoRepositorioImplcomJDBC implements AtivoRepositorioInterface {
 
             // preciso transforma siglaativo em maiusculo
             siglaAtivo = siglaAtivo.toUpperCase();
-            String sql = "SELECT count(sigla_ativo) as qtd_ativos FROM ativoobjeto WHERE sigla_ativo='" + siglaAtivo + "'";
-            //String sql = "SELECT pg_sleep(5), count(sigla_ativo) as qtd_ativos FROM ativoobjeto WHERE sigla_ativo='" + siglaAtivo + "'";
+            String sql = "SELECT count(sigla_ativo) as qtd_ativos FROM ativoobjeto WHERE sigla_ativo=?";
+            //String sql = "SELECT pg_sleep(5), count(sigla_ativo) as qtd_ativos FROM ativoobjeto WHERE sigla_ativo=?";
 
             log.logInfo(uniqueKey, "Select montado, pega conexão da classe singleton");
 
             ConexaoInterface conexao = data.getConexaoAplicacao();
             Connection conn = conexao.getConnection();
-            Statement stmt = conn.createStatement();
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setString(1,siglaAtivo);
             stmt.setQueryTimeout(data.getTimeOutDefault());
-            ResultSet rs = stmt.executeQuery(sql);
+            ResultSet rs = stmt.executeQuery();
             rs.next();
             int qtdAtivos = rs.getInt("qtd_ativos");
             rs.close();
