@@ -40,17 +40,11 @@ message ConsultaListaAtivoResponse {
   repeated AtivoObjeto ativos = 3;
 }
 
-
-service CadastraAtivoObjetoService {
+service AtivoServerService {
   //unary
   rpc CadastraAtivoObjeto(CadastraAtivoObjetoRequest) returns (CadastraAtivoObjetoResponse) {};
-}
-
-service ConsultaListaAtivoService {
-  //unary
   rpc ConsultaListaAtivo(ConsultaListaAtivoRequest) returns (ConsultaListaAtivoResponse) {};
 }
-
 
 
 
