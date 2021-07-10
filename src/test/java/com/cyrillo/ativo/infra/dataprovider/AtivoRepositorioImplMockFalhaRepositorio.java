@@ -3,7 +3,7 @@ package com.cyrillo.ativo.infra.dataprovider;
 import com.cyrillo.ativo.core.dataprovider.AtivoDtoInterface;
 import com.cyrillo.ativo.core.dataprovider.AtivoRepositorioInterface;
 import com.cyrillo.ativo.core.dataprovider.DataProviderInterface;
-import com.cyrillo.ativo.core.usecase.excecao.ComunicacaoRepositorioException;
+import com.cyrillo.ativo.core.dataprovider.excecao.ComunicacaoRepoDataProvExcecao;
 
 import java.util.List;
 
@@ -11,12 +11,12 @@ public class AtivoRepositorioImplMockFalhaRepositorio implements AtivoRepositori
     public AtivoRepositorioImplMockFalhaRepositorio(){}
 
     @Override
-    public void incluir(DataProviderInterface data,AtivoDtoInterface ativoObjeto) throws ComunicacaoRepositorioException {
-        throw new ComunicacaoRepositorioException("Falha comunicação Repositório");
+    public void incluir(DataProviderInterface data,AtivoDtoInterface ativoObjeto) throws ComunicacaoRepoDataProvExcecao {
+        throw new ComunicacaoRepoDataProvExcecao("Falha comunicação Repositório");
     }
     @Override
-    public boolean consultarPorSigla(DataProviderInterface data,String siglaAtivo) throws ComunicacaoRepositorioException {
-        throw new ComunicacaoRepositorioException("Falha comunicação Repositório");
+    public boolean consultarPorSigla(DataProviderInterface data,String siglaAtivo) throws ComunicacaoRepoDataProvExcecao {
+        throw new ComunicacaoRepoDataProvExcecao("Falha comunicação Repositório");
     }
 
     @Override
@@ -30,7 +30,7 @@ public class AtivoRepositorioImplMockFalhaRepositorio implements AtivoRepositori
     }
 
     @Override
-    public void healthCheck(DataProviderInterface data) throws ComunicacaoRepositorioException {
+    public void healthCheck(DataProviderInterface data) throws ComunicacaoRepoDataProvExcecao {
 
     }
 }

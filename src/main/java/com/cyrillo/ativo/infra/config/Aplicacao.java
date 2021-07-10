@@ -4,7 +4,7 @@ import com.cyrillo.ativo.core.dataprovider.AtivoRepositorioInterface;
 import com.cyrillo.ativo.core.dataprovider.ConexaoInterface;
 import com.cyrillo.ativo.core.dataprovider.DataProviderInterface;
 import com.cyrillo.ativo.core.dataprovider.LogInterface;
-import com.cyrillo.ativo.infra.config.excecao.PropriedadeInvalidaExcecao;
+import com.cyrillo.ativo.infra.config.excecao.PropriedadeInvalidaConfigExcecao;
 import com.cyrillo.ativo.infra.dataprovider.AtivoRepositorioImplMemoria;
 import com.cyrillo.ativo.infra.dataprovider.AtivoRepositorioImplcomJDBC;
 import com.cyrillo.ativo.infra.dataprovider.LogInterfaceImplConsole;
@@ -100,8 +100,8 @@ public class Aplicacao implements DataProviderInterface {
         this.propriedadeRepo.add("memoria");
     }
 
-    private void carregarConfiguracoes() throws PropriedadeInvalidaExcecao  {
-        PropriedadeInvalidaExcecao propriedadeInvalidaExcecao;
+    private void carregarConfiguracoes() throws PropriedadeInvalidaConfigExcecao {
+        PropriedadeInvalidaConfigExcecao propriedadeInvalidaConfigExcecao;
         montarListaConfiguracoes();
         carregarConfigBancoDados();
         try {
@@ -113,24 +113,24 @@ public class Aplicacao implements DataProviderInterface {
             this.validarConfiguracoes();
         }
         catch (FileNotFoundException e) {
-            propriedadeInvalidaExcecao = new PropriedadeInvalidaExcecao("Não foi possível carregar o arquivo de configuração: config.properties");
-            propriedadeInvalidaExcecao.addSuppressed(e);
-            throw propriedadeInvalidaExcecao;
+            propriedadeInvalidaConfigExcecao = new PropriedadeInvalidaConfigExcecao("Não foi possível carregar o arquivo de configuração: config.properties");
+            propriedadeInvalidaConfigExcecao.addSuppressed(e);
+            throw propriedadeInvalidaConfigExcecao;
 
         }
         catch (IOException e) {
-            propriedadeInvalidaExcecao = new PropriedadeInvalidaExcecao("Não foi possível carregar o arquivo de configuração: config.properties");
-            propriedadeInvalidaExcecao.addSuppressed(e);
-            throw propriedadeInvalidaExcecao;
+            propriedadeInvalidaConfigExcecao = new PropriedadeInvalidaConfigExcecao("Não foi possível carregar o arquivo de configuração: config.properties");
+            propriedadeInvalidaConfigExcecao.addSuppressed(e);
+            throw propriedadeInvalidaConfigExcecao;
         }
     }
 
-    private void validarConfiguracoes() throws PropriedadeInvalidaExcecao  {
+    private void validarConfiguracoes() throws PropriedadeInvalidaConfigExcecao {
         if ( ! propriedadeLog.contains(logImplementacao)){
-            throw new PropriedadeInvalidaExcecao("Propriedade: log.implementacao inválida.");
+            throw new PropriedadeInvalidaConfigExcecao("Propriedade: log.implementacao inválida.");
         }
         if ( ! propriedadeRepo.contains(repoImplementacao)){
-            throw new PropriedadeInvalidaExcecao("Propriedade: repositorio.implementacao inválida.");
+            throw new PropriedadeInvalidaConfigExcecao("Propriedade: repositorio.implementacao inválida.");
         }
     }
 

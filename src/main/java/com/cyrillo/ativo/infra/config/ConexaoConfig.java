@@ -1,7 +1,7 @@
 package com.cyrillo.ativo.infra.config;
 
 import com.cyrillo.ativo.core.dataprovider.ConexaoInterface;
-import com.cyrillo.ativo.core.dataprovider.excecao.FalhaObterConexaoRepositorioExcecao;
+import com.cyrillo.ativo.core.dataprovider.excecao.FalhaObterConexaoRepoDataProvExcecao;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -28,7 +28,7 @@ public class ConexaoConfig implements ConexaoInterface {
         return instance;
     }
 
-    public Connection getConnection() throws FalhaObterConexaoRepositorioExcecao {
+    public Connection getConnection() throws FalhaObterConexaoRepoDataProvExcecao {
         try {
             if (! conexaoAtiva) {
                 geraConexao();
@@ -36,7 +36,7 @@ public class ConexaoConfig implements ConexaoInterface {
         }
         catch (Exception e) {
             this.conexaoAtiva = false;
-            FalhaObterConexaoRepositorioExcecao falha = new FalhaObterConexaoRepositorioExcecao("Falha para obter conexão com repositório.");
+            FalhaObterConexaoRepoDataProvExcecao falha = new FalhaObterConexaoRepoDataProvExcecao("Falha para obter conexão com repositório.");
             falha.addSuppressed(e);
             throw falha;
         }

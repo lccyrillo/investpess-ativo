@@ -1,9 +1,9 @@
 package com.cyrillo.ativo.core.usecase;
 
 import com.cyrillo.ativo.core.dataprovider.AtivoRepositorioInterface;
-import com.cyrillo.ativo.core.usecase.excecao.AtivoJaExistenteException;
-import com.cyrillo.ativo.core.usecase.excecao.AtivoParametrosInvalidosException;
-import com.cyrillo.ativo.core.usecase.excecao.ComunicacaoRepositorioException;
+import com.cyrillo.ativo.core.usecase.excecao.AtivoJaExistenteUseCaseExcecao;
+import com.cyrillo.ativo.core.usecase.excecao.AtivoParametrosInvalidosUseCaseExcecao;
+import com.cyrillo.ativo.core.dataprovider.excecao.ComunicacaoRepoDataProvExcecao;
 import com.cyrillo.ativo.infra.config.Sessao;
 import com.cyrillo.ativo.infra.dataprovider.AtivoRepositorioImplMockCriadoSucesso;
 import com.cyrillo.ativo.infra.dataprovider.AtivoRepositorioImplMockFalhaRepositorio;
@@ -34,7 +34,7 @@ class IncluirNovoAtivoTest {
             incluirNovoAtivo.executar(dataProvider, sigla, nomeAtivo, descricaoCNPJ, tipoAtivo);
         });
         // Passo 3: Verifica se o resultado ocorrido no método é igual ao resultado esperado (
-        assertEquals(AtivoJaExistenteException.class, throwable.getClass());
+        assertEquals(AtivoJaExistenteUseCaseExcecao.class, throwable.getClass());
         // Obs: exceções lançadas pelo método incluirNovoAtivo.executar //  throws AtivoJaExistenteException, SQLException, AtivoParametrosInvalidosException
     }
     @Test
@@ -90,7 +90,7 @@ class IncluirNovoAtivoTest {
         }
 
         // Passo 3: Verifica se ocorreu a exceção esperada:
-        assertEquals(AtivoParametrosInvalidosException.class,exception.getClass());
+        assertEquals(AtivoParametrosInvalidosUseCaseExcecao.class,exception.getClass());
     }
 
     @Test
@@ -118,7 +118,7 @@ class IncluirNovoAtivoTest {
         }
 
         // Passo 3: Verifica se ocorreu a exceção esperada:
-        assertEquals(AtivoParametrosInvalidosException.class,exception.getClass());
+        assertEquals(AtivoParametrosInvalidosUseCaseExcecao.class,exception.getClass());
     }
 
     @Test
@@ -145,7 +145,7 @@ class IncluirNovoAtivoTest {
         }
 
         // Passo 3: Verifica se ocorreu a exceção esperada:
-        assertEquals(ComunicacaoRepositorioException.class,exception.getClass());
+        assertEquals(ComunicacaoRepoDataProvExcecao.class,exception.getClass());
     }
 
 

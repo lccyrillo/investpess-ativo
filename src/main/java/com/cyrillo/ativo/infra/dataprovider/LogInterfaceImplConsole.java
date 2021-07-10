@@ -2,7 +2,7 @@ package com.cyrillo.ativo.infra.dataprovider;
 
 import com.cyrillo.ativo.core.dataprovider.DataProviderInterface;
 import com.cyrillo.ativo.core.dataprovider.LogInterface;
-import com.cyrillo.ativo.core.usecase.excecao.ComunicacaoLogException;
+import com.cyrillo.ativo.core.dataprovider.excecao.ComunicacaoLogDataProvExcecao;
 
 
 public class LogInterfaceImplConsole implements LogInterface {
@@ -34,7 +34,7 @@ public class LogInterfaceImplConsole implements LogInterface {
     }
 
     @Override
-    public void healthCheck(DataProviderInterface data) throws ComunicacaoLogException {
+    public void healthCheck(DataProviderInterface data) throws ComunicacaoLogDataProvExcecao {
 
     }
 }

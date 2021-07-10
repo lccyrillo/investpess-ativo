@@ -3,17 +3,17 @@ package com.cyrillo.ativo.infra.dataprovider;
 import com.cyrillo.ativo.core.dataprovider.AtivoDtoInterface;
 import com.cyrillo.ativo.core.dataprovider.AtivoRepositorioInterface;
 import com.cyrillo.ativo.core.dataprovider.DataProviderInterface;
-import com.cyrillo.ativo.core.usecase.excecao.ComunicacaoRepositorioException;
+import com.cyrillo.ativo.core.dataprovider.excecao.ComunicacaoRepoDataProvExcecao;
 
 import java.util.List;
 
 public class AtivoRepositorioImplMockSiglaExistente implements AtivoRepositorioInterface {
     public AtivoRepositorioImplMockSiglaExistente(){}
     @Override
-    public void incluir(DataProviderInterface data, AtivoDtoInterface ativoObjeto) throws ComunicacaoRepositorioException {
+    public void incluir(DataProviderInterface data, AtivoDtoInterface ativoObjeto) throws ComunicacaoRepoDataProvExcecao {
     }
     @Override
-    public boolean consultarPorSigla(DataProviderInterface data, String siglaAtivo) throws ComunicacaoRepositorioException {
+    public boolean consultarPorSigla(DataProviderInterface data, String siglaAtivo) throws ComunicacaoRepoDataProvExcecao {
         return true;
         // throws SQLException;
         // return false;
@@ -31,7 +31,7 @@ public class AtivoRepositorioImplMockSiglaExistente implements AtivoRepositorioI
     }
 
     @Override
-    public void healthCheck(DataProviderInterface data) throws ComunicacaoRepositorioException {
+    public void healthCheck(DataProviderInterface data) throws ComunicacaoRepoDataProvExcecao {
 
     }
 }

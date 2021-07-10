@@ -3,8 +3,8 @@ package com.cyrillo.ativo.infra.entrypoint.servicogrpc;
 import com.cyrillo.ativo.core.dataprovider.AtivoDtoInterface;
 import com.cyrillo.ativo.core.dataprovider.LogInterface;
 import com.cyrillo.ativo.core.usecase.ListarAtivosPorTipo;
-import com.cyrillo.ativo.core.usecase.excecao.AtivoParametrosInvalidosException;
-import com.cyrillo.ativo.core.usecase.excecao.ComunicacaoRepositorioException;
+import com.cyrillo.ativo.core.usecase.excecao.AtivoParametrosInvalidosUseCaseExcecao;
+import com.cyrillo.ativo.core.usecase.excecao.ComunicacaoRepoUseCaseExcecao;
 import com.cyrillo.ativo.infra.config.Sessao;
 import com.cyrillo.ativo.infra.entrypoint.servicogrpc.ativoobjetoproto.AtivoObjeto;
 import com.cyrillo.ativo.infra.entrypoint.servicogrpc.ativoobjetoproto.ConsultaListaAtivoRequest;
@@ -49,11 +49,11 @@ public class ConsultaListaAtivoService extends ConsultaListaAtivoServiceGrpc.Con
                 msgResultado = "Lista ok";
             }
         }
-        catch (ComunicacaoRepositorioException e) {
+        catch (ComunicacaoRepoUseCaseExcecao e) {
             codResultado = 401;
             msgResultado = "Erro na comunicação com o Repositório!";
         }
-        catch (AtivoParametrosInvalidosException e) {
+        catch (AtivoParametrosInvalidosUseCaseExcecao e) {
             codResultado = 402;
             msgResultado = "Tipo Ativo inválido enviado na consulta";
         }

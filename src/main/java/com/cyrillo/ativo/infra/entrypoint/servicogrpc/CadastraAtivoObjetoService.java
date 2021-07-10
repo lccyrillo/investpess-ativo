@@ -1,10 +1,10 @@
 package com.cyrillo.ativo.infra.entrypoint.servicogrpc;
 
 import com.cyrillo.ativo.core.dataprovider.LogInterface;
-import com.cyrillo.ativo.core.usecase.excecao.AtivoJaExistenteException;
-import com.cyrillo.ativo.core.usecase.excecao.AtivoParametrosInvalidosException;
-import com.cyrillo.ativo.core.usecase.excecao.ComunicacaoRepositorioException;
 import com.cyrillo.ativo.core.usecase.IncluirNovoAtivo;
+import com.cyrillo.ativo.core.usecase.excecao.AtivoJaExistenteUseCaseExcecao;
+import com.cyrillo.ativo.core.usecase.excecao.AtivoParametrosInvalidosUseCaseExcecao;
+import com.cyrillo.ativo.core.usecase.excecao.ComunicacaoRepoUseCaseExcecao;
 import com.cyrillo.ativo.infra.config.Sessao;
 import com.cyrillo.ativo.infra.entrypoint.servicogrpc.ativoobjetoproto.CadastraAtivoObjetoRequest;
 import com.cyrillo.ativo.infra.entrypoint.servicogrpc.ativoobjetoproto.CadastraAtivoObjetoResponse;
@@ -41,15 +41,15 @@ public class CadastraAtivoObjetoService  extends CadastraAtivoObjetoServiceGrpc.
             codResultado = 200;
             msgResultado = "Ativo: " + nome_ativo + " cadastrado!";
         }
-        catch (ComunicacaoRepositorioException e) {
+        catch (ComunicacaoRepoUseCaseExcecao e) {
             codResultado = 401;
             msgResultado = "Erro na persistência do Ativo no banco de dados!";
         }
-        catch (AtivoJaExistenteException e) {
+        catch (AtivoJaExistenteUseCaseExcecao e) {
             codResultado = 101;
             msgResultado = e.getMessage();
         }
-        catch (AtivoParametrosInvalidosException e) {
+        catch (AtivoParametrosInvalidosUseCaseExcecao e) {
             codResultado = 102;
             msgResultado = e.getMessage();
         }
