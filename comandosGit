@@ -65,7 +65,12 @@
 
 ------------------------------------------------------------------------------------------
 
+>> git clean -f
+--> apaga arquivos que não estão trackeados
+--> arquivos que aparecem no git stauts
 
+>> git gc
+--> otimização de repositório
 
 >> git show v1.0
 
