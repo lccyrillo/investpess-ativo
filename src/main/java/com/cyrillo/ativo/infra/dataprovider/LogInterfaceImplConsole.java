@@ -1,6 +1,8 @@
 package com.cyrillo.ativo.infra.dataprovider;
 
+import com.cyrillo.ativo.core.dataprovider.DataProviderInterface;
 import com.cyrillo.ativo.core.dataprovider.LogInterface;
+import com.cyrillo.ativo.core.usecase.excecao.ComunicacaoLogException;
 
 
 public class LogInterfaceImplConsole implements LogInterface {
@@ -29,5 +31,10 @@ public class LogInterfaceImplConsole implements LogInterface {
     @Override
     public void logInfo(String flowid, String mensagem) {
         System.out.println("Level: Info | Flowid: " + flowid + " Mensagem: " +mensagem);
+    }
+
+    @Override
+    public void healthCheck(DataProviderInterface data) throws ComunicacaoLogException {
+
     }
 }

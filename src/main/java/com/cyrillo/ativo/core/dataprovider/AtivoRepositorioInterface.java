@@ -11,4 +11,5 @@ public interface AtivoRepositorioInterface {
     boolean consultarPorSigla(DataProviderInterface data, String siglaAtivo) throws ComunicacaoRepositorioException;
     List<AtivoDtoInterface> listarTodosAtivos(DataProviderInterface data);
     List<AtivoDtoInterface> listarAtivosPorTipo(DataProviderInterface data, int tipoAtivo) throws ComunicacaoRepositorioException, AtivoParametrosInvalidosException;
+    void healthCheck(DataProviderInterface data) throws ComunicacaoRepositorioException;
 }

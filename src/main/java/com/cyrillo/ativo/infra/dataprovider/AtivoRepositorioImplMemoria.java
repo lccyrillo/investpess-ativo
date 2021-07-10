@@ -46,4 +46,9 @@ public class AtivoRepositorioImplMemoria implements AtivoRepositorioInterface {
                 .filter(a -> a.getTipoAtivoInt() == tipoAtivo)
                 .collect(Collectors.toList());
     }
+
+    @Override
+    public void healthCheck(DataProviderInterface data) throws ComunicacaoRepositorioException {
+
+    }
 }

@@ -21,6 +21,12 @@ public class Sessao implements DataProviderInterface {
         return uniqueKey;
     }
 
+    @Override
+    public boolean healthCheckOk(DataProviderInterface data) {
+        return Aplicacao.getInstance().healthCheckOk(data);
+    }
+
+
     public LogInterface getLoggingInterface() {
         return this.log;
     }

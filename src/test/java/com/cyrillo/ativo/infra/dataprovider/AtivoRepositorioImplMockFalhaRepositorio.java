@@ -28,4 +28,9 @@ public class AtivoRepositorioImplMockFalhaRepositorio implements AtivoRepositori
     public List<AtivoDtoInterface> listarAtivosPorTipo(DataProviderInterface data,int tipoAtivo) {
         return null;
     }
+
+    @Override
+    public void healthCheck(DataProviderInterface data) throws ComunicacaoRepositorioException {
+
+    }
 }

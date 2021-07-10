@@ -1,8 +1,5 @@
 package com.cyrillo.ativo.infra.entrypoint.servicogrpc;
 
-import com.cyrillo.ativo.core.dataprovider.AtivoDtoInterface;
-import com.cyrillo.ativo.core.dataprovider.LogInterface;
-import com.cyrillo.ativo.core.usecase.ListarAtivosPorTipo;
 import com.cyrillo.ativo.infra.config.Sessao;
 import io.grpc.Status;
 import io.grpc.StatusException;
@@ -11,7 +8,6 @@ import io.grpc.health.v1.HealthCheckResponse;
 import io.grpc.health.v1.HealthGrpc.HealthImplBase;
 import io.grpc.stub.StreamObserver;
 
-import java.util.List;
 import java.util.logging.Logger;
 
 public class HealthCheckService extends HealthImplBase {
@@ -35,16 +31,24 @@ public class HealthCheckService extends HealthImplBase {
         HealthCheckResponse.ServingStatus status;
         try {
             Sessao dataProvider = new Sessao();
-            String uniqueKey = String.valueOf(dataProvider.getUniqueKey());
-            LogInterface log = dataProvider.getLoggingInterface();
-            List<AtivoDtoInterface> lista = null;
-            ListarAtivosPorTipo listarAtivosPorTipo = new ListarAtivosPorTipo();
-            lista = listarAtivosPorTipo.executar(dataProvider,1);
-            status = HealthCheckResponse.ServingStatus.SERVING;
+            if (dataProvider.healthCheckOk(dataProvider)) {
+                status = HealthCheckResponse.ServingStatus.SERVING;
+            }
+            else {
+                status = HealthCheckResponse.ServingStatus.NOT_SERVING;
+            }
         }
         catch (Exception e) {
             status = HealthCheckResponse.ServingStatus.NOT_SERVING;
         }
         return status;
     }
+
+    @Override
+    public void watch(io.grpc.health.v1.HealthCheckRequest request,
+                      io.grpc.stub.StreamObserver<io.grpc.health.v1.HealthCheckResponse> responseObserver) {
+        // não implementado
+        throw new UnsupportedOperationException("Not implemented yet");
+    }
+
 }

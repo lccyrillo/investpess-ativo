@@ -162,6 +162,19 @@ public class Aplicacao implements DataProviderInterface {
         return null;
     }
 
+    @Override
+    public boolean healthCheckOk(DataProviderInterface data) {
+        try {
+            this.getAtivoRepositorio().healthCheck(data);
+            this.getLoggingInterface().healthCheck(data);
+            return true;
+        }
+        catch (Exception e) {
+            data.getConexaoAplicacao().setConnectionAtiva(false);
+            return false;
+        }
+    }
+
 
     private void carregarConfigBancoDados() {
 
@@ -196,5 +209,7 @@ public class Aplicacao implements DataProviderInterface {
     public String getPasswordDB() {
         return passwordDB;
     }
+
+
 
 }

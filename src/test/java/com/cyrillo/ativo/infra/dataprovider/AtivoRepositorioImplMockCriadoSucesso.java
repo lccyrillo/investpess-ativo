@@ -30,4 +30,9 @@ public class AtivoRepositorioImplMockCriadoSucesso implements AtivoRepositorioIn
     public List<AtivoDtoInterface> listarAtivosPorTipo(DataProviderInterface data, int tipoAtivo) {
         return null;
     }
+
+    @Override
+    public void healthCheck(DataProviderInterface data) throws ComunicacaoRepositorioException {
+
+    }
 }

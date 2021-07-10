@@ -8,4 +8,5 @@ public interface DataProviderInterface {
     public ConexaoInterface getConexaoAplicacao();
     public AtivoRepositorioInterface getAtivoRepositorio();
     public UUID getUniqueKey();
+    public boolean healthCheckOk(DataProviderInterface data);
 }
