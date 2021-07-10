@@ -22,9 +22,9 @@
 2) se consegui fechar uma versão, posso gerar uma tag
 --> listar tags
 >> git tag
->> git tag -a v1.4 -m "Versão refatorada com entities, use cases e infra."
+>> git tag -a v1.5 -m "Versão fechada apresentação Clean Architechture."
 --> mandar a tag para o servidor remoto
->> git push origin v1.4
+>> git push origin v1.5
 
 3) Se a versão esta fechada e vai para ambiente de homologação ou prod
 --> posso mergear a branch desta feature com a branch de desenvolvimento
@@ -42,15 +42,15 @@
 --> entro na developer
 >> git checkout developer
 --> crio a nova branch
->> git checkout -b refatoracao_entities
+>> git checkout -b evolucao_api_delete
 --> equalizo com a developer
 >> git pull origin developer
 --> faço qualquer alteração e comito
->> git commit -a -m "CYRILLO_IMPROVE_0013 Testes unitários no use case listar ativos"
+>> git commit -a -m "CYRILLO_FEAT_0002 Implementar o endpoint de delete de ativo."
 --> manda para o repositorio remoto (o repositorio remoto é criado)
->> git push origin refatoracao_entities
+>> git push origin evolucao_api_delete
 --> posso vincular meu branch local ao branch remoto
->>  git push --set-upstream origin refatoracao_entities
+>>  git push --set-upstream origin evolucao_api_delete
 
 
 5) Posso apagar a branch anterior
