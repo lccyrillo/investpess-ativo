@@ -2,9 +2,7 @@ package com.cyrillo.ativo.infra.entrypoint.servicogrpc;
 
 import com.cyrillo.ativo.core.dataprovider.LogInterface;
 import com.cyrillo.ativo.infra.config.Aplicacao;
-import io.grpc.Server;
-import io.grpc.ServerBuilder;
-import io.grpc.ServerServiceDefinition;
+import io.grpc.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,15 +33,7 @@ public class AtivoServerGRPC {
 
             }  ));
             log.logInfo(null,"Servidor GRPC inicializado com sucesso!");
-            List<ServerServiceDefinition> lista2 = server.getServices();
-            String mensagem = "Serviços disponíveis: ";
-            for (int i =0; i <lista.size(); i++) {
-                mensagem = mensagem + lista.get(i).getServiceDescriptor().getName() + " ";
-                // code block to be executed
-            }
-
-            log.logInfo(null,mensagem);
-
+            log.logInfo(null,listaMetodosServico(lista));
             server.awaitTermination();
         }
         catch (Exception e){
@@ -51,5 +41,17 @@ public class AtivoServerGRPC {
             log.logError(null, e.getMessage());
         }
 
+    }
+
+    private String listaMetodosServico(List<ServerServiceDefinition> lista){
+        String mensagem = "";
+        for (int i =0; i <lista.size(); i++) {
+            mensagem = mensagem + "Serviço: ";
+                    mensagem = mensagem + lista.get(i).getServiceDescriptor().getName() + " Métodos: ";
+            for (ServerMethodDefinition<?, ?> methodDesc : lista.get(i).getMethods()) {
+                mensagem = mensagem + methodDesc.getMethodDescriptor().getBareMethodName() + " ";
+            }
+        }
+        return mensagem;
     }
 }
