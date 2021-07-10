@@ -46,7 +46,7 @@
 --> equalizo com a developer
 >> git pull origin developer
 --> faço qualquer alteração e comito
->> git commit -a -m "CYRILLO_IMPROVE_0007 Realizar teste com Apis GRPCs e entrypoints para saber como eles se comportam com banco de dados sem estrutura de dados."
+>> git commit -a -m "CYRILLO_IMPROVE_0008 Simular teste de timeout no banco de dados para ver como a aplicação se comporta"
 --> manda para o repositorio remoto (o repositorio remoto é criado)
 >> git push origin refatoracao_entities
 --> posso vincular meu branch local ao branch remoto
