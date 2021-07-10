@@ -3,7 +3,7 @@ package com.cyrillo.ativo.core.usecase;
 import com.cyrillo.ativo.core.dataprovider.AtivoRepositorioInterface;
 import com.cyrillo.ativo.core.usecase.excecao.AtivoJaExistenteUseCaseExcecao;
 import com.cyrillo.ativo.core.usecase.excecao.AtivoParametrosInvalidosUseCaseExcecao;
-import com.cyrillo.ativo.core.dataprovider.excecao.ComunicacaoRepoDataProvExcecao;
+import com.cyrillo.ativo.core.usecase.excecao.ComunicacaoRepoUseCaseExcecao;
 import com.cyrillo.ativo.infra.config.Sessao;
 import com.cyrillo.ativo.infra.dataprovider.AtivoRepositorioImplMockCriadoSucesso;
 import com.cyrillo.ativo.infra.dataprovider.AtivoRepositorioImplMockFalhaRepositorio;
@@ -145,7 +145,7 @@ class IncluirNovoAtivoTest {
         }
 
         // Passo 3: Verifica se ocorreu a exceção esperada:
-        assertEquals(ComunicacaoRepoDataProvExcecao.class,exception.getClass());
+        assertEquals(ComunicacaoRepoUseCaseExcecao.class,exception.getClass());
     }
 
 
