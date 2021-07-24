@@ -99,9 +99,11 @@ exit
 ## Recursos
 
 ##### Artigos
-* Abordagem prática de Clean Architecture para microsserviço em Java https://blog.8thlight.com/uncle-bob/2012/08/13/the-clean-architecture.html
+* Abordagem prática de Clean Architecture para microsserviço em Java
+  https://medium.com/@lccyrillo/abordagem-pr%C3%A1tica-de-clean-architecture-para-microsservi%C3%A7o-em-java-a71d55a2a3a6
 
 ## Contatos
 
 * Email: lccyrillo@gmail.com  
 * Linkedin: [Luciano Cyrillo](https://www.linkedin.com/in/luciano-cyrillo/)
+* github: https://github.com/lccyrillo
