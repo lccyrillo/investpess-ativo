@@ -8,6 +8,7 @@
 * [Objetivo](#objetivo)
 * [Tecnologias Utilizadas](#tecnologias)
 * [Como rodar a aplicação](#howto)
+* [Recursos](#recursos)
 * [Contatos](#contatos)
 
 ***
