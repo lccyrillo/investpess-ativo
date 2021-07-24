@@ -13,13 +13,13 @@
 
 ***
 
-##Objetivo
+## Objetivo
 
 > #### Essa implementação tem como objetivo apresentar uma abordagem prática de uso da Clean Architecture.
 > #### Nos últimos dois anos, estudei o tema através da leitura do livro do Robert C. Martin e também de artigos relacionados ao tema. De forma geral, achei o conteúdo bastante denso e com muitos conceitos importantes, mas de difícil compreensão. Dessa forma, resolvi aplicar os conceitos através da implementação do modelo em um microsserviço com linguagem Java.
 > #### A implementação do caso de uso prático foi feita com base nos modelos de arquitetura Clean Architecture Simplificada detalhados no artigo do Guilherme Biff Zarelli e no github do Mattia Battiston.
 
-##Tecnologias
+## Tecnologias
 
 * Microsserviço com java / gRPC
 * banco de dados postgres
