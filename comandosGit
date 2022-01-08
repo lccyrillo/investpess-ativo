@@ -1,4 +1,5 @@
 0) setup de trabalho
+>> git config --global user.email "lccyrillo@gmail.com"
 >> git init
 >> git remote add origin https://github.com/lccyrillo/investpess-ativo.git
 
@@ -65,8 +66,18 @@
 
 ------------------------------------------------------------------------------------------
 
+>> git clean -f
+--> apaga arquivos que não estão trackeados
+--> arquivos que aparecem no git stauts
+
+>> git gc
+--> otimização de repositório
+
+>> git fsck
+--> checagem de integridade de arquivos
 
 
+>> git archive --format zip --output master_files master
 >> git show v1.0
 
 

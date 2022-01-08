@@ -3,7 +3,7 @@
     <output-path>$PROJECT_DIR$/docker/docker_micros/artifacts/investpess_ativo_jar</output-path>
     <root id="archive" name="investpess-ativo.jar">
       <element id="directory" name="META-INF">
-        <element id="file-copy" path="$PROJECT_DIR$/build/extracted-include-protos/main/META-INF/MANIFEST.MF" />
+        <element id="file-copy" path="$PROJECT_DIR$/META-INF/MANIFEST.MF" />
       </element>
       <element id="module-output" name="investpess-ativo.main" />
       <element id="extracted-dir" path="$USER_HOME$/.gradle/caches/modules-2/files-2.1/io.grpc/grpc-core/1.37.0/129ddcd69b116dc933b5f7fabc93366b20517f2a/grpc-core-1.37.0.jar" path-in-jar="/" />
