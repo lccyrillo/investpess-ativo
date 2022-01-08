@@ -46,6 +46,7 @@
 >> git checkout -b evolucao_api_delete
 --> equalizo com a developer
 >> git pull origin developer
+
 --> faço qualquer alteração e comito
 >> git commit -a -m "CYRILLO_FEAT_0002 Implementar o endpoint de delete de ativo."
 --> manda para o repositorio remoto (o repositorio remoto é criado)
