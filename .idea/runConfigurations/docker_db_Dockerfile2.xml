@@ -1,8 +1,7 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="docker_db/Dockerfile (1)" type="docker-deploy" factoryName="dockerfile" server-name="Docker">
+  <configuration default="false" name="docker_db/Dockerfile" type="docker-deploy" factoryName="dockerfile" server-name="Docker">
     <deployment type="dockerfile">
       <settings>
-        <option name="imageTag" value="" />
         <option name="containerName" value="docker_db_desenvolvimento" />
         <option name="portBindings">
           <list>
@@ -25,7 +24,7 @@
             </DockerVolumeBindingImpl>
             <DockerVolumeBindingImpl>
               <option name="containerPath" value="/docker-entrypoint-initdb.d/init.sql" />
-              <option name="hostPath" value="C:\Arquivos\01_PRJSW\investpess-ativo\docker\docker_db\scripts\init.sql" />
+              <option name="hostPath" value="C:\aplic\prjsw\investpess-ativo\docker\docker_db\scripts\init.sql" />
             </DockerVolumeBindingImpl>
           </list>
         </option>
