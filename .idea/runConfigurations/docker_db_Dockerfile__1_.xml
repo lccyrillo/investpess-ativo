@@ -25,7 +25,7 @@
             </DockerVolumeBindingImpl>
             <DockerVolumeBindingImpl>
               <option name="containerPath" value="/docker-entrypoint-initdb.d/init.sql" />
-              <option name="hostPath" value="C:\aplic\prjsw\investpess-ativo\docker\docker_db\scripts\init.sql" />
+              <option name="hostPath" value="C:\Arquivos\01_PRJSW\investpess-ativo\docker\docker_db\scripts\init.sql" />
             </DockerVolumeBindingImpl>
           </list>
         </option>

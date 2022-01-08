@@ -1,3 +1,2 @@
 Manifest-Version: 1.0
-Main-Class: com.cyrillo.ativo.AtivoServer
-
+Main-Class: com.cyrillo.ativo.Inicializacao
