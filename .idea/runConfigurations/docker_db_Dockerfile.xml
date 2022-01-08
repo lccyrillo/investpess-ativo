@@ -2,7 +2,6 @@
   <configuration default="false" name="docker_db/Dockerfile" type="docker-deploy" factoryName="dockerfile" server-name="Docker">
     <deployment type="dockerfile">
       <settings>
-        <option name="imageTag" value="" />
         <option name="containerName" value="docker_db_desenvolvimento" />
         <option name="portBindings">
           <list>
