@@ -9,6 +9,15 @@ import com.cyrillo.ativo.infra.dataprovider.AtivoRepositorioImplMemoria;
 import com.cyrillo.ativo.infra.dataprovider.AtivoRepositorioImplcomJDBC;
 import com.cyrillo.ativo.infra.dataprovider.LogInterfaceImplConsole;
 import com.cyrillo.ativo.infra.entrypoint.servicogrpc.AtivoServerGRPC;
+import java.net.MalformedURLException;
+import io.jaegertracing.Configuration;
+import io.jaegertracing.Configuration.ReporterConfiguration;
+import io.jaegertracing.Configuration.SamplerConfiguration;
+import io.jaegertracing.Configuration.SenderConfiguration;
+import io.jaegertracing.internal.samplers.ConstSampler;
+import io.opentracing.Tracer;
+import io.opentracing.util.GlobalTracer;
+
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -34,6 +43,16 @@ public class Aplicacao implements DataProviderInterface {
     private String userDB;
     private String passwordDB;
 
+
+    private String jaeger_reporter_host;
+    private int jaeger_reporter_port;
+
+
+    private String opentracing_jaeger_service_name;
+
+
+
+
     private Aplicacao(){
     }
 
@@ -47,6 +66,8 @@ public class Aplicacao implements DataProviderInterface {
             configurarRepositorioAplicacao();
             this.logAplicacao.logInfo(null,"Propriedades de configuração da aplicação carregadas!");
             this.logAplicacao.logInfo(null,getConfiguracoesAplicacao());
+            // Carrega Jaeger
+            configureGlobalTracer(jaeger_reporter_host, Integer.toString(jaeger_reporter_port), opentracing_jaeger_service_name);
             // Levanta o servidor GRPC
             AtivoServerGRPC var = new AtivoServerGRPC(this);
         }
@@ -57,12 +78,15 @@ public class Aplicacao implements DataProviderInterface {
     }
 
     public String getConfiguracoesAplicacao(){
+        String descricaoConfiguracaoAplicacao;
         if (repoImplementacao.equals("postgres")){
-            return "Repo:" + repoImplementacao + " DB_Host:" +db_host +  " DB_Port:" + db_port  +  " User:" +userDB + " String Conexao:" + stringConexaoBD +" Log: " +logImplementacao;
+            descricaoConfiguracaoAplicacao = "Repo:" + repoImplementacao + " DB_Host:" +db_host +  " DB_Port:" + db_port  +  " User:" +userDB + " String Conexao:" + stringConexaoBD +" Log: " +logImplementacao;
+            descricaoConfiguracaoAplicacao = descricaoConfiguracaoAplicacao + " Jaeger Host:" + jaeger_reporter_host + " Jaeger Port:" + jaeger_reporter_port;
         }
         else {
-            return "Repo:" + repoImplementacao + " Log:" +logImplementacao;
+            descricaoConfiguracaoAplicacao = "Repo:" + repoImplementacao + " Log:" +logImplementacao + " Jaeger Host:" + jaeger_reporter_host + " Jaeger Port:" + jaeger_reporter_port;
         }
+        return descricaoConfiguracaoAplicacao;
     }
 
     public static Aplicacao getInstance(){
@@ -112,6 +136,9 @@ public class Aplicacao implements DataProviderInterface {
             this.logImplementacao = properties.getProperty("log.implementacao");
             this.repoImplementacao = properties.getProperty("repositorio.implementacao");
             this.defaultTimeoutRepo = Integer.parseInt(properties.getProperty("repositorio.timeout"));
+            this.jaeger_reporter_host = properties.getProperty("jaeger.reporter_host");
+            this.jaeger_reporter_port = Integer.parseInt(properties.getProperty("jaeger.reporter_port"));
+            this.opentracing_jaeger_service_name = properties.getProperty("opentracing.jaeger.service-name");
             this.validarConfiguracoes();
         }
         catch (FileNotFoundException e) {
@@ -143,6 +170,9 @@ public class Aplicacao implements DataProviderInterface {
             throw new PropriedadeInvalidaConfigExcecao("Propriedade: repositorio.timeout inválida.");
         }
 
+        if ( jaeger_reporter_port <=0 ){
+            throw new PropriedadeInvalidaConfigExcecao("Propriedade: jaeger.reporter_port inválida.");
+        }
     }
 
     public LogInterface getLoggingInterface() {
@@ -213,6 +243,24 @@ public class Aplicacao implements DataProviderInterface {
         // dev - String url = "jdbc:postgresql://localhost:5433/investpess_ativo";
     }
 
+    static void configureGlobalTracer(String jaeger_reporter_host, String jaeger_reporter_port, String opentracing_jaeger_service_name ) throws MalformedURLException
+    {
+        Tracer tracer = null;
+        SamplerConfiguration samplerConfig = new SamplerConfiguration()
+                    .withType(ConstSampler.TYPE)
+                    .withParam(1);
+        SenderConfiguration senderConfig = new SenderConfiguration()
+                    .withAgentHost(jaeger_reporter_host)
+                    .withAgentPort(Integer.decode(jaeger_reporter_port));
+        ReporterConfiguration reporterConfig = new ReporterConfiguration()
+                    .withLogSpans(true)
+                    .withFlushInterval(1000)
+                    .withMaxQueueSize(10000)
+                    .withSender(senderConfig);
+        tracer = new Configuration(opentracing_jaeger_service_name).withSampler(samplerConfig).withReporter(reporterConfig).getTracer();
+        GlobalTracer.registerIfAbsent(tracer);
+    }
+
 
     public String getStringConexaoBD() {
         return stringConexaoBD;
@@ -230,6 +278,16 @@ public class Aplicacao implements DataProviderInterface {
         return new Sessao();
     }
 
+    public String getJaeger_reporter_host() {
+        return jaeger_reporter_host;
+    }
+
+    public int getJaeger_reporter_port() {
+        return jaeger_reporter_port;
+    }
+    public String getOpentracing_jaeger_service_name() {
+        return opentracing_jaeger_service_name;
+    }
 
 
 }
