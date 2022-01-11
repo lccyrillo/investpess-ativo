@@ -51,6 +51,8 @@ dependencies {
     implementation group: 'io.jaegertracing', name: 'jaeger-core', version: '1.7.0'
     implementation group: 'org.slf4j', name: 'slf4j-api', version: '1.7.32'
     implementation group: 'org.slf4j', name: 'slf4j-simple', version: '1.7.32'
+    implementation group: 'io.opentracing.contrib', name: 'opentracing-grpc', version: '0.2.3'
+
 
 }
 

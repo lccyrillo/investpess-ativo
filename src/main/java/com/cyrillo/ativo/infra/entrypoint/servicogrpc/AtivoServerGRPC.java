@@ -4,6 +4,10 @@ import com.cyrillo.ativo.core.dataprovider.DataProviderInterface;
 import com.cyrillo.ativo.core.dataprovider.LogInterface;
 import com.cyrillo.ativo.infra.config.Aplicacao;
 import io.grpc.*;
+import io.opentracing.Tracer;
+import io.opentracing.contrib.grpc.TracingServerInterceptor;
+import io.opentracing.util.GlobalTracer;
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,25 +15,43 @@ import java.util.List;
 
 public class AtivoServerGRPC {
     private DataProviderInterface data;
+    private final Tracer tracer;
 
     public AtivoServerGRPC(DataProviderInterface dataProviderInterface) {
         this.data = dataProviderInterface;
+        tracer = GlobalTracer.get();
         this.inicializaAtivoServer();
+
     }
 
     private void inicializaAtivoServer() {
+        
         LogInterface log = Aplicacao.getInstance().getLoggingInterface();
         log.logInfo(null,"Inicializando Servidor GRPC.");
 
 
         try {
+            TracingServerInterceptor tracingInterceptor = TracingServerInterceptor
+                    .newBuilder()
+                    .withTracer(this.tracer)
+                    .build();
+
             List<ServerServiceDefinition> lista = new ArrayList<>();
-            lista.add(new AtivoServerService(this.data).bindService());
-            lista.add(new HealthCheckService().bindService());
+            AtivoServerService ativoServerService = new AtivoServerService(this.data);
+            HealthCheckService healthCheckService = new HealthCheckService();
+            lista.add(ativoServerService.bindService());
+            lista.add(healthCheckService.bindService());
             Server server = ServerBuilder.forPort(50051)
-                    .addServices(lista)
+                    //.addServices(lista)
+                    .addService(tracingInterceptor.intercept(ativoServerService))
+                    .addService(tracingInterceptor.intercept(healthCheckService))
                     .build()
                     .start();
+
+
+
+
+
             Runtime.getRuntime().addShutdownHook(new Thread( () -> {
                 log.logInfo(null,"Recebida solicitação para encerramento do servidor.");
                 server.shutdown();
