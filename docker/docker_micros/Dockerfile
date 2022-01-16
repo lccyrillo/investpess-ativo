@@ -1,4 +1,4 @@
-FROM adoptopenjdk/openjdk8:latest
+FROM adoptopenjdk/openjdk11:latest
 LABEL maintainer = 'lccyrillo - investpess ativo '
 LABEL data_release = '01/06/2021'
 

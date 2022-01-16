@@ -136,7 +136,7 @@ public class Aplicacao implements DataProviderInterface {
             this.logImplementacao = properties.getProperty("log.implementacao");
             this.repoImplementacao = properties.getProperty("repositorio.implementacao");
             this.defaultTimeoutRepo = Integer.parseInt(properties.getProperty("repositorio.timeout"));
-            this.jaeger_reporter_host = properties.getProperty("jaeger.reporter_host");
+            //this.jaeger_reporter_host = properties.getProperty("jaeger.reporter_host");
             this.jaeger_reporter_port = Integer.parseInt(properties.getProperty("jaeger.reporter_port"));
             this.opentracing_jaeger_service_name = properties.getProperty("opentracing.jaeger.service-name");
             this.validarConfiguracoes();
@@ -227,13 +227,21 @@ public class Aplicacao implements DataProviderInterface {
         // Carrega variávieis de ambiente recebidas pelo Docker
         this.db_host = System.getenv("DB_HOST");
         this.db_port = System.getenv("DB_PORT");
+        this.jaeger_reporter_host = System.getenv("JAEGER_HOST");
         // Se não conseguir carregar variáveis do docker, set variáveis de ambiente de desenvolvimento local
         if (db_host == null) {
             db_host = "localhost"; //ambiente local
         }
+
         if (db_port == null) {
             db_port = "5433"; // ambiente local
         }
+
+        if (jaeger_reporter_host == null) {
+            jaeger_reporter_host = "localhost"; //ambiente local
+        }
+
+
         this.stringConexaoBD = "jdbc:postgresql://" + db_host + ":" + db_port + "/investpess_ativo";
         this.userDB = "postgres";
         this.passwordDB = null;

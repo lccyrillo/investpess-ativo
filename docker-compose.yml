@@ -25,6 +25,7 @@ services:
     environment:
       - DB_HOST=db
       - DB_PORT=5432
+      - JAEGER_HOST=jaeger
     ports:
       - 50051:50051
     networks:
@@ -32,6 +33,7 @@ services:
       - banco
     depends_on:
       - db
+      - jaeger
   jaeger:
     image: jaegertracing/all-in-one:1.29
     container_name: jaeger
@@ -47,3 +49,5 @@ services:
       - 14268:14268
       - 14269:14269
       - 9411:9411
+    environment:
+      - COLLECTOR_ZIPKIN_HTTP_PORT=9411

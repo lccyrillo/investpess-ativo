@@ -2,3 +2,7 @@ docker run -d --name jaeger_desenv -e COLLECTOR_ZIPKIN_HOST_PORT=:9411 -p 5775:5
 
 
 http://localhost:16686/
+
+configurando na mao no intellij
+coloquei o bind das portas
+coloquei a variavel de ambiente COLLECTOR_ZIPKIN_HOST_PORT=:9411
