@@ -1,0 +1,38 @@
+https://prometheus.io/docs/prometheus/latest/installation/
+
+Volumes & bind-mount
+Bind-mount your prometheus.yml from the host by running:
+
+docker run \
+    -p 9090:9090 \
+    -v /path/to/prometheus.yml:/etc/prometheus/prometheus.yml \
+    prom/prometheus
+Or bind-mount the directory containing prometheus.yml onto /etc/prometheus by running:
+
+docker run \
+    -p 9090:9090 \
+    -v /path/to/config:/etc/prometheus \
+    prom/prometheus
+Custom image
+To avoid managing a file on the host and bind-mount it, the configuration can be baked into the image. This works well if the configuration itself is rather static and the same across all environments.
+
+For this, create a new directory with a Prometheus configuration and a Dockerfile like this:
+
+FROM prom/prometheus
+ADD prometheus.yml /etc/prometheus/
+Now build and run it:
+
+docker build -t my-prometheus .
+docker run -p 9090:9090 my-prometheus
+
+-----------------------------------------------------
+
+configurando intellij na mao
+- bind ports
+9090:9090
+
+- volumes
+     - C:\aplic\prjsw\investpess-ativo\prometheus.yml:/etc/prometheus/prometheus.yml
+
+- command:
+      - '--config.file=/etc/prometheus/prometheus.yml'

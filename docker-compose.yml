@@ -51,3 +51,16 @@ services:
       - 9411:9411
     environment:
       - COLLECTOR_ZIPKIN_HTTP_PORT=9411
+  prometheus:
+    build: docker/docker_prometheus
+    container_name: prometheus_container
+    networks:
+      - microsserv
+    ports:
+      - 9090:9090
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+
+
