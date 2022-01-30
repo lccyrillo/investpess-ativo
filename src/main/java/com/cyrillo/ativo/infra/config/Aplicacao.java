@@ -42,15 +42,9 @@ public class Aplicacao implements DataProviderInterface {
     private String stringConexaoBD;
     private String userDB;
     private String passwordDB;
-
-
     private String jaeger_reporter_host;
     private int jaeger_reporter_port;
-
-
     private String opentracing_jaeger_service_name;
-
-
 
 
     private Aplicacao(){
@@ -58,7 +52,6 @@ public class Aplicacao implements DataProviderInterface {
 
     public void inicializaAplicacao(){
         try {
-            // Carrega configuraçoes da aplicação
             carregarConfiguracoes();
             // Configura Data Providers (Aplicação e Repositório)
             configurarLogAplicacao();
@@ -66,8 +59,7 @@ public class Aplicacao implements DataProviderInterface {
             configurarRepositorioAplicacao();
             this.logAplicacao.logInfo(null,"Propriedades de configuração da aplicação carregadas!");
             this.logAplicacao.logInfo(null,getConfiguracoesAplicacao());
-            // Carrega Jaeger
-            configureGlobalTracer(jaeger_reporter_host, Integer.toString(jaeger_reporter_port), opentracing_jaeger_service_name);
+            configurarTracerGlobalJaeger(jaeger_reporter_host, Integer.toString(jaeger_reporter_port), opentracing_jaeger_service_name);
             // Levanta o servidor GRPC
             AtivoServerGRPC var = new AtivoServerGRPC(this);
         }
@@ -251,7 +243,7 @@ public class Aplicacao implements DataProviderInterface {
         // dev - String url = "jdbc:postgresql://localhost:5433/investpess_ativo";
     }
 
-    static void configureGlobalTracer(String jaeger_reporter_host, String jaeger_reporter_port, String opentracing_jaeger_service_name ) throws MalformedURLException
+    static void configurarTracerGlobalJaeger(String jaeger_reporter_host, String jaeger_reporter_port, String opentracing_jaeger_service_name ) throws MalformedURLException
     {
         Tracer tracer = null;
         SamplerConfiguration samplerConfig = new SamplerConfiguration()

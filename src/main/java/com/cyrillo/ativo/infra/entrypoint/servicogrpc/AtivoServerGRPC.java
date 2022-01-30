@@ -2,6 +2,8 @@ package com.cyrillo.ativo.infra.entrypoint.servicogrpc;
 
 import com.cyrillo.ativo.core.dataprovider.DataProviderInterface;
 import com.cyrillo.ativo.core.dataprovider.LogInterface;
+
+// Avaliar melhor as importacoes. O Entry poiny não deveria referenciar frameworks externos.
 import com.cyrillo.ativo.infra.config.Aplicacao;
 import io.grpc.*;
 import io.opentracing.Tracer;
@@ -31,26 +33,29 @@ public class AtivoServerGRPC {
 
 
         try {
+            // duas responsabilidades nesse metodo de inicialização.
+            // o servidor GRPC deveria instanciar apenas ele proprio
+            // se a configuracao de jaeger estiver ligada, o servidor grpc deveria adicionar servicos incluindo o interceptador do jaeger, caso contráriop nao.
+            // Preciso criar um servidor de tracing
             TracingServerInterceptor tracingInterceptor = TracingServerInterceptor
                     .newBuilder()
                     .withTracer(this.tracer)
                     .build();
 
+
             List<ServerServiceDefinition> lista = new ArrayList<>();
             AtivoServerService ativoServerService = new AtivoServerService(this.data);
             HealthCheckService healthCheckService = new HealthCheckService();
+
+
             lista.add(ativoServerService.bindService());
             lista.add(healthCheckService.bindService());
             Server server = ServerBuilder.forPort(50051)
-                    //.addServices(lista)
+//                    .addServices(lista)
                     .addService(tracingInterceptor.intercept(ativoServerService))
                     .addService(tracingInterceptor.intercept(healthCheckService))
                     .build()
                     .start();
-
-
-
-
 
             Runtime.getRuntime().addShutdownHook(new Thread( () -> {
                 log.logInfo(null,"Recebida solicitação para encerramento do servidor.");
