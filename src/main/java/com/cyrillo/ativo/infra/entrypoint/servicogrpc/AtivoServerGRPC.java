@@ -37,10 +37,7 @@ public class AtivoServerGRPC {
             // o servidor GRPC deveria instanciar apenas ele proprio
             // se a configuracao de jaeger estiver ligada, o servidor grpc deveria adicionar servicos incluindo o interceptador do jaeger, caso contráriop nao.
             // Preciso criar um servidor de tracing
-            TracingServerInterceptor tracingInterceptor = TracingServerInterceptor
-                    .newBuilder()
-                    .withTracer(this.tracer)
-                    .build();
+            TracingServerInterceptor tracingInterceptor = Aplicacao.getInstance().geTtracingServerInterceptor();
 
 
             List<ServerServiceDefinition> lista = new ArrayList<>();

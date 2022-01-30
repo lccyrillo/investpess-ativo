@@ -16,6 +16,7 @@ import io.jaegertracing.Configuration.SamplerConfiguration;
 import io.jaegertracing.Configuration.SenderConfiguration;
 import io.jaegertracing.internal.samplers.ConstSampler;
 import io.opentracing.Tracer;
+import io.opentracing.contrib.grpc.TracingServerInterceptor;
 import io.opentracing.util.GlobalTracer;
 
 
@@ -45,6 +46,7 @@ public class Aplicacao implements DataProviderInterface {
     private String jaeger_reporter_host;
     private int jaeger_reporter_port;
     private String opentracing_jaeger_service_name;
+    private ServidorTracingDistribuido servidorTracingDistribuido;
 
 
     private Aplicacao(){
@@ -60,8 +62,11 @@ public class Aplicacao implements DataProviderInterface {
             this.logAplicacao.logInfo(null,"Propriedades de configuração da aplicação carregadas!");
             this.logAplicacao.logInfo(null,getConfiguracoesAplicacao());
             configurarTracerGlobalJaeger(jaeger_reporter_host, Integer.toString(jaeger_reporter_port), opentracing_jaeger_service_name);
+            // Levanta o servidor de tracing distribuido
+            this.servidorTracingDistribuido = new ServidorTracingDistribuido(this);
             // Levanta o servidor GRPC
             AtivoServerGRPC var = new AtivoServerGRPC(this);
+
         }
         catch (Exception e){
             System.out.println("Não foi possível inicializar a aplicação.");
@@ -289,5 +294,8 @@ public class Aplicacao implements DataProviderInterface {
         return opentracing_jaeger_service_name;
     }
 
+    public TracingServerInterceptor geTtracingServerInterceptor() {
+        return this.servidorTracingDistribuido.geTtracingServerInterceptor();
+    }
 
 }
