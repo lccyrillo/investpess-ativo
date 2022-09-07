@@ -1,4 +1,23 @@
 0) setup de trabalho
+-> entra no diretorio pai
+>> git clone https://github.com/lccyrillo/investpess-negociacao.git
+>> entra no diretorio do projeto
+>> git config --global user.email "lccyrillo@gmail.com"
+-> renomei no github a branch main para master
+-> Verificar a branch que estou
+>> git branch (vejo que estou na main)
+>> git checkout -b master
+>> git checkout -b developer
+>> git checkout -b release_setup
+-> apago a branch main
+>> git branch -D main
+-> Se precisar apagar no github
+>> git push origin --delete refatoracao_conexao
+>> aponto a origem para o repositorio correto
+
+
+
+0) setup de trabalho
 >> git config --global user.email "lccyrillo@gmail.com"
 >> git init
 >> git remote add origin https://github.com/lccyrillo/investpess-ativo.git

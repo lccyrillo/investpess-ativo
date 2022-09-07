@@ -10,7 +10,7 @@ Configurações para startar o docker
       # VOLUME dados_dev -> Volume criado para armazernar os dados de desenvolvimento
 
 0) docker image build -t docker_db .
-   docker container run --name docker_db_container -p 5433:5432 -v ./scripts:/scripts -v C:\Arquivos\01_PRJSW\investpess-teste\investpess-ativo\docker\docker_db\scripts\init.sql:/docker-entrypoint-initdb.d/init.sql -v dados_dev:/var/lib/postgresql/data docker_db
+   docker container run --name docker_db_container -p 5433:5432 -v ./scripts:/scripts -v C:\aplic\prjsw\investpess-ativo\docker\docker_db\scripts\init.sql:/docker-entrypoint-initdb.d/init.sql -v dados_dev:/var/lib/postgresql/data docker_db
 
    configuração manual no intellij
    container name:

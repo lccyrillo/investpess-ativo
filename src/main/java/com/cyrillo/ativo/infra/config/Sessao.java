@@ -9,16 +9,26 @@ import java.util.UUID;
 
 public class Sessao implements DataProviderInterface {
 
-    private UUID uniqueKey;
+    private UUID sessionId;
+    private String flowId;
     private LogInterface log;
 
     public Sessao(){
-        this.uniqueKey = UUID.randomUUID();
+        this.sessionId = UUID.randomUUID();
         this.log = Aplicacao.getInstance().gerarNovoObjetoLog();
     }
 
     public UUID getUniqueKey() {
-        return uniqueKey;
+        return sessionId;
+    }
+    public String getSessionId() {
+        return String.valueOf(sessionId);
+    }
+    public void setFlowId(String flowId) {
+        this.flowId = flowId;
+    }
+    public String getFlowId() {
+        return flowId;
     }
 
     @Override
